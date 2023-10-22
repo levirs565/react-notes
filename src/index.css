@@ -5,7 +5,9 @@
   --color-red-500: #ef4444;
   --color-red-700: #b91c1c;
   --color-red-800: #991b1b;
+  --color-rose-500: #f43f5e;
   --color-rose-700: #be123c;
+  --color-rose-800: #9f1239;
   --color-rose-300: #fda4af;
   --color-green-500: #22c55e;
   --color-green-600: #16a34a;
@@ -57,6 +59,19 @@ main {
 
 .button--danger:active {
   background-color: var(--color-red-800);
+}
+
+.button--primary {
+  background-color: var(--color-red-500);
+  color: white;
+}
+
+.button--primary:hover {
+  background-color: var(--color-rose-700);
+}
+
+.button--primary:active {
+  background-color: var(--color-rose-800);
 }
 
 .app-fab {

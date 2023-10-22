@@ -11,6 +11,10 @@ export default class AddNoteDialog extends React.Component {
     };
     this.onDialogCloseHandler = () => {
       this.props.onChange(false);
+      this.setState({
+        title: "",
+        body: "",
+      });
     };
 
     this.state = {

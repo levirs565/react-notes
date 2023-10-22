@@ -79,6 +79,8 @@ export default class AddNoteDialog extends React.Component {
                 value={this.state.title}
                 onChange={this.onTitleInputChangeHandler}
                 type="text"
+                variant="primary"
+                className="add-note-dialog--input"
               />
               <FieldMessage>
                 {this.state.remainingTitle} karakter tersisa
@@ -93,6 +95,8 @@ export default class AddNoteDialog extends React.Component {
                 as="textarea"
                 value={this.state.body}
                 onChange={this.onBodyInputChangeHandler}
+                variant="primary"
+                className="add-note-dialog--input"
               ></FieldInput>
             </Field>
           </div>

@@ -1,0 +1,15 @@
+.app-input {
+  font-size: 16px;
+  appearance: none;
+  border: 1px solid var(--color-zink-400);
+  padding: 4px 8px;
+}
+
+.app-input:focus {
+  outline: none;
+  border-color: var(--color-zink-500);
+}
+
+.app-input--primary:focus {
+  border-color: var(--color-rose-500);
+}

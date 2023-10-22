@@ -1,6 +1,7 @@
 import React from "react";
 import { useContext } from "react";
 import "./Field.css";
+import { AppInput } from "./AppInput";
 
 const InputIdContext = React.createContext();
 
@@ -9,8 +10,14 @@ export class FieldInput extends React.Component {
 
   render() {
     const inputId = this.context;
-    const { as: Component, ...rest } = this.props;
-    return <Component className={"field--input"} id={inputId} {...rest} />;
+    const { className, ...rest } = this.props;
+    return (
+      <AppInput
+        className={`field--input ${className ? className : ""}`}
+        id={inputId}
+        {...rest}
+      />
+    );
   }
 }
 

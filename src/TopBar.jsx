@@ -1,3 +1,4 @@
+import { AppInput } from "./AppInput";
 import "./TopBar.css";
 
 export function TopBar({ searchQuery, onChangeSearch }) {
@@ -5,7 +6,7 @@ export function TopBar({ searchQuery, onChangeSearch }) {
     <header className="top-bar">
       <h1 className="top-bar--title">Notes</h1>
       <div className="top-bar--grow" />
-      <input
+      <AppInput
         value={searchQuery}
         className="top-bar--search"
         type="text"

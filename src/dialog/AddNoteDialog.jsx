@@ -102,6 +102,7 @@ export class AddNoteDialog extends React.Component {
                 onChange={this.onBodyInputChangeHandler}
                 variant="primary"
                 className="add-note-dialog--input"
+                rows="5"
               ></FieldInput>
             </Field>
           </div>

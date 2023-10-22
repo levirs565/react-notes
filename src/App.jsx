@@ -9,6 +9,7 @@ class App extends React.Component {
     super();
     const prevNotes = localStorage.getItem("notes");
     this.state = {
+      searchQuery: "",
       isAddDialogOpen: false,
       notes: prevNotes
         ? JSON.parse(prevNotes)
@@ -58,6 +59,13 @@ class App extends React.Component {
         ),
       });
     };
+
+    this.onChangeSearchQueryHandler = (query) => {
+      this.setState({
+        ...this.state,
+        searchQuery: query,
+      });
+    };
   }
 
   createNote(data) {
@@ -77,14 +85,23 @@ class App extends React.Component {
   }
 
   render() {
+    const lowerCasedQuery = this.state.searchQuery.toLowerCase();
+    const filteredNotes = this.state.notes.filter(
+      ({ title, body }) =>
+        title.toLowerCase().includes(lowerCasedQuery) ||
+        body.toLowerCase().includes(lowerCasedQuery)
+    );
     return (
       <React.Fragment>
-        <TopBar />
+        <TopBar
+          searchQuery={this.state.searchQuery}
+          onChangeSearch={this.onChangeSearchQueryHandler}
+        />
         <main>
           <section className="app-section">
             <h2 className="app-section--title">Catatan</h2>
             <NoteList
-              list={this.state.notes.filter(({ archived }) => !archived)}
+              list={filteredNotes.filter(({ archived }) => !archived)}
               onDeleteItem={this.onNoteDeleteHandler}
               onChangeItemArchive={this.onNoteChangeArchiveHandler}
               emptyMessage={"Catatan Kosong"}
@@ -93,7 +110,7 @@ class App extends React.Component {
           <section className="app-section">
             <h2 className="app-section--title">Arsip</h2>
             <NoteList
-              list={this.state.notes.filter(({ archived }) => archived)}
+              list={filteredNotes.filter(({ archived }) => archived)}
               onDeleteItem={this.onNoteDeleteHandler}
               onChangeItemArchive={this.onNoteChangeArchiveHandler}
               emptyMessage={"Arsip catatan kosong"}

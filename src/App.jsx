@@ -3,6 +3,7 @@ import { NoteList } from "./Note";
 import { TopBar } from "./TopBar";
 import AddNoteDialog from "./AddNoteDialog";
 import "./App.css";
+import { createNote, getInitialNotes } from "./utils";
 
 class App extends React.Component {
   constructor() {
@@ -11,14 +12,7 @@ class App extends React.Component {
     this.state = {
       searchQuery: "",
       isAddDialogOpen: false,
-      notes: prevNotes
-        ? JSON.parse(prevNotes)
-        : [
-            this.createNote({
-              title: "Test",
-              body: "Test Kontent",
-            }),
-          ],
+      notes: prevNotes ? JSON.parse(prevNotes) : getInitialNotes(),
     };
 
     this.onAddFabClickHandler = () => {
@@ -36,7 +30,7 @@ class App extends React.Component {
     this.onDialogSubmitHandler = (data) => {
       this.setState({
         ...this.state,
-        notes: [...this.state.notes, this.createNote(data)],
+        notes: [...this.state.notes, createNote(data)],
       });
     };
 
@@ -65,16 +59,6 @@ class App extends React.Component {
         ...this.state,
         searchQuery: query,
       });
-    };
-  }
-
-  createNote(data) {
-    const date = new Date();
-    return {
-      ...data,
-      id: +date,
-      archived: false,
-      createdAt: `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`,
     };
   }
 

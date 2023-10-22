@@ -1,5 +1,6 @@
 import { AppButton, AppButtonGroup } from "./AppButton";
 import "./Note.css";
+import { showFormattedDate } from "./utils";
 
 export function Note({
   title,
@@ -12,7 +13,7 @@ export function Note({
   return (
     <li className="note">
       <h3 className="note--title">{title}</h3>
-      <time className="note--created-date">{createdAt}</time>
+      <time className="note--created-date">{showFormattedDate(createdAt)}</time>
       <p className="note--body">{body}</p>
       <AppButtonGroup>
         <AppButton onClick={() => onChangeArchive(!archived)}>

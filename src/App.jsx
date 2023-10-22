@@ -86,6 +86,7 @@ class App extends React.Component {
             <h2 className="app-section--title">Catatan</h2>
             <NoteList
               list={filteredNotes.filter(({ archived }) => !archived)}
+              highlightPattern={this.state.searchQuery}
               onDeleteItem={this.onNoteDeleteHandler}
               onChangeItemArchive={this.onNoteChangeArchiveHandler}
               emptyMessage={"Catatan Kosong"}
@@ -95,6 +96,7 @@ class App extends React.Component {
             <h2 className="app-section--title">Arsip</h2>
             <NoteList
               list={filteredNotes.filter(({ archived }) => archived)}
+              highlightPattern={this.state.searchQuery}
               onDeleteItem={this.onNoteDeleteHandler}
               onChangeItemArchive={this.onNoteChangeArchiveHandler}
               emptyMessage={"Arsip catatan kosong"}

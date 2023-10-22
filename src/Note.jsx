@@ -1,4 +1,5 @@
 import { AppButton, AppButtonGroup } from "./AppButton";
+import { HighlightText } from "./HighlightText";
 import "./Note.css";
 import { showFormattedDate } from "./utils";
 
@@ -7,14 +8,19 @@ export function Note({
   body,
   archived,
   createdAt,
+  highlightPattern,
   onDelete,
   onChangeArchive,
 }) {
   return (
     <li className="note">
-      <h3 className="note--title">{title}</h3>
+      <h3 className="note--title">
+        <HighlightText text={title} pattern={highlightPattern} />
+      </h3>
       <time className="note--created-date">{showFormattedDate(createdAt)}</time>
-      <p className="note--body">{body}</p>
+      <p className="note--body">
+        <HighlightText text={body} pattern={highlightPattern} />
+      </p>
       <AppButtonGroup>
         <AppButton onClick={() => onChangeArchive(!archived)}>
           {archived ? "Kembalikan" : "Arsipkan"}
@@ -29,6 +35,7 @@ export function Note({
 
 export function NoteList({
   list,
+  highlightPattern,
   onDeleteItem,
   onChangeItemArchive,
   emptyMessage,
@@ -45,6 +52,7 @@ export function NoteList({
           body={body}
           archived={archived}
           createdAt={createdAt}
+          highlightPattern={highlightPattern}
           onDelete={() => onDeleteItem(id)}
           onChangeArchive={(archived) => onChangeItemArchive(id, archived)}
         />

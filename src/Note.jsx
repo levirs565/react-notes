@@ -25,7 +25,15 @@ export function Note({
   );
 }
 
-export function NoteList({ list, onDeleteItem, onChangeItemArchive }) {
+export function NoteList({
+  list,
+  onDeleteItem,
+  onChangeItemArchive,
+  emptyMessage,
+}) {
+  if (list.length === 0) {
+    return <p className="note-empty">{emptyMessage}</p>;
+  }
   return (
     <ul className="note-list">
       {list.map(({ id, title, body, archived, createdAt }) => (

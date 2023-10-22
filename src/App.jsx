@@ -87,6 +87,7 @@ class App extends React.Component {
               list={this.state.notes.filter(({ archived }) => !archived)}
               onDeleteItem={this.onNoteDeleteHandler}
               onChangeItemArchive={this.onNoteChangeArchiveHandler}
+              emptyMessage={"Catatan Kosong"}
             />
           </section>
           <section className="app-section">
@@ -95,6 +96,7 @@ class App extends React.Component {
               list={this.state.notes.filter(({ archived }) => archived)}
               onDeleteItem={this.onNoteDeleteHandler}
               onChangeItemArchive={this.onNoteChangeArchiveHandler}
+              emptyMessage={"Arsip catatan kosong"}
             />
           </section>
           <button className="app-fab" onClick={this.onAddFabClickHandler}>

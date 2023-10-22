@@ -1,3 +1,7 @@
+.note-empty {
+  text-align: center;
+}
+
 .note-list {
   list-style: none;
   padding-inline: 0;

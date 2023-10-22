@@ -4,13 +4,15 @@ import "./HighlightText.css";
 export function HighlightText({ text, pattern }) {
   if (pattern.length === 0)
     return [<React.Fragment key={0}>{text}</React.Fragment>];
-  const lowerCased = text.toLowerCase();
+  const lowerCasedPattern = pattern.toLowerCase();
+  const lowerCasedText = text.toLowerCase();
   const result = [];
   let lastIndex = 0;
   let currentIndex = 0;
   let keyIndex = 0;
   while (
-    ((currentIndex = lowerCased.indexOf(pattern, lastIndex)), currentIndex >= 0)
+    ((currentIndex = lowerCasedText.indexOf(lowerCasedPattern, lastIndex)),
+    currentIndex >= 0)
   ) {
     result.push(
       <React.Fragment key={keyIndex}>

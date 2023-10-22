@@ -1,10 +1,10 @@
 import React from "react";
-import { NoteList } from "./Note";
-import { TopBar } from "./TopBar";
-import AddNoteDialog from "./AddNoteDialog";
-import "./App.css";
+import { NoteList } from "./components/Note";
+import { TopBar } from "./components/TopBar";
+import AddNoteDialog from "./dialog/AddNoteDialog";
+import { FloatingActionButton } from "./components/FloatingActionButton";
 import { createNote, getInitialNotes } from "./utils";
-import { FloatingActionButton } from "./FloatingActionButton";
+import "./App.css";
 
 class App extends React.Component {
   constructor() {

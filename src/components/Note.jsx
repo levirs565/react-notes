@@ -1,7 +1,7 @@
 import { AppButton, AppButtonGroup } from "./AppButton";
 import { HighlightText } from "./HighlightText";
 import "./Note.css";
-import { showFormattedDate } from "./utils";
+import { showFormattedDate } from "../utils";
 
 export function Note({
   title,

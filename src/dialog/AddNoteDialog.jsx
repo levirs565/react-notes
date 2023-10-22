@@ -1,7 +1,12 @@
 import React from "react";
 import "./AddNoteDialog.css";
-import { AppButton, AppButtonGroup } from "./AppButton";
-import { Field, FieldInput, FieldLabel, FieldMessage } from "./Field";
+import { AppButton, AppButtonGroup } from "../components/AppButton";
+import {
+  Field,
+  FieldInput,
+  FieldLabel,
+  FieldMessage,
+} from "../components/Field";
 
 export default class AddNoteDialog extends React.Component {
   constructor() {

@@ -1,5 +1,5 @@
 import { AppInput } from "./AppInput";
-import { SearchIcon } from "./icons/SearchIcon";
+import { SearchIcon } from "../icons/SearchIcon";
 import "./SearchInput.css";
 
 export function SearchInput({ value, onChange }) {

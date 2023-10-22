@@ -8,7 +8,7 @@ import {
   FieldMessage,
 } from "../components/Field";
 
-export default class AddNoteDialog extends React.Component {
+export class AddNoteDialog extends React.Component {
   constructor() {
     super();
 
@@ -109,7 +109,7 @@ export default class AddNoteDialog extends React.Component {
             <AppButton>Cancel</AppButton>
             <AppButton
               disabled={this.state.title.length === 0}
-              variant="danger"
+              variant="primary"
               onClick={this.onAddButtonClickHandler}
             >
               Tambah

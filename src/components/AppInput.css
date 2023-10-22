@@ -11,5 +11,5 @@
 }
 
 .app-input--primary:focus {
-  border-color: var(--color-rose-500);
+  border-color: var(--color-fuchsia-500);
 }

@@ -1,12 +1,12 @@
 import React from "react";
 import { NoteList } from "./components/Note";
 import { TopBar } from "./components/TopBar";
-import AddNoteDialog from "./dialog/AddNoteDialog";
+import { AddNoteDialog } from "./dialog/AddNoteDialog";
 import { FloatingActionButton } from "./components/FloatingActionButton";
 import { createNote, getInitialNotes } from "./utils";
 import "./App.css";
 
-class App extends React.Component {
+export class App extends React.Component {
   constructor() {
     super();
     const prevNotes = localStorage.getItem("notes");
@@ -124,5 +124,3 @@ class App extends React.Component {
     );
   }
 }
-
-export default App;

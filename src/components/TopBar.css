@@ -1,7 +1,7 @@
 .top-bar {
   position: sticky;
   top: 0;
-  background-color: var(--color-rose-700);
+  background-color: var(--color-fuchsia-700);
   height: 48px;
   display: flex;
   flex-direction: row;

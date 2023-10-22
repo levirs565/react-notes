@@ -21,7 +21,7 @@
 
 .add-note-dialog--input:focus {
   outline: none;
-  border-color: var(--color-rose-500);
+  border-color: var(--color-fuchsia-500);
 }
 
 .add-note-dialog--buttons {

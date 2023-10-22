@@ -36,21 +36,21 @@
   background-color: var(--color-red-800);
 }
 
-.app-button--danger:disabled {
-  background-color: var(--color-red-300);
-}
-
 .app-button--primary {
-  background-color: var(--color-red-500);
+  background-color: var(--color-fuchsia-500);
   color: white;
 }
 
 .app-button--primary:hover {
-  background-color: var(--color-rose-700);
+  background-color: var(--color-fuchsia-700);
 }
 
 .app-button--primary:active {
-  background-color: var(--color-rose-800);
+  background-color: var(--color-fuchsia-800);
+}
+
+.app-button--primary:disabled {
+  background-color: var(--color-fuchsia-300);
 }
 
 .app-button-group {

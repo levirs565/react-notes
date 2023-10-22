@@ -4,19 +4,27 @@ import "./Field.css";
 
 const InputIdContext = React.createContext();
 
-export function FieldInput({ as, ...rest }) {
-  const inputId = useContext(InputIdContext);
-  const Component = as;
-  return <Component className={"field--input"} id={inputId} {...rest} />;
+export class FieldInput extends React.Component {
+  static contextType = InputIdContext;
+
+  render() {
+    const inputId = this.context;
+    const { as: Component, ...rest } = this.props;
+    return <Component className={"field--input"} id={inputId} {...rest} />;
+  }
 }
 
-export function FieldLabel({ children }) {
-  const inputId = useContext(InputIdContext);
-  return (
-    <label className="field--label" htmlFor={inputId}>
-      {children}
-    </label>
-  );
+export class FieldLabel extends React.Component {
+  static contextType = InputIdContext;
+
+  render() {
+    const inputId = this.context;
+    return (
+      <label className="field--label" htmlFor={inputId}>
+        {this.props.children}
+      </label>
+    );
+  }
 }
 
 export function FieldMessage({ children, error }) {

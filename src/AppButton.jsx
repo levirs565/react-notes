@@ -1,12 +1,13 @@
 import "./AppButton.css";
 
-export function AppButton({ className, variant, children, onClick }) {
+export function AppButton({ className, variant, children, onClick, disabled }) {
   return (
     <button
-      className={`app-button ${
-        variant ? `app-button--${variant}` : ""
-      } ${className}`}
+      className={`app-button ${variant ? `app-button--${variant}` : ""} ${
+        className ? className : ""
+      }`}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>

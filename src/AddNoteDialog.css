@@ -11,15 +11,6 @@
   margin-bottom: 16px;
 }
 
-.add-note-dialog--label,
-.add-note-dialog--input {
-  display: block;
-}
-
-.add-note-dialog--label {
-  font-size: 14px;
-}
-
 .add-note-dialog--input {
   font-size: 16px;
   appearance: none;
@@ -31,14 +22,6 @@
 .add-note-dialog--input:focus {
   outline: none;
   border-color: var(--color-rose-500);
-}
-
-.add-note-dialog--label + .add-note-dialog--input {
-  margin-top: 4px;
-}
-
-.add-note-dialog--input + .add-note-dialog--label {
-  margin-top: 8px;
 }
 
 .add-note-dialog--buttons {

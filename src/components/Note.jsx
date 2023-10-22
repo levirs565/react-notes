@@ -40,8 +40,8 @@ export function Note({
 export function NoteList({
   list,
   highlightPattern,
-  onDeleteItem,
-  onChangeItemArchive,
+  onItemDelete,
+  onItemChangeArchive,
   emptyMessage,
 }) {
   if (list.length === 0) {
@@ -57,8 +57,8 @@ export function NoteList({
           archived={archived}
           createdAt={createdAt}
           highlightPattern={highlightPattern}
-          onDelete={() => onDeleteItem(id)}
-          onChangeArchive={(archived) => onChangeItemArchive(id, archived)}
+          onDelete={() => onItemDelete(id)}
+          onChangeArchive={(archived) => onItemChangeArchive(id, archived)}
         />
       ))}
     </ul>

@@ -11,19 +11,6 @@
   margin-bottom: 16px;
 }
 
-.add-note-dialog--input {
-  font-size: 16px;
-  appearance: none;
-  border: 1px solid var(--color-zink-400);
-  padding: 4px 8px;
-  min-width: 300px;
-}
-
-.add-note-dialog--input:focus {
-  outline: none;
-  border-color: var(--color-fuchsia-500);
-}
-
 .add-note-dialog--buttons {
   margin-top: 16px;
 }

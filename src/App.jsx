@@ -6,14 +6,11 @@ import { FloatingActionButton } from "./components/FloatingActionButton";
 import { createNote, getInitialNotes } from "./utils";
 import "./App.css";
 
-export class App extends React.Component {
+export class AppMain extends React.Component {
   constructor() {
     super();
-    const prevNotes = localStorage.getItem("notes");
     this.state = {
-      searchQuery: "",
       isAddDialogOpen: false,
-      notes: prevNotes ? JSON.parse(prevNotes) : getInitialNotes(),
     };
 
     this.onAddFabClickHandler = () => {
@@ -28,10 +25,65 @@ export class App extends React.Component {
         isAddDialogOpen: state,
       });
     };
-    this.onDialogSubmitHandler = (data) => {
+  }
+
+  render() {
+    return (
+      <main className="app-main">
+        <section className="app-section">
+          <h2 className="app-section--title">Catatan</h2>
+          <NoteList
+            list={this.props.notes.filter(({ archived }) => !archived)}
+            highlightPattern={this.props.searchQuery}
+            onItemDelete={this.props.onNoteDelete}
+            onItemChangeArchive={this.props.onNoteChangeArchive}
+            emptyMessage={
+              this.props.searchQuery.length > 0
+                ? "Catatan tidak ditemukan"
+                : "Catatan Kosong"
+            }
+          />
+        </section>
+        <section className="app-section">
+          <h2 className="app-section--title">Arsip</h2>
+          <NoteList
+            list={this.props.notes.filter(({ archived }) => archived)}
+            highlightPattern={this.props.searchQuery}
+            onItemDelete={this.props.onNoteDelete}
+            onItemChangeArchive={this.props.onNoteChangeArchive}
+            emptyMessage={
+              this.props.searchQuery.length > 0
+                ? "Catatan terarsip tidak ditemukan"
+                : "Arsip catatan kosong"
+            }
+          />
+        </section>
+        <FloatingActionButton onClick={this.onAddFabClickHandler}>
+          +
+        </FloatingActionButton>
+        <AddNoteDialog
+          open={this.state.isAddDialogOpen}
+          onChange={this.onDialogChangeHandler}
+          onSubmit={this.props.onNoteAdd}
+        />
+      </main>
+    );
+  }
+}
+
+export class App extends React.Component {
+  constructor() {
+    super();
+    const prevNotes = localStorage.getItem("notes");
+    this.state = {
+      searchQuery: "",
+      notes: prevNotes ? JSON.parse(prevNotes) : getInitialNotes(),
+    };
+
+    this.onSearchChangeQueryHandler = (query) => {
       this.setState({
         ...this.state,
-        notes: [...this.state.notes, createNote(data)],
+        searchQuery: query,
       });
     };
 
@@ -55,10 +107,10 @@ export class App extends React.Component {
       });
     };
 
-    this.onChangeSearchQueryHandler = (query) => {
+    this.onNoteAddHandler = (data) => {
       this.setState({
         ...this.state,
-        searchQuery: query,
+        notes: [...this.state.notes, createNote(data)],
       });
     };
   }
@@ -80,46 +132,15 @@ export class App extends React.Component {
       <React.Fragment>
         <TopBar
           searchQuery={this.state.searchQuery}
-          onChangeSearch={this.onChangeSearchQueryHandler}
+          onSearchChange={this.onSearchChangeQueryHandler}
         />
-        <main className="app-main">
-          <section className="app-section">
-            <h2 className="app-section--title">Catatan</h2>
-            <NoteList
-              list={filteredNotes.filter(({ archived }) => !archived)}
-              highlightPattern={this.state.searchQuery}
-              onDeleteItem={this.onNoteDeleteHandler}
-              onChangeItemArchive={this.onNoteChangeArchiveHandler}
-              emptyMessage={
-                this.state.searchQuery.length > 0
-                  ? "Catatan tidak ditemukan"
-                  : "Catatan Kosong"
-              }
-            />
-          </section>
-          <section className="app-section">
-            <h2 className="app-section--title">Arsip</h2>
-            <NoteList
-              list={filteredNotes.filter(({ archived }) => archived)}
-              highlightPattern={this.state.searchQuery}
-              onDeleteItem={this.onNoteDeleteHandler}
-              onChangeItemArchive={this.onNoteChangeArchiveHandler}
-              emptyMessage={
-                this.state.searchQuery.length > 0
-                  ? "Catatan terarsip tidak ditemukan"
-                  : "Arsip catatan kosong"
-              }
-            />
-          </section>
-          <FloatingActionButton onClick={this.onAddFabClickHandler}>
-            +
-          </FloatingActionButton>
-          <AddNoteDialog
-            open={this.state.isAddDialogOpen}
-            onChange={this.onDialogChangeHandler}
-            onSubmit={this.onDialogSubmitHandler}
-          />
-        </main>
+        <AppMain
+          notes={filteredNotes}
+          searchQuery={this.state.searchQuery}
+          onNoteAdd={this.onNoteAddHandler}
+          onNoteChangeArchive={this.onNoteChangeArchiveHandler}
+          onNoteDelete={this.onNoteDeleteHandler}
+        />
       </React.Fragment>
     );
   }

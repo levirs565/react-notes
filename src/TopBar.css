@@ -1,0 +1,16 @@
+.top-bar {
+  position: sticky;
+  top: 0;
+  background-color: var(--color-rose-700);
+  height: 48px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 8px;
+}
+
+.top-bar--title {
+  font-family: "Montserrat Variable", sans-serif;
+  font-size: 18px;
+  color: white;
+}

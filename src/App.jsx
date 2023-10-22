@@ -9,13 +9,10 @@ class App extends React.Component {
     this.state = {
       isAddDialogOpen: false,
       notes: [
-        {
-          id: 0,
+        this.createNote({
           title: "Test",
           body: "Test Kontent",
-          archived: false,
-          createdAt: new Date().toString(),
-        },
+        }),
       ],
     };
 
@@ -34,18 +31,21 @@ class App extends React.Component {
     this.onDialogSubmitHandler = (data) => {
       this.setState({
         ...this.state,
-        notes: [
-          ...this.state.notes,
-          {
-            ...data,
-            id: +new Date(),
-            archived: false,
-            createdAt: new Date().toString(),
-          },
-        ],
+        notes: [...this.state.notes, this.createNote(data)],
       });
     };
   }
+
+  createNote(data) {
+    const date = new Date();
+    return {
+      ...data,
+      id: +date,
+      archived: false,
+      createdAt: `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`,
+    };
+  }
+
   render() {
     return (
       <React.Fragment>

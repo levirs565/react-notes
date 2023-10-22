@@ -43,8 +43,4 @@
 
 .add-note-dialog--buttons {
   margin-top: 16px;
-  display: flex;
-  flex-direction: row;
-  justify-content: end;
-  gap: 8px;
 }

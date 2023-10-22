@@ -33,10 +33,3 @@
   font-size: 16px;
   margin-bottom: 8px;
 }
-
-.note--buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: end;
-  gap: 8px;
-}

@@ -1,5 +1,6 @@
 import React from "react";
 import "./AddNoteDialog.css";
+import { AppButton, AppButtonGroup } from "./AppButton";
 
 export default class AddNoteDialog extends React.Component {
   constructor() {
@@ -89,15 +90,12 @@ export default class AddNoteDialog extends React.Component {
             value={this.state.body}
             onChange={this.onBodyInputChangeHandler}
           ></textarea>
-          <div className="add-note-dialog--buttons">
-            <button className="button">Cancel</button>
-            <button
-              className="button button--primary"
-              onClick={this.onAddButtonClickHandler}
-            >
+          <AppButtonGroup className="add-note-dialog--buttons">
+            <AppButton>Cancel</AppButton>
+            <AppButton variant="primary" onClick={this.onAddButtonClickHandler}>
               Tambah
-            </button>
-          </div>
+            </AppButton>
+          </AppButtonGroup>
         </form>
       </dialog>
     );

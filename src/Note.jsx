@@ -1,3 +1,4 @@
+import { AppButton, AppButtonGroup } from "./AppButton";
 import "./Note.css";
 
 export function Note({
@@ -13,14 +14,14 @@ export function Note({
       <h3 className="note--title">{title}</h3>
       <time className="note--created-date">{createdAt}</time>
       <p className="note--body">{body}</p>
-      <div className="note--buttons">
-        <button className="button" onClick={() => onChangeArchive(!archived)}>
+      <AppButtonGroup>
+        <AppButton onClick={() => onChangeArchive(!archived)}>
           {archived ? "Kembalikan" : "Arsipkan"}
-        </button>
-        <button onClick={onDelete} className="button button--danger">
+        </AppButton>
+        <AppButton onClick={onDelete} variant="danger">
           Hapus
-        </button>
-      </div>
+        </AppButton>
+      </AppButtonGroup>
     </li>
   );
 }

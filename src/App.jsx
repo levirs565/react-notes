@@ -82,7 +82,7 @@ export class App extends React.Component {
           searchQuery={this.state.searchQuery}
           onChangeSearch={this.onChangeSearchQueryHandler}
         />
-        <main>
+        <main className="app-main">
           <section className="app-section">
             <h2 className="app-section--title">Catatan</h2>
             <NoteList

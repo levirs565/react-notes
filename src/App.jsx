@@ -89,7 +89,11 @@ class App extends React.Component {
               highlightPattern={this.state.searchQuery}
               onDeleteItem={this.onNoteDeleteHandler}
               onChangeItemArchive={this.onNoteChangeArchiveHandler}
-              emptyMessage={"Catatan Kosong"}
+              emptyMessage={
+                this.state.searchQuery.length > 0
+                  ? "Catatan tidak ditemukan"
+                  : "Catatan Kosong"
+              }
             />
           </section>
           <section className="app-section">
@@ -99,7 +103,11 @@ class App extends React.Component {
               highlightPattern={this.state.searchQuery}
               onDeleteItem={this.onNoteDeleteHandler}
               onChangeItemArchive={this.onNoteChangeArchiveHandler}
-              emptyMessage={"Arsip catatan kosong"}
+              emptyMessage={
+                this.state.searchQuery.length > 0
+                  ? "Catatan terarsip tidak ditemukan"
+                  : "Arsip catatan kosong"
+              }
             />
           </section>
           <button className="app-fab" onClick={this.onAddFabClickHandler}>

@@ -4,6 +4,7 @@ import { TopBar } from "./TopBar";
 import AddNoteDialog from "./AddNoteDialog";
 import "./App.css";
 import { createNote, getInitialNotes } from "./utils";
+import { FloatingActionButton } from "./FloatingActionButton";
 
 class App extends React.Component {
   constructor() {
@@ -110,9 +111,9 @@ class App extends React.Component {
               }
             />
           </section>
-          <button className="app-fab" onClick={this.onAddFabClickHandler}>
+          <FloatingActionButton onClick={this.onAddFabClickHandler}>
             +
-          </button>
+          </FloatingActionButton>
           <AddNoteDialog
             open={this.state.isAddDialogOpen}
             onChange={this.onDialogChangeHandler}

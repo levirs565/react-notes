@@ -9,19 +9,22 @@ export default class AddNoteDialog extends React.Component {
     this.setDialogElementRef = (element) => {
       this.dialogElement = element;
     };
+
+    const maxTitleLength = 50;
+    const initialState = {
+      title: "",
+      body: "",
+      remainingTitle: maxTitleLength,
+    };
+
     this.onDialogCloseHandler = () => {
       this.props.onChange(false);
       this.setState({
-        title: "",
-        body: "",
+        ...initialState,
       });
     };
 
-    this.state = {
-      title: "",
-      body: "",
-    };
-
+    this.state = { ...initialState };
     this.onBodyInputChangeHandler = (inputEl) => {
       this.setState({
         ...this.state,
@@ -30,9 +33,14 @@ export default class AddNoteDialog extends React.Component {
     };
 
     this.onTitleInputChangeHandler = (inputEl) => {
+      let value = inputEl.target.value;
+      if (value.length > maxTitleLength) {
+        value = value.substring(0, maxTitleLength);
+      }
       this.setState({
         ...this.state,
-        title: inputEl.target.value,
+        title: value,
+        remainingTitle: maxTitleLength - value.length,
       });
     };
 
@@ -71,6 +79,7 @@ export default class AddNoteDialog extends React.Component {
             value={this.state.title}
             onChange={this.onTitleInputChangeHandler}
           />
+          <p>{this.state.remainingTitle} karakter tersisa</p>
           <label className="add-note-dialog--label" htmlFor="bodyInput">
             Konten:
           </label>

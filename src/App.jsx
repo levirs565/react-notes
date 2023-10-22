@@ -6,14 +6,17 @@ import AddNoteDialog from "./AddNoteDialog";
 class App extends React.Component {
   constructor() {
     super();
+    const prevNotes = localStorage.getItem("notes");
     this.state = {
       isAddDialogOpen: false,
-      notes: [
-        this.createNote({
-          title: "Test",
-          body: "Test Kontent",
-        }),
-      ],
+      notes: prevNotes
+        ? JSON.parse(prevNotes)
+        : [
+            this.createNote({
+              title: "Test",
+              body: "Test Kontent",
+            }),
+          ],
     };
 
     this.onAddFabClickHandler = () => {
@@ -44,6 +47,12 @@ class App extends React.Component {
       archived: false,
       createdAt: `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`,
     };
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.notes != this.state.notes) {
+      localStorage.setItem("notes", JSON.stringify(this.state.notes));
+    }
   }
 
   render() {

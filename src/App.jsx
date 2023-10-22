@@ -37,6 +37,13 @@ class App extends React.Component {
         notes: [...this.state.notes, this.createNote(data)],
       });
     };
+
+    this.onNoteDeleteHandler = (id) => {
+      this.setState({
+        ...this.state,
+        notes: this.state.notes.filter((note) => note.id != id),
+      });
+    };
   }
 
   createNote(data) {
@@ -60,7 +67,10 @@ class App extends React.Component {
       <React.Fragment>
         <TopBar />
         <main>
-          <NoteList list={this.state.notes} />
+          <NoteList
+            list={this.state.notes}
+            onDeleteItem={this.onNoteDeleteHandler}
+          />
           <button className="app-fab" onClick={this.onAddFabClickHandler}>
             +
           </button>

@@ -1,13 +1,20 @@
 import "./Note.css";
 
-export function Note({ title, body, archived, createdAt, onDelete }) {
+export function Note({
+  title,
+  body,
+  archived,
+  createdAt,
+  onDelete,
+  onChangeArchive,
+}) {
   return (
     <li className="note">
       <h3 className="note--title">{title}</h3>
       <time className="note--created-date">{createdAt}</time>
       <p className="note--body">{body}</p>
       <div className="note--buttons">
-        <button className="button">
+        <button className="button" onClick={() => onChangeArchive(!archived)}>
           {archived ? "Kembalikan" : "Arsipkan"}
         </button>
         <button onClick={onDelete} className="button button--danger">
@@ -18,7 +25,7 @@ export function Note({ title, body, archived, createdAt, onDelete }) {
   );
 }
 
-export function NoteList({ list, onDeleteItem }) {
+export function NoteList({ list, onDeleteItem, onChangeItemArchive }) {
   return (
     <ul className="note-list">
       {list.map(({ id, title, body, archived, createdAt }) => (
@@ -29,6 +36,7 @@ export function NoteList({ list, onDeleteItem }) {
           archived={archived}
           createdAt={createdAt}
           onDelete={() => onDeleteItem(id)}
+          onChangeArchive={(archived) => onChangeItemArchive(id, archived)}
         />
       ))}
     </ul>

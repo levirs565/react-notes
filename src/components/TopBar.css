@@ -1,20 +1,56 @@
 .top-bar {
   position: sticky;
   top: 0;
-  background-color: var(--color-fuchsia-700);
   height: 48px;
   display: flex;
   flex-direction: row;
   align-items: center;
   padding: 8px 8px;
+  column-gap: 16px;
+  background: white;
+  border-bottom: 1px solid var(--color-zink-500);
 }
 
 .top-bar--title {
   font-family: "Montserrat Variable", sans-serif;
   font-size: 18px;
-  color: white;
 }
 
 .top-bar--grow {
   flex-grow: 1;
+}
+
+.top-bar-tabs {
+  list-style-type: none;
+  margin-inline: 0;
+  padding-inline: 0;
+  display: flex;
+}
+
+.top-bar-tabs--item {
+}
+
+.top-bar-tabs--item-link {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 16px;
+  color: black;
+  padding: 8px 16px;
+}
+
+.top-bar-tabs--item-link:hover {
+  background-color: var(--color-zink-200);
+}
+
+.top-bar-tabs--item-link:active {
+  background-color: var(--color-zink-300);
+}
+
+.top-bar-tabs--item-link--active {
+  background-color: var(--color-fuchsia-300);
+}
+
+.top-bar-tabs--item-link--active:hover {
+  background-color: var(--color-fuchsia-500);
 }

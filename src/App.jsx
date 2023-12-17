@@ -1,75 +1,10 @@
 import React from "react";
-import { NoteList } from "./components/Note";
 import { TopBar } from "./components/TopBar";
-import { AddNoteDialog } from "./dialog/AddNoteDialog";
-import { FloatingActionButton } from "./components/FloatingActionButton";
 import { createNote, getInitialNotes } from "./utils";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-
-export class AppMain extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      isAddDialogOpen: false,
-    };
-
-    this.onAddFabClickHandler = () => {
-      this.setState({
-        ...this.state,
-        isAddDialogOpen: true,
-      });
-    };
-    this.onDialogChangeHandler = (state) => {
-      this.setState({
-        ...this.state,
-        isAddDialogOpen: state,
-      });
-    };
-  }
-
-  render() {
-    return (
-      <main className="app-main">
-        <section className="app-section">
-          <h2 className="app-section--title">Catatan</h2>
-          <NoteList
-            list={this.props.notes.filter(({ archived }) => !archived)}
-            highlightPattern={this.props.searchQuery}
-            onItemDelete={this.props.onNoteDelete}
-            onItemChangeArchive={this.props.onNoteChangeArchive}
-            emptyMessage={
-              this.props.searchQuery.length > 0
-                ? "Catatan tidak ditemukan"
-                : "Catatan Kosong"
-            }
-          />
-        </section>
-        <section className="app-section">
-          <h2 className="app-section--title">Arsip</h2>
-          <NoteList
-            list={this.props.notes.filter(({ archived }) => archived)}
-            highlightPattern={this.props.searchQuery}
-            onItemDelete={this.props.onNoteDelete}
-            onItemChangeArchive={this.props.onNoteChangeArchive}
-            emptyMessage={
-              this.props.searchQuery.length > 0
-                ? "Catatan terarsip tidak ditemukan"
-                : "Arsip catatan kosong"
-            }
-          />
-        </section>
-        <FloatingActionButton onClick={this.onAddFabClickHandler}>
-          +
-        </FloatingActionButton>
-        <AddNoteDialog
-          open={this.state.isAddDialogOpen}
-          onChange={this.onDialogChangeHandler}
-          onSubmit={this.props.onNoteAdd}
-        />
-      </main>
-    );
-  }
-}
+import { ActiveNotePage } from "./pages/ActiveNotePage";
+import { ArchiveNotePage } from "./pages/ArchiveNotePage";
 
 export class App extends React.Component {
   constructor() {
@@ -134,13 +69,29 @@ export class App extends React.Component {
           searchQuery={this.state.searchQuery}
           onSearchChange={this.onSearchChangeQueryHandler}
         />
-        <AppMain
-          notes={filteredNotes}
-          searchQuery={this.state.searchQuery}
-          onNoteAdd={this.onNoteAddHandler}
-          onNoteChangeArchive={this.onNoteChangeArchiveHandler}
-          onNoteDelete={this.onNoteDeleteHandler}
-        />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ActiveNotePage
+                notes={filteredNotes}
+                searchQuery={this.state.searchQuery}
+                onNoteAdd={this.onNoteAddHandler}
+                onNoteChangeArchive={this.onNoteChangeArchiveHandler}
+                onNoteDelete={this.onNoteDeleteHandler}
+              />
+            }
+          />
+          <Route
+            path="/archive"
+            element={
+              <ArchiveNotePage
+                notes={filteredNotes}
+                searchQuery={this.state.searchQuery}
+              />
+            }
+          />
+        </Routes>
       </React.Fragment>
     );
   }

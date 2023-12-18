@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 import "./FloatingActionButton.css";
 
-export function FloatingActionButton({ children, onClick }) {
+export function FloatingActionButton({ children, ...props }) {
   return (
-    <button className="floating-action-button" onClick={onClick}>
+    <Link className="floating-action-button" {...props}>
       {children}
-    </button>
+    </Link>
   );
 }

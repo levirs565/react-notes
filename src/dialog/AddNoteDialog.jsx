@@ -7,6 +7,7 @@ import {
   FieldLabel,
   FieldMessage,
 } from "../components/Field";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export class AddNoteDialog extends React.Component {
   constructor() {
@@ -15,6 +16,7 @@ export class AddNoteDialog extends React.Component {
     this.dialogElement = null;
     this.setDialogElementRef = (element) => {
       this.dialogElement = element;
+      if (this.dialogElement) this.dialogElement.showModal();
     };
 
     const maxTitleLength = 50;
@@ -120,4 +122,19 @@ export class AddNoteDialog extends React.Component {
       </dialog>
     );
   }
+}
+
+export function AddNoteDialogWrapper({ onSubmit }) {
+  const navigate = useNavigate();
+  return (
+    <AddNoteDialog
+      open
+      onChange={(state) => {
+        if (!state) {
+          navigate(-1);
+        }
+      }}
+      onSubmit={onSubmit}
+    />
+  );
 }

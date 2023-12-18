@@ -15,6 +15,10 @@
   background-color: var(--color-green-500);
   color: white;
   cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .floating-action-button:hover {

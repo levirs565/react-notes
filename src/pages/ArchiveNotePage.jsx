@@ -1,7 +1,8 @@
 import React from "react";
 import { NoteList } from "../components/Note";
+import { useSyncSearchQuery } from "./utils";
 
-export class ArchiveNotePage extends React.Component {
+class ArchiveNotePage extends React.Component {
   constructor() {
     super();
   }
@@ -23,4 +24,9 @@ export class ArchiveNotePage extends React.Component {
       </main>
     );
   }
+}
+
+export function ArchiveNotePageWrapper({ onSearchQueryChanged, ...props }) {
+  useSyncSearchQuery(props.searchQuery, onSearchQueryChanged);
+  return <ArchiveNotePage {...props} />;
 }

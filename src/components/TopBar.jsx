@@ -1,6 +1,7 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, createSearchParams } from "react-router-dom";
 import { SearchInput } from "./SearchInput";
 import "./TopBar.css";
+import { buildSearchParam } from "../pages/utils";
 
 export function TopBarTabsItem({ to, children }) {
   return (
@@ -25,12 +26,29 @@ export function TopBarTabs({ children }) {
 }
 
 export function TopBar({ searchQuery, onSearchChange }) {
+  const searchParam = createSearchParams(
+    buildSearchParam(searchQuery)
+  ).toString();
   return (
     <header className="top-bar">
       <h1 className="top-bar--title">Notes</h1>
       <TopBarTabs>
-        <TopBarTabsItem to="/">Aktif</TopBarTabsItem>
-        <TopBarTabsItem to="/archive">Arsip</TopBarTabsItem>
+        <TopBarTabsItem
+          to={{
+            pathname: "/",
+            search: searchParam,
+          }}
+        >
+          Aktif
+        </TopBarTabsItem>
+        <TopBarTabsItem
+          to={{
+            pathname: "/archive",
+            search: searchParam,
+          }}
+        >
+          Arsip
+        </TopBarTabsItem>
       </TopBarTabs>
       <div className="top-bar--grow" />
       <SearchInput

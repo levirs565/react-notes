@@ -2,8 +2,9 @@ import React from "react";
 import { NoteList } from "../components/Note";
 import { AddNoteDialog } from "../dialog/AddNoteDialog";
 import { FloatingActionButton } from "../components/FloatingActionButton";
+import { useSyncSearchQuery } from "./utils";
 
-export class ActiveNotePage extends React.Component {
+class ActiveNotePage extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -49,4 +50,10 @@ export class ActiveNotePage extends React.Component {
       </main>
     );
   }
+}
+
+export function ActiveNotePageWrapper({ onSearchQueryChanged, ...props }) {
+  useSyncSearchQuery(props.searchQuery, onSearchQueryChanged);
+
+  return <ActiveNotePage {...props}></ActiveNotePage>;
 }

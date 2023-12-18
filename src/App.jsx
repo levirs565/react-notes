@@ -3,8 +3,8 @@ import { TopBar } from "./components/TopBar";
 import { createNote, getInitialNotes } from "./utils";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import { ActiveNotePage } from "./pages/ActiveNotePage";
-import { ArchiveNotePage } from "./pages/ArchiveNotePage";
+import { ActiveNotePageWrapper } from "./pages/ActiveNotePage";
+import { ArchiveNotePageWrapper } from "./pages/ArchiveNotePage";
 
 export class App extends React.Component {
   constructor() {
@@ -48,6 +48,13 @@ export class App extends React.Component {
         notes: [...this.state.notes, createNote(data)],
       });
     };
+
+    this.onSearchQueryChangedHandler = (data) => {
+      this.setState({
+        ...this.state,
+        searchQuery: data,
+      });
+    };
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -73,9 +80,10 @@ export class App extends React.Component {
           <Route
             path="/"
             element={
-              <ActiveNotePage
+              <ActiveNotePageWrapper
                 notes={filteredNotes}
                 searchQuery={this.state.searchQuery}
+                onSearchQueryChanged={this.onSearchQueryChangedHandler}
                 onNoteAdd={this.onNoteAddHandler}
                 onNoteChangeArchive={this.onNoteChangeArchiveHandler}
                 onNoteDelete={this.onNoteDeleteHandler}
@@ -85,9 +93,10 @@ export class App extends React.Component {
           <Route
             path="/archive"
             element={
-              <ArchiveNotePage
+              <ArchiveNotePageWrapper
                 notes={filteredNotes}
                 searchQuery={this.state.searchQuery}
+                onSearchQueryChanged={this.onSearchQueryChangedHandler}
               />
             }
           />

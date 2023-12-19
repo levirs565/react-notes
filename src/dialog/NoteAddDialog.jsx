@@ -60,12 +60,14 @@ export function NoteAddDialogWrapper({ onSubmit }) {
   const newNoteId = useRef();
   return (
     <NoteAddDialog
-      onClose={() =>
-        navigate(`/note/${newNoteId.current}`, {
-          replace: true,
-          state: location.state,
-        })
-      }
+      onClose={() => {
+        if (newNoteId.current)
+          navigate(`/note/${newNoteId.current}`, {
+            replace: true,
+            state: location.state,
+          });
+        else navigate(-1);
+      }}
       onSubmit={(data) => {
         newNoteId.current = onSubmit(data).id;
       }}

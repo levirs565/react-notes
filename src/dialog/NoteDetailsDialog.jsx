@@ -22,8 +22,15 @@ function NoteDetailsDialog({
   onSave,
 }) {
   const [editable, setEditable] = useState(false);
+  const titleRef = useRef();
   const bodyRef = useRef();
   const dialogRef = useRef();
+  const [titleReaminingLength, setTitleReaminingLength] = useState();
+
+  const maxTitleLength = 50;
+  const updatRemainingLength = () => {
+    setTitleReaminingLength(maxTitleLength - titleRef.current.innerText.length);
+  };
 
   useEffect(() => {
     if (dialogRef.current) setTimeout(() => dialogRef.current.showModal(), 1);
@@ -33,12 +40,53 @@ function NoteDetailsDialog({
     <dialog className="note-details-dialog" ref={dialogRef} onClose={onClose}>
       <form method="dialog">
         <div className="note-details-dialog--header">
-          <h2
-            contentEditable={editable}
-            className="note-details-dialog--title"
-            dangerouslySetInnerHTML={{ __html: title }}
-            onBlur={(e) => onTitleChanged(e.target.innerHTML)}
-          />
+          <div className="note-details-dialog--title-wrapper">
+            <h2
+              ref={titleRef}
+              contentEditable={editable}
+              className="note-details-dialog--title"
+              dangerouslySetInnerHTML={{ __html: title }}
+              onBlur={(e) => onTitleChanged(e.target.innerHTML)}
+              onInput={() => updatRemainingLength()}
+              onKeyDown={(e) => {
+                if (
+                  titleReaminingLength == 0 &&
+                  ![
+                    "Backspace",
+                    "ArrowLeft",
+                    "ArrowRight",
+                    "ArrowUp",
+                    "ArrowDown",
+                    "Delete",
+                  ].includes(e.code) &&
+                  !(
+                    e.ctrlKey &&
+                    ["KeyA", "KeyC", "KeyV", "KeyX", "KeyZ"].includes(e.code)
+                  )
+                )
+                  e.preventDefault();
+              }}
+              onPaste={(e) => {
+                const allowedPasteLength =
+                  titleReaminingLength +
+                  (document.activeElement == titleRef.current
+                    ? window.getSelection()?.toString().length ?? 0
+                    : 0);
+                const text = e.clipboardData
+                  .getData("text/plain")
+                  .substring(0, allowedPasteLength);
+                e.preventDefault();
+                document.execCommand("insertHTML", false, text);
+              }}
+            />
+            <p
+              className={`note-details-dialog--remaining ${
+                editable ? "note-details-dialog--remaining--show" : ""
+              }`}
+            >
+              {titleReaminingLength} tersisa
+            </p>
+          </div>
           <time className="note-details-dialog--created-date">
             {showFormattedDate(createdAt)}
           </time>
@@ -65,6 +113,7 @@ function NoteDetailsDialog({
             <AppButton
               onClick={(e) => {
                 e.preventDefault();
+                updatRemainingLength();
                 setEditable(true);
                 setTimeout(() => {
                   const range = document.createRange();

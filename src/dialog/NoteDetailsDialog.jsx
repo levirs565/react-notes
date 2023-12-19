@@ -7,6 +7,13 @@ import {
   AppButtonGroup,
   AppButtonGroupSpacer,
 } from "../components/AppButton";
+import {
+  BaseDialog,
+  BaseDialogScrollable,
+  BaseDialogFooter,
+  BaseDialogForm,
+} from "./BaseDialog";
+import { NoteBodyEditor, NoteTitleEditor } from "../components/NoteEditor";
 
 function NoteDetailsDialog({
   id,
@@ -22,130 +29,72 @@ function NoteDetailsDialog({
   onSave,
 }) {
   const [editable, setEditable] = useState(false);
-  const titleRef = useRef();
   const bodyRef = useRef();
-  const dialogRef = useRef();
-  const [titleReaminingLength, setTitleReaminingLength] = useState();
-
-  const maxTitleLength = 50;
-  const updatRemainingLength = () => {
-    setTitleReaminingLength(maxTitleLength - titleRef.current.innerText.length);
-  };
-
-  useEffect(() => {
-    if (dialogRef.current) setTimeout(() => dialogRef.current.showModal(), 1);
-  }, []);
 
   return (
-    <dialog className="note-details-dialog" ref={dialogRef} onClose={onClose}>
-      <form method="dialog">
-        <div className="note-details-dialog--header">
-          <div className="note-details-dialog--title-wrapper">
-            <h2
-              ref={titleRef}
-              contentEditable={editable}
-              className="note-details-dialog--title"
-              dangerouslySetInnerHTML={{ __html: title }}
-              onBlur={(e) => onTitleChanged(e.target.innerHTML)}
-              onInput={() => updatRemainingLength()}
-              onKeyDown={(e) => {
-                if (
-                  titleReaminingLength == 0 &&
-                  ![
-                    "Backspace",
-                    "ArrowLeft",
-                    "ArrowRight",
-                    "ArrowUp",
-                    "ArrowDown",
-                    "Delete",
-                  ].includes(e.code) &&
-                  !(
-                    e.ctrlKey &&
-                    ["KeyA", "KeyC", "KeyV", "KeyX", "KeyZ"].includes(e.code)
-                  )
-                )
-                  e.preventDefault();
-              }}
-              onPaste={(e) => {
-                const allowedPasteLength =
-                  titleReaminingLength +
-                  (document.activeElement == titleRef.current
-                    ? window.getSelection()?.toString().length ?? 0
-                    : 0);
-                const text = e.clipboardData
-                  .getData("text/plain")
-                  .substring(0, allowedPasteLength);
-                e.preventDefault();
-                document.execCommand("insertHTML", false, text);
-              }}
-              placeholder="Judul"
-            />
-            <p
-              className={`note-details-dialog--remaining ${
-                editable ? "note-details-dialog--remaining--show" : ""
-              }`}
-            >
-              {titleReaminingLength} tersisa
-            </p>
-          </div>
+    <BaseDialog
+      open
+      className="note-details-dialog"
+      onCloseTransitionEnd={onClose}
+    >
+      <BaseDialogForm>
+        <BaseDialogScrollable>
+          <NoteTitleEditor
+            editable={editable}
+            value={title}
+            onValueChanged={(newTitle) => onTitleChanged(newTitle)}
+          />
           <time className="note-details-dialog--created-date">
             {showFormattedDate(createdAt)}
           </time>
-        </div>
-        <div
-          ref={bodyRef}
-          contentEditable={editable}
-          className="note-details-dialog--body"
-          dangerouslySetInnerHTML={{ __html: body }}
-          onBlur={(e) => onBodyChanged(e.target.innerHTML)}
-          placeholder="Catatan"
-        />
-        <AppButtonGroup>
-          {editable ? (
+          <NoteBodyEditor
+            ref={bodyRef}
+            editable={editable}
+            value={body}
+            onValueChanged={(newBody) => onBodyChanged(newBody)}
+          />
+        </BaseDialogScrollable>
+        <BaseDialogFooter>
+          <AppButtonGroup>
+            {editable ? (
+              <AppButton
+                onClick={(e) => {
+                  e.preventDefault();
+                  setEditable(false);
+                  onSave();
+                }}
+              >
+                Simpan
+              </AppButton>
+            ) : (
+              <AppButton
+                onClick={(e) => {
+                  e.preventDefault();
+                  setEditable(true);
+                  setTimeout(() => {
+                    bodyRef.current.focus();
+                  }, 100);
+                }}
+              >
+                Edit
+              </AppButton>
+            )}
+            <AppButtonGroupSpacer />
             <AppButton
               onClick={(e) => {
                 e.preventDefault();
-                setEditable(false);
-                onSave();
+                onChangeArchive(!archived);
               }}
             >
-              Simpan
+              {archived ? "Kembalikan" : "Arsipkan"}
             </AppButton>
-          ) : (
-            <AppButton
-              onClick={(e) => {
-                e.preventDefault();
-                updatRemainingLength();
-                setEditable(true);
-                setTimeout(() => {
-                  const range = document.createRange();
-                  range.selectNodeContents(bodyRef.current);
-                  range.collapse(false);
-                  const selection = window.getSelection();
-                  selection.removeAllRanges();
-                  selection.addRange(range);
-                  bodyRef.current.focus();
-                }, 100);
-              }}
-            >
-              Edit
+            <AppButton onClick={onDelete} variant="danger">
+              Hapus
             </AppButton>
-          )}
-          <AppButtonGroupSpacer />
-          <AppButton
-            onClick={(e) => {
-              e.preventDefault();
-              onChangeArchive(!archived);
-            }}
-          >
-            {archived ? "Kembalikan" : "Arsipkan"}
-          </AppButton>
-          <AppButton onClick={onDelete} variant="danger">
-            Hapus
-          </AppButton>
-        </AppButtonGroup>
-      </form>
-    </dialog>
+          </AppButtonGroup>
+        </BaseDialogFooter>
+      </BaseDialogForm>
+    </BaseDialog>
   );
 }
 
@@ -176,9 +125,7 @@ export function NoteDetailsDialogWrapper({
       archived={archived}
       createdAt={createdAt}
       onClose={() => {
-        setTimeout(() => {
-          navigate(-1);
-        }, 250);
+        navigate(-1);
       }}
       onDelete={() => {
         onNoteDelete(id);

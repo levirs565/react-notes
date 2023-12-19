@@ -1,62 +1,9 @@
-.note-details-dialog {
-  margin: auto;
-  border-radius: 16px;
-  padding: 16px;
-  border: 1px solid var(--color-fuchsia-700);
-  max-block-size: min(80vh, 100%);
-  min-inline-size: 60ch;
-  max-inline-size: min(90vw, 60ch);
-  overflow: hidden;
-}
-
-.note-details-dialog:focus {
-  outline: none;
-}
-
-.note-details-dialog--title-wrapper {
+.note-details-dialog .note-title-editor {
   margin-bottom: 4px;
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  align-items: baseline;
-}
-
-.note-details-dialog--title {
-  font-size: 20px;
-  font-weight: 500;
-  flex-grow: 1;
-}
-
-.note-details-dialog--remaining {
-  opacity: 0;
-  transition: opacity 0.25s ease-in;
-  font-size: 14px;
-  text-align: right;
-  flex-shrink: 0;
-}
-
-.note-details-dialog--remaining--show {
-  opacity: 1;
 }
 
 .note-details-dialog--created-date {
   font-size: 14px;
   display: block;
   margin-bottom: 8px;
-}
-
-.note-details-dialog--body {
-  font-size: 16px;
-  margin-bottom: 8px;
-}
-
-.note-details-dialog--body:focus,
-.note-details-dialog--title:focus {
-  outline: none;
-}
-
-.note-details-dialog--title:empty::before,
-.note-details-dialog--body:empty::before {
-  content: attr(placeholder);
-  color: var(--color-zink-500);
 }

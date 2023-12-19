@@ -1,0 +1,28 @@
+.note-title-editor {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.note-title-editor--title {
+  font-size: 20px;
+  font-weight: 500;
+  flex-grow: 1;
+}
+
+.note-title-editor--remaining {
+  opacity: 0;
+  transition: opacity 0.25s ease-in;
+  font-size: 14px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.note-title-editor--remaining--show {
+  opacity: 1;
+}
+
+.note-body-editor {
+  font-size: 16px;
+}

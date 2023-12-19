@@ -1,0 +1,8 @@
+.content-editable:focus {
+  outline: none;
+}
+
+.content-editable:empty::before {
+  content: attr(placeholder);
+  color: var(--color-zink-500);
+}

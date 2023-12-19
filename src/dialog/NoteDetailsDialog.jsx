@@ -78,6 +78,7 @@ function NoteDetailsDialog({
                 e.preventDefault();
                 document.execCommand("insertHTML", false, text);
               }}
+              placeholder="Judul"
             />
             <p
               className={`note-details-dialog--remaining ${
@@ -97,6 +98,7 @@ function NoteDetailsDialog({
           className="note-details-dialog--body"
           dangerouslySetInnerHTML={{ __html: body }}
           onBlur={(e) => onBodyChanged(e.target.innerHTML)}
+          placeholder="Catatan"
         />
         <AppButtonGroup>
           {editable ? (

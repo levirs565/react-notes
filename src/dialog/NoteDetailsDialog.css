@@ -54,3 +54,9 @@
 .note-details-dialog--title:focus {
   outline: none;
 }
+
+.note-details-dialog--title:empty::before,
+.note-details-dialog--body:empty::before {
+  content: attr(placeholder);
+  color: var(--color-zink-500);
+}

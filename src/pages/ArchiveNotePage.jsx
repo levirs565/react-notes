@@ -13,8 +13,6 @@ class ArchiveNotePage extends React.Component {
         <NoteList
           list={this.props.notes.filter(({ archived }) => archived)}
           highlightPattern={this.props.searchQuery}
-          onItemDelete={this.props.onNoteDelete}
-          onItemChangeArchive={this.props.onNoteChangeArchive}
           emptyMessage={
             this.props.searchQuery.length > 0
               ? "Catatan terarsip tidak ditemukan"

@@ -5,20 +5,12 @@ import { FloatingActionButton } from "../components/FloatingActionButton";
 import { useSyncSearchQuery } from "./utils";
 import { Link, useLocation } from "react-router-dom";
 
-function ActiveNotePage({
-  location,
-  notes,
-  searchQuery,
-  onNoteDelete,
-  onNoteChangeArchive,
-}) {
+function ActiveNotePage({ location, notes, searchQuery }) {
   return (
     <main className="app-main">
       <NoteList
         list={notes.filter(({ archived }) => !archived)}
         highlightPattern={searchQuery}
-        onItemDelete={onNoteDelete}
-        onItemChangeArchive={onNoteChangeArchive}
         emptyMessage={
           searchQuery.length > 0 ? "Catatan tidak ditemukan" : "Catatan kosong"
         }

@@ -6,6 +6,7 @@ import "./App.css";
 import { ActiveNotePageWrapper } from "./pages/ActiveNotePage";
 import { ArchiveNotePageWrapper } from "./pages/ArchiveNotePage";
 import { AddNoteDialogWrapper } from "./dialog/AddNoteDialog";
+import { NoteDetailsDialogWrapper } from "./dialog/NoteDetailsDialog";
 
 /*
   AppMain dipisah menjadi Router agar NavLink di TopBar mendapatkan location
@@ -84,8 +85,6 @@ export function App() {
                 searchQuery={searchQuery}
                 onSearchQueryChanged={onSearchQueryChangedHandler}
                 onNoteAdd={onNoteAddHandler}
-                onNoteChangeArchive={onNoteChangeArchiveHandler}
-                onNoteDelete={onNoteDeleteHandler}
               />
             }
           />
@@ -96,8 +95,6 @@ export function App() {
                 notes={filteredNotes}
                 searchQuery={searchQuery}
                 onSearchQueryChanged={onSearchQueryChangedHandler}
-                onNoteChangeArchive={onNoteChangeArchiveHandler}
-                onNoteDelete={onNoteDeleteHandler}
               />
             }
           />
@@ -109,6 +106,16 @@ export function App() {
           <Route
             path="/note/add"
             element={<AddNoteDialogWrapper onSubmit={onNoteAddHandler} />}
+          />
+          <Route
+            path="/note/:id"
+            element={
+              <NoteDetailsDialogWrapper
+                onNoteDelete={onNoteDeleteHandler}
+                onNoteChangeArchive={onNoteChangeArchiveHandler}
+                notes={notes}
+              />
+            }
           />
         </Routes>
       )}

@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./NoteAddDialog.css";
 import { AppButton, AppButtonGroup } from "../components/AppButton";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   BaseDialog,
   BaseDialogFooter,
@@ -56,5 +56,19 @@ function NoteAddDialog({ onSubmit, onClose }) {
 
 export function NoteAddDialogWrapper({ onSubmit }) {
   const navigate = useNavigate();
-  return <NoteAddDialog onClose={() => navigate(-1)} onSubmit={onSubmit} />;
+  const location = useLocation();
+  const newNoteId = useRef();
+  return (
+    <NoteAddDialog
+      onClose={() =>
+        navigate(`/note/${newNoteId.current}`, {
+          replace: true,
+          state: location.state,
+        })
+      }
+      onSubmit={(data) => {
+        newNoteId.current = onSubmit(data).id;
+      }}
+    />
+  );
 }

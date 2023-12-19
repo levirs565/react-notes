@@ -69,7 +69,9 @@ export function App() {
     );
   };
   const onNoteAddHandler = (data) => {
-    setNotes((prevNotes) => [...prevNotes, createNote(data)]);
+    const newNote = createNote(data);
+    setNotes((prevNotes) => [...prevNotes, newNote]);
+    return newNote;
   };
 
   return (

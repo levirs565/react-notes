@@ -1,9 +1,7 @@
-import React from "react";
 import { NoteList } from "../components/Note";
-import { AddNoteDialog } from "../dialog/AddNoteDialog";
 import { FloatingActionButton } from "../components/FloatingActionButton";
 import { useSyncSearchQuery } from "./utils";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function ActiveNotePage({ location, notes, searchQuery }) {
   return (

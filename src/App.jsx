@@ -5,7 +5,7 @@ import { Outlet, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import { ActiveNotePageWrapper } from "./pages/ActiveNotePage";
 import { ArchiveNotePageWrapper } from "./pages/ArchiveNotePage";
-import { AddNoteDialogWrapper } from "./dialog/AddNoteDialog";
+import { NoteAddDialogWrapper } from "./dialog/NoteAddDialog";
 import { NoteDetailsDialogWrapper } from "./dialog/NoteDetailsDialog";
 
 /*
@@ -112,7 +112,7 @@ export function App() {
         <Routes>
           <Route
             path="/note/add"
-            element={<AddNoteDialogWrapper onSubmit={onNoteAddHandler} />}
+            element={<NoteAddDialogWrapper onSubmit={onNoteAddHandler} />}
           />
           <Route
             path="/note/:id"

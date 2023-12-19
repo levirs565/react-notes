@@ -53,6 +53,10 @@
   background-color: var(--color-fuchsia-300);
 }
 
+.app-button-group-spacer {
+  flex-grow: 1;
+}
+
 .app-button-group {
   display: flex;
   flex-direction: row;

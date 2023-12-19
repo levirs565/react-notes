@@ -61,6 +61,13 @@ export function App() {
       )
     );
   };
+  const onNoteUpdateHandler = (note) => {
+    setNotes((prevNotes) =>
+      prevNotes.map((currentNote) =>
+        currentNote.id == note.id ? note : currentNote
+      )
+    );
+  };
   const onNoteAddHandler = (data) => {
     setNotes((prevNotes) => [...prevNotes, createNote(data)]);
   };
@@ -113,6 +120,7 @@ export function App() {
               <NoteDetailsDialogWrapper
                 onNoteDelete={onNoteDeleteHandler}
                 onNoteChangeArchive={onNoteChangeArchiveHandler}
+                onNoteUpdate={onNoteUpdateHandler}
                 notes={notes}
               />
             }

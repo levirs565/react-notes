@@ -2,7 +2,11 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { showFormattedDate } from "../utils";
 import "./NoteDetailsDialog.css";
-import { AppButton, AppButtonGroup } from "../components/AppButton";
+import {
+  AppButton,
+  AppButtonGroup,
+  AppButtonGroupSpacer,
+} from "../components/AppButton";
 
 function NoteDetailsDialog({
   id,
@@ -13,24 +17,70 @@ function NoteDetailsDialog({
   onDelete,
   onClose,
   onChangeArchive,
+  onTitleChanged,
+  onBodyChanged,
+  onSave,
 }) {
-  const dialog = useRef();
+  const [editable, setEditable] = useState(false);
+  const bodyRef = useRef();
+  const dialogRef = useRef();
 
   useEffect(() => {
-    if (dialog.current) setTimeout(() => dialog.current.showModal(), 1);
+    if (dialogRef.current) setTimeout(() => dialogRef.current.showModal(), 1);
   }, []);
 
   return (
-    <dialog className="note-details-dialog" ref={dialog} onClose={onClose}>
+    <dialog className="note-details-dialog" ref={dialogRef} onClose={onClose}>
       <form method="dialog">
         <div className="note-details-dialog--header">
-          <h2 className="note-details-dialog--title">{title}</h2>
+          <h2
+            contentEditable={editable}
+            className="note-details-dialog--title"
+            dangerouslySetInnerHTML={{ __html: title }}
+            onBlur={(e) => onTitleChanged(e.target.innerHTML)}
+          />
           <time className="note-details-dialog--created-date">
             {showFormattedDate(createdAt)}
           </time>
         </div>
-        <p className="note-details-dialog--body">{body}</p>
+        <div
+          ref={bodyRef}
+          contentEditable={editable}
+          className="note-details-dialog--body"
+          dangerouslySetInnerHTML={{ __html: body }}
+          onBlur={(e) => onBodyChanged(e.target.innerHTML)}
+        />
         <AppButtonGroup>
+          {editable ? (
+            <AppButton
+              onClick={(e) => {
+                e.preventDefault();
+                setEditable(false);
+                onSave();
+              }}
+            >
+              Simpan
+            </AppButton>
+          ) : (
+            <AppButton
+              onClick={(e) => {
+                e.preventDefault();
+                setEditable(true);
+                setTimeout(() => {
+                  const range = document.createRange();
+                  range.selectNodeContents(bodyRef.current);
+                  range.collapse(false);
+                  const selection = window.getSelection();
+                  selection.removeAllRanges();
+                  selection.addRange(range);
+                  bodyRef.current.focus();
+                }, 100);
+              }}
+            >
+              Edit
+            </AppButton>
+          )}
+          <AppButtonGroupSpacer />
           <AppButton
             onClick={(e) => {
               e.preventDefault();
@@ -52,6 +102,7 @@ export function NoteDetailsDialogWrapper({
   notes,
   onNoteDelete,
   onNoteChangeArchive,
+  onNoteUpdate,
 }) {
   const { id } = useParams();
   const [note, setNote] = useState(() => {
@@ -87,6 +138,21 @@ export function NoteDetailsDialogWrapper({
           ...note,
           archived: state,
         });
+      }}
+      onTitleChanged={(title) => {
+        setNote({
+          ...note,
+          title,
+        });
+      }}
+      onBodyChanged={(body) => {
+        setNote({
+          ...note,
+          body,
+        });
+      }}
+      onSave={() => {
+        onNoteUpdate(note);
       }}
     />
   );

@@ -5,25 +5,38 @@
 .note-list {
   list-style: none;
   padding-inline: 0;
-  display: grid;
-  gap: 8px;
+  /* display: grid; */
+  column-gap: 8px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.masonry-divider {
+  width: 0;
+  /* flex-basis: 100%;
+  width: 0px;
+  background: red; */
 }
 
 @media (min-width: 640px) {
-  .note-list {
+  /* .note-list {
     grid-template-columns: 1fr 1fr;
-  }
+  } */
 }
 
 @media (min-width: 960px) {
-  .note-list {
+  /* .note-list {
     grid-template-columns: repeat(3, 1fr);
-  }
+  } */
 }
 
 @media (min-width: 1280px) {
-  .note-list {
+  /* .note-list {
     grid-template-columns: repeat(4, 1fr);
+  } */
+  .note {
+    width: calc(25% - 8px);
   }
 }
 
@@ -36,6 +49,7 @@
   gap: 8px;
   position: relative;
   transition: transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+  margin-bottom: 8px;
 }
 
 .note:hover {

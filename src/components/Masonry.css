@@ -1,0 +1,20 @@
+.masonry {
+  --gap: 8px;
+  --column-count: 4;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  column-gap: var(--gap);
+  align-content: flex-start;
+}
+
+.masonry--divider {
+  width: 0;
+  flex-basis: 100%;
+  background-color: red;
+}
+
+.masonry--item {
+  width: calc(100% / var(--column-count) - 2 * var(--gap));
+  margin-bottom: calc(2 * var(--gap));
+}

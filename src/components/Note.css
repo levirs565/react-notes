@@ -5,38 +5,28 @@
 .note-list {
   list-style: none;
   padding-inline: 0;
-  /* display: grid; */
-  column-gap: 8px;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-}
-
-.masonry-divider {
-  width: 0;
-  /* flex-basis: 100%;
-  width: 0px;
-  background: red; */
+  margin: 0 auto;
+  --column-count: 1 !important;
 }
 
 @media (min-width: 640px) {
-  /* .note-list {
-    grid-template-columns: 1fr 1fr;
-  } */
+  .note-list {
+    --column-count: 2 !important;
+    max-width: calc(640px - 32px);
+  }
 }
 
 @media (min-width: 960px) {
-  /* .note-list {
-    grid-template-columns: repeat(3, 1fr);
-  } */
+  .note-list {
+    --column-count: 3 !important;
+    max-width: calc(960px - 32px);
+  }
 }
 
 @media (min-width: 1280px) {
-  /* .note-list {
-    grid-template-columns: repeat(4, 1fr);
-  } */
-  .note {
-    width: calc(25% - 8px);
+  .note-list {
+    max-width: calc(1280px - 32px);
+    --column-count: 4 !important;
   }
 }
 
@@ -49,7 +39,6 @@
   gap: 8px;
   position: relative;
   transition: transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
-  margin-bottom: 8px;
 }
 
 .note:hover {

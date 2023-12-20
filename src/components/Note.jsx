@@ -1,4 +1,4 @@
-import { HighlightText } from "./HighlightText";
+import { HighlightHTML } from "./HighlightHTML";
 import "./Note.css";
 import { showFormattedDate } from "../utils";
 import { Link, useLocation } from "react-router-dom";
@@ -17,16 +17,16 @@ export function Note({ id, title, body, createdAt, highlightPattern }) {
             }}
             className="note--link"
           >
-            <HighlightText text={title} pattern={highlightPattern} />
+            <HighlightHTML text={title} pattern={highlightPattern} />
           </Link>
         </h3>
         <time className="note--created-date">
           {showFormattedDate(createdAt)}
         </time>
       </div>
-      <p className="note--body">
-        <HighlightText text={body} pattern={highlightPattern} />
-      </p>
+      <div className="note--body">
+        <HighlightHTML text={body} pattern={highlightPattern} />
+      </div>
     </MasonryItem>
   );
 }

@@ -1,3 +1,6 @@
+import { innerText } from "domutils";
+import { htmlToDOM } from "html-react-parser";
+
 const getInitialNotes = () => [
   {
     id: 1,
@@ -63,4 +66,13 @@ const createNote = (data) => {
   };
 };
 
-export { getInitialNotes, showFormattedDate, createNote };
+const normalizeInnerText = (text) => text.replace("\xa0", " ");
+const htmlInnerText = (html) => normalizeInnerText(innerText(htmlToDOM(html)));
+
+export {
+  getInitialNotes,
+  showFormattedDate,
+  createNote,
+  htmlInnerText,
+  normalizeInnerText,
+};

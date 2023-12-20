@@ -56,21 +56,27 @@ export function Masonry({ as, className, children }) {
       requestUpdateSize();
     });
     const mutationObserver = new MutationObserver((mutationList) => {
+      let resetMaxHeight = false;
+      let requestUpdate = false;
       mutationList.forEach((mutation) => {
         mutation.addedNodes.forEach((node) => {
           if (isDivider(node)) {
             return;
           }
           resizeObserver.observe(node);
+          resetMaxHeight = true;
         });
         mutation.removedNodes.forEach((node) => {
           if (isDivider(node)) {
             return;
           }
           resizeObserver.unobserve(node);
-          requestUpdateSize();
+          requestUpdate = true;
         });
       });
+
+      if (resetMaxHeight) setMaxColumnHeight(null);
+      if (requestUpdate) requestUpdateSize();
     });
 
     elementRef.current.childNodes.forEach((node) =>

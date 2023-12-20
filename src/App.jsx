@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { TopBar } from "./components/TopBar";
-import { createNote, getInitialNotes } from "./utils";
+import { createNote, getInitialNotes, htmlInnerText } from "./utils";
 import { Outlet, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import { ActiveNotePageWrapper } from "./pages/ActiveNotePage";
@@ -37,11 +37,13 @@ export function App() {
   }, [notes]);
 
   const lowerCasedQuery = searchQuery.toLowerCase();
-  const filteredNotes = notes.filter(
-    ({ title, body }) =>
-      title.toLowerCase().includes(lowerCasedQuery) ||
-      body.toLowerCase().includes(lowerCasedQuery)
-  );
+  const filteredNotes = notes.filter(({ title, body }) => {
+    console.log(htmlInnerText(body));
+    return (
+      htmlInnerText(title).toLowerCase().includes(lowerCasedQuery) ||
+      htmlInnerText(body).toLowerCase().includes(lowerCasedQuery)
+    );
+  });
 
   const onSearchQueryChangedHandler = (query) => {
     setSearchQuery(query);

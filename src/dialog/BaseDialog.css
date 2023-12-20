@@ -58,14 +58,14 @@ html:has(.base-dialog[open]) {
 
   100% {
     transform: scaleY(1);
-    display: block;
+    display: flex;
   }
 }
 
 @keyframes dialog-close {
   0% {
     transform: scaleY(1);
-    display: block;
+    display: flex;
   }
 
   100% {

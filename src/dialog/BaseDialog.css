@@ -43,11 +43,13 @@ html:has(.base-dialog[open]) {
 }
 
 .base-dialog {
-  animation: dialog-close 0.25s forwards ease-in-out;
+  animation: dialog-close 0.25s ease-in-out;
+  display: none;
 }
 
 .base-dialog[open] {
-  animation: dialog-open 0.25s forwards ease-in-out;
+  animation: dialog-open 0.25s ease-in-out;
+  display: flex;
 }
 
 @keyframes dialog-open {

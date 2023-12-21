@@ -1,4 +1,5 @@
 import { forwardRef, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 import "./ContentEditable.css";
 
 function getElementSelectionLength(el) {
@@ -23,6 +24,13 @@ export const ContentEditable = forwardRef(function ContentEditable(
     />
   );
 });
+
+ContentEditable.propTypes = {
+  as: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  value: PropTypes.string.isRequired,
+  onValueChanged: PropTypes.func.isRequired,
+};
 
 export function LimitedContentEditable({
   maxLength,
@@ -61,7 +69,9 @@ export function LimitedContentEditable({
             e.ctrlKey &&
             ["KeyA", "KeyC", "KeyV", "KeyX", "KeyZ"].includes(e.code)
           )
-        )
+        );
+
+
           e.preventDefault();
       }}
       onPaste={(e) => {
@@ -79,3 +89,9 @@ export function LimitedContentEditable({
     />
   );
 }
+
+LimitedContentEditable.propTypes = {
+  ...ContentEditable.propTypes,
+  maxLength: PropTypes.number.isRequired,
+  onRemainingLengthUpdated: PropTypes.func.isRequired,
+};

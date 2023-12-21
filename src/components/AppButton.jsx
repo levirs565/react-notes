@@ -12,6 +12,8 @@ export function AppButton({ className, variant, children, onClick, disabled }) {
       {children}
     </button>
   );
+
+  ;
 }
 
 export function AppButtonGroupSpacer() {

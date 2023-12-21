@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import "./Masonry.css";
 
 function isDivider(node) {
@@ -113,7 +114,19 @@ export function Masonry({ as, className, children }) {
   );
 }
 
+Masonry.propTypes = {
+  as: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  children: PropTypes.node,
+};
+
 export function MasonryItem({ as, className, children }) {
   const As = as;
   return <As className={["masonry--item", className].join(" ")}>{children}</As>;
 }
+
+MasonryItem.propTypes = {
+  as: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  children: PropTypes.node,
+};

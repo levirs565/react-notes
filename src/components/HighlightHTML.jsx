@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import "./HighlightHTML.css";
 import htmlToReact from "html-react-parser";
 import { normalizeInnerText } from "../utils";
+import PropTypes from "prop-types";
 
 const HighlightDataContext = React.createContext();
 
@@ -62,6 +63,11 @@ function HighlightHTMLChunk({ text, startIndex }) {
   return result;
 }
 
+HighlightHTMLChunk.propTypes = {
+  text: PropTypes.string.isRequired,
+  startIndex: PropTypes.number.isRequired,
+};
+
 export function HighlightHTML({ text, pattern }) {
   let currentText = "";
   let nextTextIndex = 0;
@@ -108,3 +114,8 @@ export function HighlightHTML({ text, pattern }) {
     </HighlightDataContext.Provider>
   );
 }
+
+HighlightHTML.propTypes = {
+  text: PropTypes.string.isRequired,
+  pattern: PropTypes.string.isRequired,
+};

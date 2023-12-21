@@ -76,39 +76,41 @@ export function App() {
 
   return (
     <React.Fragment>
-      <Routes location={currentLocation}>
-        <Route
-          path="/"
-          element={
-            <AppMain
-              searchQuery={searchQuery}
-              onSearchQueryChange={onSearchQueryChangedHandler}
-            />
-          }
-        >
+      <div inert={backgroundLocation ? "" : undefined}>
+        <Routes location={currentLocation}>
           <Route
             path="/"
             element={
-              <ActiveNotePageWrapper
-                notes={filteredNotes}
+              <AppMain
                 searchQuery={searchQuery}
-                onSearchQueryChanged={onSearchQueryChangedHandler}
-                onNoteAdd={onNoteAddHandler}
+                onSearchQueryChange={onSearchQueryChangedHandler}
               />
             }
-          />
-          <Route
-            path="/archive"
-            element={
-              <ArchiveNotePageWrapper
-                notes={filteredNotes}
-                searchQuery={searchQuery}
-                onSearchQueryChanged={onSearchQueryChangedHandler}
-              />
-            }
-          />
-        </Route>
-      </Routes>
+          >
+            <Route
+              path="/"
+              element={
+                <ActiveNotePageWrapper
+                  notes={filteredNotes}
+                  searchQuery={searchQuery}
+                  onSearchQueryChanged={onSearchQueryChangedHandler}
+                  onNoteAdd={onNoteAddHandler}
+                />
+              }
+            />
+            <Route
+              path="/archive"
+              element={
+                <ArchiveNotePageWrapper
+                  notes={filteredNotes}
+                  searchQuery={searchQuery}
+                  onSearchQueryChanged={onSearchQueryChangedHandler}
+                />
+              }
+            />
+          </Route>
+        </Routes>
+      </div>
 
       {backgroundLocation && (
         <Routes>

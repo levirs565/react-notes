@@ -23,9 +23,17 @@ export function BaseDialog({
     <dialog
       className={["base-dialog", className].join(" ")}
       ref={dialogRef}
-      onClose={onClose}
-      onAnimationEnd={(e) => {
-        if (e.animationName === "dialog-close") onCloseTransitionEnd();
+      onClose={(e) => {
+        if (onClose) onClose();
+
+        const callback = () => {
+          if (onCloseTransitionEnd) onCloseTransitionEnd();
+        };
+        Promise.all(
+          e.target.getAnimations().map((animation) => animation.finished)
+        )
+          .then(callback)
+          .catch(callback);
       }}
     >
       {children}

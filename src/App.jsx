@@ -37,13 +37,11 @@ export function App() {
   }, [notes]);
 
   const lowerCasedQuery = searchQuery.toLowerCase();
-  const filteredNotes = notes.filter(({ title, body }) => {
-    console.log(htmlInnerText(body));
-    return (
+  const filteredNotes = notes.filter(
+    ({ title, body }) =>
       htmlInnerText(title).toLowerCase().includes(lowerCasedQuery) ||
       htmlInnerText(body).toLowerCase().includes(lowerCasedQuery)
-    );
-  });
+  );
 
   const onSearchQueryChangedHandler = (query) => {
     setSearchQuery(query);

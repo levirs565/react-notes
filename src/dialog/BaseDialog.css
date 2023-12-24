@@ -69,3 +69,8 @@ html:has(.base-dialog[open]) {
     transform: scaleY(0);
   }
 }
+
+.base-dialog--title {
+  font-size: 18px;
+  font-weight: 500;
+}

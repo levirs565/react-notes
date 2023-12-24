@@ -77,3 +77,11 @@ export function BaseDialogFooter({ children }) {
 BaseDialogFooter.propTypes = {
   children: PropTypes.node,
 };
+
+export function BaseDialogTitle({ children }) {
+  return <h2 className="base-dialog--title">{children}</h2>;
+}
+
+BaseDialogTitle.propTypes = {
+  children: PropTypes.node,
+};

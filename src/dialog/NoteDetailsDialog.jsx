@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { showFormattedDate } from "../utils";
 import "./NoteDetailsDialog.css";
 import {
@@ -12,6 +12,7 @@ import {
   BaseDialogScrollable,
   BaseDialogFooter,
   BaseDialogForm,
+  BaseDialogTitle,
 } from "./BaseDialog";
 import { NoteBodyEditor, NoteTitleEditor } from "../components/NoteEditor";
 import PropTypes from "prop-types";
@@ -113,25 +114,70 @@ NoteDetailsDialog.propTypes = {
   onSave: PropTypes.func.isRequired,
 };
 
+export function NoteNotFoundDialog({ onClose, onCreateNew }) {
+  return (
+    <BaseDialog open onCloseTransitionEnd={onClose}>
+      <BaseDialogForm>
+        <BaseDialogScrollable>
+          <BaseDialogTitle>Catatan tidak ada!</BaseDialogTitle>
+        </BaseDialogScrollable>
+        <BaseDialogFooter>
+          <AppButtonGroup>
+            <AppButtonGroupSpacer />
+            <AppButton>Keluar</AppButton>
+            <AppButton
+              variant="primary"
+              onClick={(e) => {
+                e.preventDefault();
+                onCreateNew();
+              }}
+            >
+              Buat Baru
+            </AppButton>
+          </AppButtonGroup>
+        </BaseDialogFooter>
+      </BaseDialogForm>
+    </BaseDialog>
+  );
+}
+
+NoteNotFoundDialog.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  onCreateNew: PropTypes.func.isRequired,
+};
+
 export function NoteDetailsDialogWrapper({
   notes,
   onNoteDelete,
   onNoteChangeArchive,
   onNoteUpdate,
 }) {
+  const location = useLocation();
   const { id } = useParams();
   const [note, setNote] = useState(() => {
-    return (
-      notes.find((note) => note.id === Number(id)) ?? {
-        title: "",
-        body: "",
-        archived: false,
-        createdAt: Date.now(),
-      }
-    );
+    return notes.find((note) => note.id === Number(id));
   });
+  const { navigate, modalGoBack } = useEnhancedNavigate();
+
+  if (!note)
+    return (
+      <NoteNotFoundDialog
+        onClose={modalGoBack}
+        onCreateNew={() => {
+          navigate(
+            {
+              pathname: "/note/add",
+            },
+            {
+              state: location.state,
+              replace: true,
+            }
+          );
+        }}
+      />
+    );
+
   const { title, body, archived, createdAt } = note;
-  const { modalGoBack } = useEnhancedNavigate();
   return (
     <NoteDetailsDialog
       id={id}
@@ -139,9 +185,7 @@ export function NoteDetailsDialogWrapper({
       body={body}
       archived={archived}
       createdAt={createdAt}
-      onClose={() => {
-        modalGoBack();
-      }}
+      onClose={modalGoBack}
       onDelete={() => {
         onNoteDelete(id);
       }}

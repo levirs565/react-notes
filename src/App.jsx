@@ -14,6 +14,7 @@ import {
   useEnhancedLocation,
   useSyncLastBackgroundLocation,
 } from "./routes";
+import { NotFoundPageWrapper } from "./pages/NotFoundPage";
 
 /*
   AppMain dipisah menjadi Router agar NavLink di TopBar mendapatkan location
@@ -124,6 +125,7 @@ export function App() {
                 />
               }
             />
+            <Route path="*" element={<NotFoundPageWrapper />} />
           </Route>
         </Routes>
       </div>

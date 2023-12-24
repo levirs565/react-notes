@@ -80,7 +80,6 @@ function NoteDetailsDialog({
                 Edit
               </AppButton>
             )}
-            <AppButtonGroupSpacer />
             <AppButton
               onClick={(e) => {
                 e.preventDefault();
@@ -92,6 +91,8 @@ function NoteDetailsDialog({
             <AppButton onClick={onDelete} variant="danger">
               Hapus
             </AppButton>
+            <AppButtonGroupSpacer />
+            <AppButton>Keluar</AppButton>
           </AppButtonGroup>
         </BaseDialogFooter>
       </BaseDialogForm>

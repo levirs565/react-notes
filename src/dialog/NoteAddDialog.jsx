@@ -37,6 +37,7 @@ function NoteAddDialog({ onSubmit, onClose }) {
         </BaseDialogScrollable>
         <BaseDialogFooter>
           <AppButtonGroup>
+            <AppButton>Keluar</AppButton>
             <AppButton
               disabled={title.length === 0}
               variant="primary"

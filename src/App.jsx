@@ -7,6 +7,7 @@ import { ActiveNotePageWrapper } from "./pages/ActiveNotePage";
 import { ArchiveNotePageWrapper } from "./pages/ArchiveNotePage";
 import { NoteAddDialogWrapper } from "./dialog/NoteAddDialog";
 import { NoteDetailsDialogWrapper } from "./dialog/NoteDetailsDialog";
+import PropTypes from "prop-types";
 
 /*
   AppMain dipisah menjadi Router agar NavLink di TopBar mendapatkan location
@@ -21,6 +22,11 @@ function AppMain({ searchQuery, onSearchQueryChange }) {
     </React.Fragment>
   );
 }
+
+AppMain.propTypes = {
+  searchQuery: PropTypes.string.isRequired,
+  onSearchQueryChange: PropTypes.func.isRequired,
+};
 
 export function App() {
   const [notes, setNotes] = useState(() => {

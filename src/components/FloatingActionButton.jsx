@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import "./FloatingActionButton.css";
 
 export function FloatingActionButton({ children, ...props }) {
@@ -8,3 +9,7 @@ export function FloatingActionButton({ children, ...props }) {
     </Link>
   );
 }
+
+FloatingActionButton.propTypes = {
+  children: PropTypes.node,
+};

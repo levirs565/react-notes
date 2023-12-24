@@ -9,6 +9,7 @@ import {
   BaseDialogScrollable,
 } from "./BaseDialog";
 import { NoteBodyEditor, NoteTitleEditor } from "../components/NoteEditor";
+import PropTypes from "prop-types";
 
 function NoteAddDialog({ onSubmit, onClose }) {
   const [title, setTitle] = useState("");
@@ -54,6 +55,11 @@ function NoteAddDialog({ onSubmit, onClose }) {
   );
 }
 
+NoteAddDialog.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
+
 export function NoteAddDialogWrapper({ onSubmit }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -74,3 +80,7 @@ export function NoteAddDialogWrapper({ onSubmit }) {
     />
   );
 }
+
+NoteAddDialogWrapper.propTypes = {
+  onSubmit: PropTypes.func,
+};

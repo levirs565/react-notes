@@ -1,6 +1,7 @@
 import React from "react";
 import { NoteList } from "../components/Note";
 import { useSyncSearchQuery } from "./utils";
+import PropTypes from "prop-types";
 
 class ArchiveNotePage extends React.Component {
   constructor() {
@@ -24,7 +25,17 @@ class ArchiveNotePage extends React.Component {
   }
 }
 
+ArchiveNotePage.propTypes = {
+  notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  searchQuery: PropTypes.string.isRequired,
+};
+
 export function ArchiveNotePageWrapper({ onSearchQueryChanged, ...props }) {
   useSyncSearchQuery(props.searchQuery, onSearchQueryChanged);
   return <ArchiveNotePage {...props} />;
 }
+
+ArchiveNotePageWrapper.propTypes = {
+  ...ArchiveNotePage.propTypes,
+  onSearchQueryChanged: PropTypes.func.isRequired,
+};

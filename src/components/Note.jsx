@@ -3,6 +3,7 @@ import "./Note.css";
 import { showFormattedDate } from "../utils";
 import { Link, useLocation } from "react-router-dom";
 import { Masonry, MasonryItem } from "./Masonry";
+import PropTypes from "prop-types";
 
 export function Note({ id, title, body, createdAt, highlightPattern }) {
   const location = useLocation();
@@ -31,6 +32,14 @@ export function Note({ id, title, body, createdAt, highlightPattern }) {
   );
 }
 
+Note.propTypes = {
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  highlightPattern: PropTypes.string.isRequired,
+};
+
 export function NoteList({ list, highlightPattern, emptyMessage }) {
   if (list.length === 0) {
     return <p className="note-empty">{emptyMessage}</p>;
@@ -51,3 +60,9 @@ export function NoteList({ list, highlightPattern, emptyMessage }) {
     </Masonry>
   );
 }
+
+NoteList.propTypes = {
+  list: PropTypes.array.isRequired,
+  highlightPattern: PropTypes.string.isRequired,
+  emptyMessage: PropTypes.string.isRequired,
+};

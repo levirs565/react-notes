@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useRef } from "react";
+import PropTypes from "prop-types";
 import "./BaseDialog.css";
 
 export function BaseDialog({
@@ -41,6 +42,14 @@ export function BaseDialog({
   );
 }
 
+BaseDialog.propTypes = {
+  open: PropTypes.bool,
+  className: PropTypes.string,
+  onClose: PropTypes.func,
+  children: PropTypes.node,
+  onCloseTransitionEnd: PropTypes.func,
+};
+
 export function BaseDialogForm({ children }) {
   return (
     <form className="base-dialog--form" method="dialog">
@@ -49,10 +58,22 @@ export function BaseDialogForm({ children }) {
   );
 }
 
+BaseDialogForm.propTypes = {
+  children: PropTypes.node,
+};
+
 export function BaseDialogScrollable({ children }) {
   return <div className="base-dialog--scroll">{children}</div>;
 }
 
+BaseDialogScrollable.propTypes = {
+  children: PropTypes.node,
+};
+
 export function BaseDialogFooter({ children }) {
   return <div className="base-dialog--footer">{children}</div>;
 }
+
+BaseDialogFooter.propTypes = {
+  children: PropTypes.node,
+};

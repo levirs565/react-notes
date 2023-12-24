@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { showFormattedDate } from "../utils";
 import "./NoteDetailsDialog.css";
@@ -14,9 +14,9 @@ import {
   BaseDialogForm,
 } from "./BaseDialog";
 import { NoteBodyEditor, NoteTitleEditor } from "../components/NoteEditor";
+import PropTypes from "prop-types";
 
 function NoteDetailsDialog({
-  id,
   title,
   body,
   createdAt,
@@ -98,6 +98,19 @@ function NoteDetailsDialog({
   );
 }
 
+NoteDetailsDialog.propTypes = {
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  archived: PropTypes.bool.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onTitleChanged: PropTypes.func.isRequired,
+  onBodyChanged: PropTypes.func.isRequired,
+  onChangeArchive: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+};
+
 export function NoteDetailsDialogWrapper({
   notes,
   onNoteDelete,
@@ -155,3 +168,10 @@ export function NoteDetailsDialogWrapper({
     />
   );
 }
+
+NoteDetailsDialogWrapper.propTypes = {
+  notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onNoteDelete: PropTypes.func.isRequired,
+  onNoteChangeArchive: PropTypes.func.isRequired,
+  onNoteUpdate: PropTypes.func.isRequired,
+};

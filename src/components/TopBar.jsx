@@ -2,6 +2,7 @@ import { NavLink, createSearchParams } from "react-router-dom";
 import { SearchInput } from "./SearchInput";
 import "./TopBar.css";
 import { buildSearchParam } from "../pages/utils";
+import PropTypes from "prop-types";
 
 export function TopBarTabsItem({ to, children }) {
   return (
@@ -21,9 +22,18 @@ export function TopBarTabsItem({ to, children }) {
   );
 }
 
+TopBarTabsItem.propTypes = {
+  to: PropTypes.object.isRequired,
+  children: PropTypes.node,
+};
+
 export function TopBarTabs({ children }) {
   return <ul className="top-bar-tabs">{children}</ul>;
 }
+
+TopBarTabs.propTypes = {
+  children: PropTypes.node,
+};
 
 export function TopBar({ searchQuery, onSearchChange }) {
   const searchParam = createSearchParams(
@@ -58,3 +68,8 @@ export function TopBar({ searchQuery, onSearchChange }) {
     </header>
   );
 }
+
+TopBar.propTypes = {
+  searchQuery: PropTypes.string.isRequired,
+  onSearchChange: PropTypes.func.isRequired,
+};

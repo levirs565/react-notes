@@ -1,5 +1,6 @@
 import { AppInput } from "./AppInput";
 import { SearchIcon } from "../icons/SearchIcon";
+import PropTypes from "prop-types";
 import "./SearchInput.css";
 
 export function SearchInput({ value, onChange }) {
@@ -23,3 +24,8 @@ export function SearchInput({ value, onChange }) {
     </div>
   );
 }
+
+SearchInput.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};

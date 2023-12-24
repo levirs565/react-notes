@@ -1,5 +1,6 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { ContentEditable, LimitedContentEditable } from "./ContentEditable";
+import PropTypes from "prop-types";
 import "./NoteEditor.css";
 
 export function NoteTitleEditor({ editable, value, onValueChanged }) {
@@ -28,6 +29,12 @@ export function NoteTitleEditor({ editable, value, onValueChanged }) {
     </div>
   );
 }
+
+NoteTitleEditor.propTypes = {
+  editable: PropTypes.bool,
+  value: PropTypes.string.isRequired,
+  onValueChanged: PropTypes.func.isRequired,
+};
 
 export const NoteBodyEditor = forwardRef(function NoteBodyEditor(
   { editable, value, onValueChanged },
@@ -59,3 +66,9 @@ export const NoteBodyEditor = forwardRef(function NoteBodyEditor(
     />
   );
 });
+
+NoteBodyEditor.propTypes = {
+  editable: PropTypes.bool,
+  value: PropTypes.string.isRequired,
+  onValueChanged: PropTypes.func.isRequired,
+};

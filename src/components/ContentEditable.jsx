@@ -69,9 +69,7 @@ export function LimitedContentEditable({
             e.ctrlKey &&
             ["KeyA", "KeyC", "KeyV", "KeyX", "KeyZ"].includes(e.code)
           )
-        );
-
-
+        )
           e.preventDefault();
       }}
       onPaste={(e) => {

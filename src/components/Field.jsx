@@ -1,7 +1,7 @@
 import React from "react";
-import { useContext } from "react";
-import "./Field.css";
 import { AppInput } from "./AppInput";
+import PropTypes from "prop-types";
+import "./Field.css";
 
 const InputIdContext = React.createContext();
 
@@ -21,6 +21,10 @@ export class FieldInput extends React.Component {
   }
 }
 
+FieldInput.propTypes = {
+  className: PropTypes.string,
+};
+
 export class FieldLabel extends React.Component {
   static contextType = InputIdContext;
 
@@ -34,6 +38,10 @@ export class FieldLabel extends React.Component {
   }
 }
 
+FieldLabel.propTypes = {
+  children: PropTypes.node,
+};
+
 export function FieldMessage({ children, error }) {
   return (
     <p className={`field--message ${error ? "field--message--error" : ""}`}>
@@ -42,6 +50,11 @@ export function FieldMessage({ children, error }) {
   );
 }
 
+FieldMessage.propTypes = {
+  children: PropTypes.node,
+  error: PropTypes.string,
+};
+
 export function Field({ inputId, children }) {
   return (
     <InputIdContext.Provider value={inputId}>
@@ -49,3 +62,8 @@ export function Field({ inputId, children }) {
     </InputIdContext.Provider>
   );
 }
+
+Field.propTypes = {
+  inputId: PropTypes.string.isRequired,
+  children: PropTypes.node,
+};

@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { TopBar } from "./components/TopBar";
 import { createNote, getInitialNotes, htmlInnerText } from "./utils";
-import { Outlet, Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { ActiveNotePageWrapper } from "./pages/ActiveNotePage";
 import { ArchiveNotePageWrapper } from "./pages/ArchiveNotePage";
 import { NoteAddDialogWrapper } from "./dialog/NoteAddDialog";
 import { NoteDetailsDialogWrapper } from "./dialog/NoteDetailsDialog";
 import PropTypes from "prop-types";
+import {
+  createToValidNavigation,
+  isInvalidLocation,
+  useEnhancedLocation,
+  useSyncLastBackgroundLocation,
+} from "./routes";
 
 /*
   AppMain dipisah menjadi Router agar NavLink di TopBar mendapatkan location
@@ -34,13 +40,14 @@ export function App() {
     return prevNotes ? JSON.parse(prevNotes) : getInitialNotes();
   });
   const [searchQuery, setSearchQuery] = useState("");
-  const location = useLocation();
-  const backgroundLocation = location.state?.backgroundLocation;
-  const currentLocation = backgroundLocation ?? location;
 
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
   }, [notes]);
+
+  const enhancedLocation = useEnhancedLocation();
+
+  useSyncLastBackgroundLocation(enhancedLocation);
 
   const lowerCasedQuery = searchQuery.toLowerCase();
   const filteredNotes = notes.filter(
@@ -80,10 +87,13 @@ export function App() {
     return newNote;
   };
 
+  if (isInvalidLocation(enhancedLocation))
+    return <Navigate {...createToValidNavigation(enhancedLocation)} />;
+
   return (
     <React.Fragment>
-      <div inert={backgroundLocation ? "" : undefined}>
-        <Routes location={currentLocation}>
+      <div inert={enhancedLocation.hasModal ? "" : undefined}>
+        <Routes location={enhancedLocation.currentLocation}>
           <Route
             path="/"
             element={
@@ -118,7 +128,7 @@ export function App() {
         </Routes>
       </div>
 
-      {backgroundLocation && (
+      {enhancedLocation.hasModal && (
         <Routes>
           <Route
             path="/note/add"

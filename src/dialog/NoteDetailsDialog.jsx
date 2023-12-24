@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { showFormattedDate } from "../utils";
 import "./NoteDetailsDialog.css";
 import {
@@ -15,6 +15,7 @@ import {
 } from "./BaseDialog";
 import { NoteBodyEditor, NoteTitleEditor } from "../components/NoteEditor";
 import PropTypes from "prop-types";
+import { useEnhancedNavigate } from "../routes";
 
 function NoteDetailsDialog({
   title,
@@ -129,7 +130,7 @@ export function NoteDetailsDialogWrapper({
     );
   });
   const { title, body, archived, createdAt } = note;
-  const navigate = useNavigate();
+  const { modalGoBack } = useEnhancedNavigate();
   return (
     <NoteDetailsDialog
       id={id}
@@ -138,7 +139,7 @@ export function NoteDetailsDialogWrapper({
       archived={archived}
       createdAt={createdAt}
       onClose={() => {
-        navigate(-1);
+        modalGoBack();
       }}
       onDelete={() => {
         onNoteDelete(id);

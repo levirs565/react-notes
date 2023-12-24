@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import "./NoteAddDialog.css";
 import { AppButton, AppButtonGroup } from "../components/AppButton";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   BaseDialog,
   BaseDialogFooter,
@@ -10,6 +10,7 @@ import {
 } from "./BaseDialog";
 import { NoteBodyEditor, NoteTitleEditor } from "../components/NoteEditor";
 import PropTypes from "prop-types";
+import { useEnhancedNavigate } from "../routes";
 
 function NoteAddDialog({ onSubmit, onClose }) {
   const [title, setTitle] = useState("");
@@ -61,7 +62,7 @@ NoteAddDialog.propTypes = {
 };
 
 export function NoteAddDialogWrapper({ onSubmit }) {
-  const navigate = useNavigate();
+  const { navigate, modalGoBack } = useEnhancedNavigate();
   const location = useLocation();
   const newNoteId = useRef();
   return (
@@ -72,7 +73,7 @@ export function NoteAddDialogWrapper({ onSubmit }) {
             replace: true,
             state: location.state,
           });
-        else navigate(-1);
+        else modalGoBack();
       }}
       onSubmit={(data) => {
         newNoteId.current = onSubmit(data).id;

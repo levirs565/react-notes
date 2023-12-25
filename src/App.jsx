@@ -13,7 +13,7 @@ import {
   useSyncLastBackgroundLocation,
 } from "./routes";
 import { NotFoundPageWrapper } from "./pages/NotFoundPage";
-import { MainLayout } from "./pages/MainLayout";
+import { MainLayout } from "./layout/MainLayout";
 
 export function App() {
   const [notes, setNotes] = useState(() => {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSearchQuery } from "./utils";
+import { useSearchQuery } from "../pages/utils";
 import { TopBar } from "../components/TopBar";
 import { Outlet } from "react-router-dom";
 

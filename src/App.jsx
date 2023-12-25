@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { TopBar } from "./components/TopBar";
 import { createNote, getInitialNotes } from "./utils";
-import { Navigate, Outlet, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { ActiveNotePageWrapper } from "./pages/ActiveNotePage";
 import { ArchiveNotePageWrapper } from "./pages/ArchiveNotePage";
@@ -14,33 +13,7 @@ import {
   useSyncLastBackgroundLocation,
 } from "./routes";
 import { NotFoundPageWrapper } from "./pages/NotFoundPage";
-import { useSearchQuery } from "./pages/utils";
-
-/*
-  AppMain dipisah menjadi Router agar NavLink di TopBar mendapatkan location
-  dari currentLocation di App
- */
-
-function AppMain() {
-  const [showSearch, setShowSearch] = useState(false);
-  const [searchQuery, onSearchQueryChange] = useSearchQuery();
-  console.log(searchQuery);
-  return (
-    <React.Fragment>
-      <TopBar
-        showSearch={showSearch}
-        searchQuery={searchQuery}
-        onSearchChange={onSearchQueryChange}
-      />
-      <Outlet
-        context={{
-          showSearch,
-          setShowSearch,
-        }}
-      />
-    </React.Fragment>
-  );
-}
+import { MainLayout } from "./pages/MainLayout";
 
 export function App() {
   const [notes, setNotes] = useState(() => {
@@ -91,7 +64,7 @@ export function App() {
     <React.Fragment>
       <div inert={enhancedLocation.hasModal ? "" : undefined}>
         <Routes location={enhancedLocation.currentLocation}>
-          <Route path="/" element={<AppMain />}>
+          <Route path="/" element={<MainLayout />}>
             <Route
               path="/"
               element={

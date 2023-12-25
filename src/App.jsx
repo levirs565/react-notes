@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { createNote, getInitialNotes } from "./utils";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
@@ -16,6 +16,7 @@ import { NotFoundPageWrapper } from "./pages/NotFoundPage";
 import { MainLayout } from "./layout/MainLayout";
 
 export function App() {
+  /*
   const [notes, setNotes] = useState(() => {
     const prevNotes = localStorage.getItem("notes");
     return prevNotes ? JSON.parse(prevNotes) : getInitialNotes();
@@ -24,6 +25,8 @@ export function App() {
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
   }, [notes]);
+  */
+  const [notes, setNotes] = useState(() => getInitialNotes());
 
   const enhancedLocation = useEnhancedLocation();
 

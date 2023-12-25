@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export function buildSearchParam(query) {
@@ -8,24 +7,10 @@ export function buildSearchParam(query) {
   };
 }
 
-export function useSyncSearchQuery(searchQuery, onSearchQueryChanged) {
-  const [searchParams, setSearchParam] = useSearchParams();
-  const prevSearchQuery = useRef(null);
-  const prevSearchParam = useRef(null);
+export function useSearchQuery() {
+  const [params, setParams] = useSearchParams();
+  const query = params.get("q") ?? "";
+  const setQuery = (newQuery) => setParams(buildSearchParam(newQuery));
 
-  useEffect(() => {
-    let currentQuery = searchParams.get("q");
-    if (!currentQuery) currentQuery = "";
-
-    if (currentQuery != searchQuery) {
-      if (prevSearchParam.current != currentQuery) {
-        onSearchQueryChanged(currentQuery);
-      } else if (prevSearchQuery.current != searchQuery) {
-        setSearchParam(buildSearchParam(searchQuery));
-      }
-    }
-
-    prevSearchParam.current = currentQuery;
-    prevSearchQuery.current = searchQuery;
-  }, [searchParams.get("q"), searchQuery]);
+  return [query, setQuery];
 }

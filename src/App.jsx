@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { TopBar } from "./components/TopBar";
-import { createNote, getInitialNotes, htmlInnerText } from "./utils";
+import { createNote, getInitialNotes } from "./utils";
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { ActiveNotePageWrapper } from "./pages/ActiveNotePage";
 import { ArchiveNotePageWrapper } from "./pages/ArchiveNotePage";
 import { NoteAddDialogWrapper } from "./dialog/NoteAddDialog";
 import { NoteDetailsDialogWrapper } from "./dialog/NoteDetailsDialog";
-import PropTypes from "prop-types";
 import {
   createToValidNavigation,
   isInvalidLocation,
@@ -15,32 +14,39 @@ import {
   useSyncLastBackgroundLocation,
 } from "./routes";
 import { NotFoundPageWrapper } from "./pages/NotFoundPage";
+import { useSearchQuery } from "./pages/utils";
 
 /*
   AppMain dipisah menjadi Router agar NavLink di TopBar mendapatkan location
   dari currentLocation di App
  */
 
-function AppMain({ searchQuery, onSearchQueryChange }) {
+function AppMain() {
+  const [showSearch, setShowSearch] = useState(false);
+  const [searchQuery, onSearchQueryChange] = useSearchQuery();
+  console.log(searchQuery);
   return (
     <React.Fragment>
-      <TopBar searchQuery={searchQuery} onSearchChange={onSearchQueryChange} />
-      <Outlet />
+      <TopBar
+        showSearch={showSearch}
+        searchQuery={searchQuery}
+        onSearchChange={onSearchQueryChange}
+      />
+      <Outlet
+        context={{
+          showSearch,
+          setShowSearch,
+        }}
+      />
     </React.Fragment>
   );
 }
-
-AppMain.propTypes = {
-  searchQuery: PropTypes.string.isRequired,
-  onSearchQueryChange: PropTypes.func.isRequired,
-};
 
 export function App() {
   const [notes, setNotes] = useState(() => {
     const prevNotes = localStorage.getItem("notes");
     return prevNotes ? JSON.parse(prevNotes) : getInitialNotes();
   });
-  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
@@ -50,16 +56,6 @@ export function App() {
 
   useSyncLastBackgroundLocation(enhancedLocation);
 
-  const lowerCasedQuery = searchQuery.toLowerCase();
-  const filteredNotes = notes.filter(
-    ({ title, body }) =>
-      htmlInnerText(title).toLowerCase().includes(lowerCasedQuery) ||
-      htmlInnerText(body).toLowerCase().includes(lowerCasedQuery)
-  );
-
-  const onSearchQueryChangedHandler = (query) => {
-    setSearchQuery(query);
-  };
   const onNoteDeleteHandler = (id) => {
     setNotes((prevNotes) => prevNotes.filter((note) => note.id != id));
   };
@@ -95,35 +91,19 @@ export function App() {
     <React.Fragment>
       <div inert={enhancedLocation.hasModal ? "" : undefined}>
         <Routes location={enhancedLocation.currentLocation}>
-          <Route
-            path="/"
-            element={
-              <AppMain
-                searchQuery={searchQuery}
-                onSearchQueryChange={onSearchQueryChangedHandler}
-              />
-            }
-          >
+          <Route path="/" element={<AppMain />}>
             <Route
               path="/"
               element={
                 <ActiveNotePageWrapper
-                  notes={filteredNotes}
-                  searchQuery={searchQuery}
-                  onSearchQueryChanged={onSearchQueryChangedHandler}
+                  notes={notes}
                   onNoteAdd={onNoteAddHandler}
                 />
               }
             />
             <Route
               path="/archive"
-              element={
-                <ArchiveNotePageWrapper
-                  notes={filteredNotes}
-                  searchQuery={searchQuery}
-                  onSearchQueryChanged={onSearchQueryChangedHandler}
-                />
-              }
+              element={<ArchiveNotePageWrapper notes={notes} />}
             />
             <Route path="*" element={<NotFoundPageWrapper />} />
           </Route>

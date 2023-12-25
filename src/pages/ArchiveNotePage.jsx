@@ -1,28 +1,28 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { NoteList } from "../components/Note";
-import { useSyncSearchQuery } from "./utils";
 import PropTypes from "prop-types";
+import { useOutletContext } from "react-router-dom";
+import { useSearchQuery } from "./utils";
+import { filterNotes } from "../utils";
 
-class ArchiveNotePage extends React.Component {
-  constructor() {
-    super();
-  }
-
-  render() {
-    return (
-      <main className="app-main">
-        <NoteList
-          list={this.props.notes.filter(({ archived }) => archived)}
-          highlightPattern={this.props.searchQuery}
-          emptyMessage={
-            this.props.searchQuery.length > 0
-              ? "Catatan terarsip tidak ditemukan"
-              : "Arsip catatan kosong"
-          }
-        />
-      </main>
-    );
-  }
+function ArchiveNotePage({ notes, searchQuery }) {
+  const filteredNotes = useMemo(
+    () => filterNotes(notes, searchQuery).filter(({ archived }) => archived),
+    [notes, searchQuery]
+  );
+  return (
+    <main className="app-main">
+      <NoteList
+        list={filteredNotes}
+        highlightPattern={searchQuery}
+        emptyMessage={
+          searchQuery.length > 0
+            ? "Catatan terarsip tidak ditemukan"
+            : "Arsip catatan kosong"
+        }
+      />
+    </main>
+  );
 }
 
 ArchiveNotePage.propTypes = {
@@ -30,12 +30,21 @@ ArchiveNotePage.propTypes = {
   searchQuery: PropTypes.string.isRequired,
 };
 
-export function ArchiveNotePageWrapper({ onSearchQueryChanged, ...props }) {
-  useSyncSearchQuery(props.searchQuery, onSearchQueryChanged);
-  return <ArchiveNotePage {...props} />;
+export function ArchiveNotePageWrapper({ notes }) {
+  const { setShowSearch } = useOutletContext();
+  const [searchQuery] = useSearchQuery();
+
+  useEffect(() => {
+    setShowSearch(true);
+
+    return () => {
+      setShowSearch(false);
+    };
+  });
+
+  return <ArchiveNotePage notes={notes} searchQuery={searchQuery} />;
 }
 
 ArchiveNotePageWrapper.propTypes = {
-  ...ArchiveNotePage.propTypes,
-  onSearchQueryChanged: PropTypes.func.isRequired,
+  notes: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

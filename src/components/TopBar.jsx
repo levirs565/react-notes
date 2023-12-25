@@ -35,7 +35,7 @@ TopBarTabs.propTypes = {
   children: PropTypes.node,
 };
 
-export function TopBar({ searchQuery, onSearchChange }) {
+export function TopBar({ showSearch, searchQuery, onSearchChange }) {
   const searchParam = createSearchParams(
     buildSearchParam(searchQuery)
   ).toString();
@@ -61,10 +61,12 @@ export function TopBar({ searchQuery, onSearchChange }) {
         </TopBarTabsItem>
       </TopBarTabs>
       <div className="top-bar--grow" />
-      <SearchInput
-        value={searchQuery}
-        onChange={(el) => onSearchChange(el.target.value)}
-      />
+      {showSearch && (
+        <SearchInput
+          value={searchQuery}
+          onChange={(el) => onSearchChange(el.target.value)}
+        />
+      )}
     </header>
   );
 }
@@ -72,4 +74,5 @@ export function TopBar({ searchQuery, onSearchChange }) {
 TopBar.propTypes = {
   searchQuery: PropTypes.string.isRequired,
   onSearchChange: PropTypes.func.isRequired,
+  showSearch: PropTypes.bool.isRequired,
 };

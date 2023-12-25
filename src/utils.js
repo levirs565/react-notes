@@ -69,10 +69,20 @@ const createNote = (data) => {
 const normalizeInnerText = (text) => text.replace("\xa0", " ");
 const htmlInnerText = (html) => normalizeInnerText(innerText(htmlToDOM(html)));
 
+const filterNotes = (notes, text) => {
+  const lowerCasedText = text.toLowerCase();
+  return notes.filter(
+    ({ title, body }) =>
+      htmlInnerText(title).toLowerCase().includes(lowerCasedText) ||
+      htmlInnerText(body).toLowerCase().includes(lowerCasedText)
+  );
+};
+
 export {
   getInitialNotes,
   showFormattedDate,
   createNote,
   htmlInnerText,
   normalizeInnerText,
+  filterNotes,
 };

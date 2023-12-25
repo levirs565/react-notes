@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { NoteList } from "../components/Note";
 import PropTypes from "prop-types";
 import { useOutletContext } from "react-router-dom";

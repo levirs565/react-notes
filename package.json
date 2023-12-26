@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@fontsource-variable/montserrat": "^5.0.15",
+    "axios": "^1.6.2",
     "domutils": "^3.1.0",
     "html-dom-parser": "^5.0.6",
     "html-react-parser": "^5.0.10",

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import {
   AppButton,
   AppButtonGroup,
@@ -19,16 +19,23 @@ import {
   ReactHookFieldMessage,
 } from "../components/Field";
 import { useForm } from "react-hook-form";
+import { useLoggedUser, useLoginUser } from "../api";
 
 function LoginPage() {
+  const { user } = useLoggedUser();
+  const loginUser = useLoginUser();
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
 
+  if (user) return <Navigate to="/" />;
+
   return (
-    <CardForm onSubmit={handleSubmit(() => console.log("G"))}>
+    <CardForm
+      onSubmit={handleSubmit((data) => loginUser(data.email, data.password))}
+    >
       <CardFormHeader>
         <CardFormTitle>Login</CardFormTitle>
       </CardFormHeader>

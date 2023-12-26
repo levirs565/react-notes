@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   CardForm,
   CardFormContent,
@@ -19,8 +19,11 @@ import {
   AppButtonGroupSpacer,
 } from "../components/AppButton";
 import { useForm } from "react-hook-form";
+import { useRegisterUser } from "../api";
 
 function RegisterPage() {
+  const navigate = useNavigate();
+  const registerUser = useRegisterUser();
   const {
     register,
     formState: { errors },
@@ -30,7 +33,13 @@ function RegisterPage() {
   const passwordValue = watch("password");
 
   return (
-    <CardForm onSubmit={handleSubmit(() => console.log("C"))}>
+    <CardForm
+      onSubmit={handleSubmit((data) =>
+        registerUser(data.name, data.email, data.password).then(() =>
+          navigate("/login")
+        )
+      )}
+    >
       <CardFormHeader>
         <CardFormTitle>Register</CardFormTitle>
       </CardFormHeader>

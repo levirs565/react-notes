@@ -1,7 +1,11 @@
+import { forwardRef } from "react";
 import "./AppInput.css";
 import PropTypes from "prop-types";
 
-export function AppInput({ as, className, variant, ...rest }) {
+export const AppInput = forwardRef(function AppInput(
+  { as, className, variant, ...rest },
+  ref
+) {
   const Component = as ? as : "input";
   return (
     <Component
@@ -9,9 +13,10 @@ export function AppInput({ as, className, variant, ...rest }) {
         className ? className : ""
       }`}
       {...rest}
+      ref={ref}
     />
   );
-}
+});
 
 AppInput.propTypes = {
   as: PropTypes.string,

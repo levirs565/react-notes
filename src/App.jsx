@@ -14,6 +14,8 @@ import {
 } from "./routes";
 import { NotFoundPageWrapper } from "./pages/NotFoundPage";
 import { MainLayout } from "./layout/MainLayout";
+import { LoginPageWrapper } from "./pages/LoginPage";
+import { RegisterPageWrapper } from "./pages/RegisterPage";
 
 export function App() {
   /*
@@ -83,6 +85,9 @@ export function App() {
             />
             <Route path="*" element={<NotFoundPageWrapper />} />
           </Route>
+
+          <Route path="/login" element={<LoginPageWrapper />} />
+          <Route path="/register" element={<RegisterPageWrapper />} />
         </Routes>
       </div>
 

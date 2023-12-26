@@ -1,25 +1,24 @@
-import React from "react";
+import React, { forwardRef, useContext } from "react";
 import { AppInput } from "./AppInput";
 import PropTypes from "prop-types";
 import "./Field.css";
 
 const InputIdContext = React.createContext();
 
-export class FieldInput extends React.Component {
-  static contextType = InputIdContext;
-
-  render() {
-    const inputId = this.context;
-    const { className, ...rest } = this.props;
-    return (
-      <AppInput
-        className={`field--input ${className ? className : ""}`}
-        id={inputId}
-        {...rest}
-      />
-    );
-  }
-}
+export const FieldInput = forwardRef(function FieldInput(
+  { className, ...rest },
+  ref
+) {
+  const inputId = useContext(InputIdContext);
+  return (
+    <AppInput
+      className={`field--input ${className ? className : ""}`}
+      id={inputId}
+      {...rest}
+      ref={ref}
+    />
+  );
+});
 
 FieldInput.propTypes = {
   className: PropTypes.string,
@@ -52,7 +51,15 @@ export function FieldMessage({ children, error }) {
 
 FieldMessage.propTypes = {
   children: PropTypes.node,
-  error: PropTypes.string,
+  error: PropTypes.bool,
+};
+
+export function ReactHookFieldMessage({ error }) {
+  return error && <FieldMessage error>{error.message}</FieldMessage>;
+}
+
+ReactHookFieldMessage.propTypes = {
+  error: PropTypes.object,
 };
 
 export function Field({ inputId, children }) {

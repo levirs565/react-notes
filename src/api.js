@@ -110,7 +110,7 @@ export function useNote(id) {
       await noteChanged();
     },
     async remove() {
-      await customFetch(`${path}/delete`, { method: "DELETE" });
+      await customFetch(path, { method: "DELETE" });
       await noteChanged();
     },
   };

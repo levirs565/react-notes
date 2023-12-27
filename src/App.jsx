@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { createNote, getInitialNotes } from "./utils";
+import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { ActiveNotePageWrapper } from "./pages/ActiveNotePage";

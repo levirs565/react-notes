@@ -14,7 +14,9 @@ async function customFetch(path, { headers, ...moreOptions }) {
   });
   const json = await response.json();
   if (!response.ok) {
-    throw new Error(json.message);
+    const error = new Error(json.message);
+    error.statusCode = response.status;
+    throw error;
   }
   return json.data;
 }
@@ -54,15 +56,42 @@ export function useLoginUser() {
   };
 }
 
+function loggedUserMiddleware(useSWRNext) {
+  return (key, fetcher, config) => {
+    const extendedFetcher = async (...args) => {
+      try {
+        return await fetcher(...args);
+      } catch (e) {
+        if (e.statusCode === 401) {
+          return null;
+        }
+        throw e;
+      }
+    };
+    return useSWRNext(key, extendedFetcher, config);
+  };
+}
+
 export function useLoggedUser() {
-  const { data: user, ...rest } = useSWR("users/me", swrFetcher, {
+  const {
+    data: user,
+    mutate,
+    ...rest
+  } = useSWR("users/me", swrFetcher, {
     shouldRetryOnError: false,
+    use: [loggedUserMiddleware],
   });
   return {
     user,
+    mutate,
     ...rest,
+    logout: async () => {
+      localStorage.removeItem(accessTokenKey);
+      await mutate();
+    },
   };
 }
+
 export function useActiveNotes() {
   const { data, ...rest } = useSWR("notes", swrFetcher);
   return {

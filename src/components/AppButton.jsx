@@ -35,3 +35,16 @@ AppButtonGroup.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
 };
+
+export function AppIconButton({ children, onClick }) {
+  return (
+    <button className="app-icon-button" onClick={onClick}>
+      {children}
+    </button>
+  );
+}
+
+AppIconButton.propTypes = {
+  children: PropTypes.node,
+  onClick: PropTypes.func,
+};

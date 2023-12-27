@@ -63,3 +63,29 @@
   justify-content: end;
   gap: 8px;
 }
+
+.app-icon-button {
+  width: 36px;
+  height: 36px;
+  outline: none;
+  appearance: none;
+  border: none;
+  background-color: transparent;
+  border-radius: 100%;
+  padding: 0;
+  cursor: pointer;
+}
+
+.app-icon-button > svg {
+  height: 20px;
+  width: 20px;
+  margin: 8px;
+}
+
+.app-icon-button:hover {
+  background-color: var(--color-zink-100);
+}
+
+.app-icon-button:active {
+  background-color: var(--color-zink-200);
+}

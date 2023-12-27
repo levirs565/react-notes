@@ -7,7 +7,7 @@ import { useLoggedUser } from "../api";
 export function MainLayout() {
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, onSearchQueryChange] = useSearchQuery();
-  const { user, isLoading } = useLoggedUser();
+  const { user, isLoading, logout } = useLoggedUser();
 
   if (isLoading) return null;
 
@@ -19,6 +19,8 @@ export function MainLayout() {
         showSearch={showSearch}
         searchQuery={searchQuery}
         onSearchChange={onSearchQueryChange}
+        userName={user.name}
+        onLogout={logout}
       />
       <Outlet
         context={{

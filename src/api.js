@@ -4,7 +4,7 @@ const rootUrl = "https://notes-api.dicoding.dev/v1";
 const accessTokenKey = "accessToken";
 
 async function customFetch(path, { headers, ...moreOptions }) {
-  const accessToken = sessionStorage.getItem(accessTokenKey);
+  const accessToken = localStorage.getItem(accessTokenKey);
   const response = await fetch(`${rootUrl}/${path}`, {
     ...moreOptions,
     headers: {
@@ -49,7 +49,7 @@ export function useLoginUser() {
       email,
       password,
     });
-    sessionStorage.setItem(accessTokenKey, result.accessToken);
+    localStorage.setItem(accessTokenKey, result.accessToken);
     await mutate("users/me");
   };
 }

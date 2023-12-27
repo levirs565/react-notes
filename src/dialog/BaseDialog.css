@@ -7,7 +7,6 @@
   min-inline-size: 60ch;
   max-inline-size: min(90vw, 60ch);
   overflow: hidden;
-  display: flex;
 }
 
 .base-dialog:focus {
@@ -42,31 +41,35 @@ html:has(.base-dialog[open]) {
   overflow: hidden;
 }
 
-.base-dialog {
-  animation: dialog-close 0.25s forwards ease-in-out;
+.base-dialog[open] {
+  animation: dialog-open 0.25s both ease-in-out;
 }
 
-.base-dialog[open] {
-  animation: dialog-open 0.25s ease-in-out;
+.base-dialog {
+  animation: dialog-close 0.25s both ease-in-out;
 }
 
 @keyframes dialog-open {
   0% {
     transform: scaleY(0);
+    display: flex;
   }
 
   100% {
     transform: scaleY(1);
+    display: flex;
   }
 }
 
 @keyframes dialog-close {
   0% {
     transform: scaleY(1);
+    display: flex;
   }
 
   100% {
     transform: scaleY(0);
+    display: none;
   }
 }
 

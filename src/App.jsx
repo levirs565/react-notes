@@ -70,19 +70,8 @@ export function App() {
       <div inert={enhancedLocation.hasModal ? "" : undefined}>
         <Routes location={enhancedLocation.currentLocation}>
           <Route path="/" element={<MainLayout />}>
-            <Route
-              path="/"
-              element={
-                <ActiveNotePageWrapper
-                  notes={notes}
-                  onNoteAdd={onNoteAddHandler}
-                />
-              }
-            />
-            <Route
-              path="/archive"
-              element={<ArchiveNotePageWrapper notes={notes} />}
-            />
+            <Route path="/" element={<ActiveNotePageWrapper />} />
+            <Route path="/archive" element={<ArchiveNotePageWrapper />} />
             <Route path="*" element={<NotFoundPageWrapper />} />
           </Route>
 
@@ -93,21 +82,8 @@ export function App() {
 
       {enhancedLocation.hasModal && (
         <Routes>
-          <Route
-            path="/note/add"
-            element={<NoteAddDialogWrapper onSubmit={onNoteAddHandler} />}
-          />
-          <Route
-            path="/note/:id"
-            element={
-              <NoteDetailsDialogWrapper
-                onNoteDelete={onNoteDeleteHandler}
-                onNoteChangeArchive={onNoteChangeArchiveHandler}
-                onNoteUpdate={onNoteUpdateHandler}
-                notes={notes}
-              />
-            }
-          />
+          <Route path="/note/add" element={<NoteAddDialogWrapper />} />
+          <Route path="/note/:id" element={<NoteDetailsDialogWrapper />} />
         </Routes>
       )}
     </React.Fragment>

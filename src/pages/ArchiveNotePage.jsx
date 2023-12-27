@@ -4,10 +4,15 @@ import PropTypes from "prop-types";
 import { useOutletContext } from "react-router-dom";
 import { useSearchQuery } from "./utils";
 import { filterNotes } from "../utils";
+import { useArchivedNotes } from "../api";
 
-function ArchiveNotePage({ notes, searchQuery }) {
+function ArchiveNotePage({ searchQuery }) {
+  const { notes } = useArchivedNotes();
   const filteredNotes = useMemo(
-    () => filterNotes(notes, searchQuery).filter(({ archived }) => archived),
+    () =>
+      notes
+        ? filterNotes(notes, searchQuery).filter(({ archived }) => archived)
+        : [],
     [notes, searchQuery]
   );
   return (
@@ -26,11 +31,10 @@ function ArchiveNotePage({ notes, searchQuery }) {
 }
 
 ArchiveNotePage.propTypes = {
-  notes: PropTypes.arrayOf(PropTypes.object).isRequired,
   searchQuery: PropTypes.string.isRequired,
 };
 
-export function ArchiveNotePageWrapper({ notes }) {
+export function ArchiveNotePageWrapper() {
   const { setShowSearch } = useOutletContext();
   const [searchQuery] = useSearchQuery();
 
@@ -42,9 +46,5 @@ export function ArchiveNotePageWrapper({ notes }) {
     };
   });
 
-  return <ArchiveNotePage notes={notes} searchQuery={searchQuery} />;
+  return <ArchiveNotePage searchQuery={searchQuery} />;
 }
-
-ArchiveNotePageWrapper.propTypes = {
-  notes: PropTypes.arrayOf(PropTypes.object).isRequired,
-};

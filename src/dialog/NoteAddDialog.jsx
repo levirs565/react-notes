@@ -11,15 +11,16 @@ import {
 import { NoteBodyEditor, NoteTitleEditor } from "../components/NoteEditor";
 import PropTypes from "prop-types";
 import { useEnhancedNavigate } from "../routes";
+import { useAddNote } from "../api";
 
-function NoteAddDialog({ onSubmit, onClose }) {
+function NoteAddDialog({ open, onSubmit, onClose }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
   return (
     <BaseDialog
       className={"note-add-dialog"}
-      open
+      open={open}
       onCloseTransitionEnd={() => onClose()}
     >
       <BaseDialogForm>
@@ -41,12 +42,13 @@ function NoteAddDialog({ onSubmit, onClose }) {
             <AppButton
               disabled={title.length === 0}
               variant="primary"
-              onClick={() =>
+              onClick={(e) => {
+                e.preventDefault();
                 onSubmit({
                   title,
                   body,
-                })
-              }
+                });
+              }}
             >
               Simpan
             </AppButton>
@@ -60,14 +62,19 @@ function NoteAddDialog({ onSubmit, onClose }) {
 NoteAddDialog.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
 };
 
-export function NoteAddDialogWrapper({ onSubmit }) {
+export function NoteAddDialogWrapper() {
+  const addNote = useAddNote();
   const { navigate, modalGoBack } = useEnhancedNavigate();
   const location = useLocation();
   const newNoteId = useRef();
+  const [open, setOpen] = useState(true);
+
   return (
     <NoteAddDialog
+      open={open}
       onClose={() => {
         if (newNoteId.current)
           navigate(`/note/${newNoteId.current}`, {
@@ -77,12 +84,11 @@ export function NoteAddDialogWrapper({ onSubmit }) {
         else modalGoBack();
       }}
       onSubmit={(data) => {
-        newNoteId.current = onSubmit(data).id;
+        addNote(data).then((result) => {
+          newNoteId.current = result.id;
+          setOpen(false);
+        });
       }}
     />
   );
 }
-
-NoteAddDialogWrapper.propTypes = {
-  onSubmit: PropTypes.func,
-};

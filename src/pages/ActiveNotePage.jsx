@@ -5,10 +5,15 @@ import PropTypes from "prop-types";
 import { useEffect, useMemo } from "react";
 import { useSearchQuery } from "./utils";
 import { filterNotes } from "../utils";
+import { useActiveNotes } from "../api";
 
-function ActiveNotePage({ location, notes, searchQuery }) {
+function ActiveNotePage({ location, searchQuery }) {
+  const { notes } = useActiveNotes();
   const filteredNotes = useMemo(
-    () => filterNotes(notes, searchQuery).filter(({ archived }) => !archived),
+    () =>
+      notes
+        ? filterNotes(notes, searchQuery).filter(({ archived }) => !archived)
+        : [],
     [searchQuery, notes]
   );
   return (
@@ -34,11 +39,10 @@ function ActiveNotePage({ location, notes, searchQuery }) {
 
 ActiveNotePage.propTypes = {
   location: PropTypes.object.isRequired,
-  notes: PropTypes.arrayOf(PropTypes.object).isRequired,
   searchQuery: PropTypes.string.isRequired,
 };
 
-export function ActiveNotePageWrapper({ notes }) {
+export function ActiveNotePageWrapper() {
   const { setShowSearch } = useOutletContext();
   const [searchQuery] = useSearchQuery();
   const location = useLocation();
@@ -51,15 +55,5 @@ export function ActiveNotePageWrapper({ notes }) {
     };
   });
 
-  return (
-    <ActiveNotePage
-      location={location}
-      notes={notes}
-      searchQuery={searchQuery}
-    />
-  );
+  return <ActiveNotePage location={location} searchQuery={searchQuery} />;
 }
-
-ActiveNotePageWrapper.propTypes = {
-  notes: PropTypes.arrayOf(PropTypes.object).isRequired,
-};

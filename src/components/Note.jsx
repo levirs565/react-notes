@@ -33,7 +33,7 @@ export function Note({ id, title, body, createdAt, highlightPattern }) {
 }
 
 Note.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,

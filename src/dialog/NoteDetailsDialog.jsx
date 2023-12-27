@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { showFormattedDate } from "../utils";
 import "./NoteDetailsDialog.css";
@@ -17,6 +17,7 @@ import {
 import { NoteBodyEditor, NoteTitleEditor } from "../components/NoteEditor";
 import PropTypes from "prop-types";
 import { useEnhancedNavigate } from "../routes";
+import { useNote } from "../api";
 
 function NoteDetailsDialog({
   title,
@@ -146,18 +147,19 @@ NoteNotFoundDialog.propTypes = {
   onCreateNew: PropTypes.func.isRequired,
 };
 
-export function NoteDetailsDialogWrapper({
-  notes,
-  onNoteDelete,
-  onNoteChangeArchive,
-  onNoteUpdate,
-}) {
+export function NoteDetailsDialogWrapper() {
   const location = useLocation();
   const { id } = useParams();
-  const [note, setNote] = useState(() => {
-    return notes.find((note) => note.id === Number(id));
-  });
   const { navigate, modalGoBack } = useEnhancedNavigate();
+  const { note: rawNote, isLoading, archive, unarchive, remove } = useNote(id);
+
+  const [note, setNote] = useState(rawNote);
+
+  useEffect(() => {
+    setNote(rawNote);
+  }, [rawNote]);
+
+  if (isLoading) return null;
 
   if (!note)
     return (
@@ -187,14 +189,15 @@ export function NoteDetailsDialogWrapper({
       createdAt={createdAt}
       onClose={modalGoBack}
       onDelete={() => {
-        onNoteDelete(id);
+        remove();
       }}
-      onChangeArchive={(state) => {
-        onNoteChangeArchive(id, state);
+      onChangeArchive={async (state) => {
         setNote({
           ...note,
           archived: state,
         });
+        if (state) await archive();
+        else unarchive();
       }}
       onTitleChanged={(title) => {
         setNote({
@@ -214,10 +217,3 @@ export function NoteDetailsDialogWrapper({
     />
   );
 }
-
-NoteDetailsDialogWrapper.propTypes = {
-  notes: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onNoteDelete: PropTypes.func.isRequired,
-  onNoteChangeArchive: PropTypes.func.isRequired,
-  onNoteUpdate: PropTypes.func.isRequired,
-};

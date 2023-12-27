@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import useSWR, { useSWRConfig } from "swr";
 
 const rootUrl = "https://notes-api.dicoding.dev/v1";
@@ -60,5 +61,58 @@ export function useLoggedUser() {
   return {
     user,
     ...rest,
+  };
+}
+export function useActiveNotes() {
+  const { data, ...rest } = useSWR("notes", swrFetcher);
+  return {
+    notes: data,
+    ...rest,
+  };
+}
+
+export function useArchivedNotes() {
+  const { data, ...rest } = useSWR("notes/archived", swrFetcher);
+  return {
+    notes: data,
+    ...rest,
+  };
+}
+
+export function useAddNote() {
+  const { mutate } = useSWRConfig();
+  return async (note) => {
+    const result = await postData("notes", note);
+    mutate("notes");
+    return result;
+  };
+}
+
+export function useNote(id) {
+  const path = `notes/${id}`;
+  const { data, ...rest } = useSWR(path, swrFetcher);
+  const { mutate: mutateGlobal } = useSWRConfig();
+
+  const noteChanged = async () => {
+    await mutateGlobal((key) =>
+      ["notes", "notes/archived", path].includes(key)
+    );
+  };
+
+  return {
+    note: data,
+    ...rest,
+    async archive() {
+      await postData(`${path}/archive`);
+      await noteChanged();
+    },
+    async unarchive() {
+      await postData(`${path}/unarchive`);
+      await noteChanged();
+    },
+    async remove() {
+      await customFetch(`${path}/delete`, { method: "DELETE" });
+      await noteChanged();
+    },
   };
 }

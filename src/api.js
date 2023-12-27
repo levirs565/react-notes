@@ -1,9 +1,10 @@
 import useSWR, { useSWRConfig } from "swr";
 
 const rootUrl = "https://notes-api.dicoding.dev/v1";
-let accessToken = null;
+const accessTokenKey = "accessToken";
 
 async function customFetch(path, { headers, ...moreOptions }) {
+  const accessToken = sessionStorage.getItem(accessTokenKey);
   const response = await fetch(`${rootUrl}/${path}`, {
     ...moreOptions,
     headers: {
@@ -48,7 +49,7 @@ export function useLoginUser() {
       email,
       password,
     });
-    accessToken = result.accessToken;
+    sessionStorage.setItem(accessTokenKey, result.accessToken);
     await mutate("users/me");
   };
 }

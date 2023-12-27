@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import "./Masonry.css";
+import { flushSync } from "react-dom";
 
 function isDivider(node) {
   return node.className === "masonry--divider";
@@ -21,7 +22,8 @@ export function Masonry({ as, className, children }) {
     );
     const columnsHeight = new Array(columnCount).fill(0);
     let skip = false;
-    element.childNodes.forEach((child) => {
+    const orderList = new Array(element.childNodes.length);
+    element.childNodes.forEach((child, index) => {
       if (skip) return;
 
       if (isDivider(child)) {
@@ -39,12 +41,31 @@ export function Masonry({ as, className, children }) {
 
       const minHeightIndex = columnsHeight.indexOf(Math.min(...columnsHeight));
       columnsHeight[minHeightIndex] += totalHeight;
-      child.style.order = minHeightIndex;
+      orderList[index] = minHeightIndex;
     });
 
     if (!skip) {
-      setMaxColumnHeight(Math.max(...columnsHeight));
-      setLineBreakCount(columnCount - 1);
+      element.childNodes.forEach((child) => {
+        if (isDivider(child)) {
+          return;
+        }
+
+        child.classList.remove("masonry--item--rendered");
+      });
+
+      flushSync(() => {
+        setMaxColumnHeight(Math.max(...columnsHeight));
+        setLineBreakCount(columnCount - 1);
+
+        element.childNodes.forEach((child, index) => {
+          if (isDivider(child)) {
+            return;
+          }
+
+          child.style.order = orderList[index];
+          child.classList.add("masonry--item--rendered");
+        });
+      });
     }
   };
 
@@ -57,7 +78,6 @@ export function Masonry({ as, className, children }) {
       requestUpdateSize();
     });
     const mutationObserver = new MutationObserver((mutationList) => {
-      let resetMaxHeight = false;
       let requestUpdate = false;
       mutationList.forEach((mutation) => {
         mutation.addedNodes.forEach((node) => {
@@ -65,7 +85,6 @@ export function Masonry({ as, className, children }) {
             return;
           }
           resizeObserver.observe(node);
-          resetMaxHeight = true;
         });
         mutation.removedNodes.forEach((node) => {
           if (isDivider(node)) {
@@ -76,7 +95,6 @@ export function Masonry({ as, className, children }) {
         });
       });
 
-      if (resetMaxHeight) setMaxColumnHeight(null);
       if (requestUpdate) requestUpdateSize();
     });
 

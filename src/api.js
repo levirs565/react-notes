@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import useSWR, { useSWRConfig } from "swr";
 
 const rootUrl = "https://notes-api.dicoding.dev/v1";

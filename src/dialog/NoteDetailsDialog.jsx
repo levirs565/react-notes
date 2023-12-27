@@ -87,7 +87,7 @@ function NoteDetailsDialogSuccessForm({
               onChangeArchive(!archived);
             }}
           >
-            {archived ? "Kembalikan" : "Arsipkan"}
+            {archived ? "Batal Arsip" : "Arsipkan"}
           </AppButton>
           <AppButton
             onClick={(e) => {

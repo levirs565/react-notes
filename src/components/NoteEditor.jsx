@@ -2,6 +2,7 @@ import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { ContentEditable, LimitedContentEditable } from "./ContentEditable";
 import PropTypes from "prop-types";
 import "./NoteEditor.css";
+import { Shimmer } from "./Shimmer";
 
 export function NoteTitleEditor({ editable, value, onValueChanged }) {
   const [titleRemainingLength, setTitleRemainingLength] = useState();
@@ -35,6 +36,14 @@ NoteTitleEditor.propTypes = {
   value: PropTypes.string.isRequired,
   onValueChanged: PropTypes.func.isRequired,
 };
+
+export function NoteTitleEditorShimmer() {
+  return (
+    <Shimmer>
+      <h2 className="note-title-editor">Title</h2>
+    </Shimmer>
+  );
+}
 
 export const NoteBodyEditor = forwardRef(function NoteBodyEditor(
   { editable, value, onValueChanged },
@@ -72,3 +81,11 @@ NoteBodyEditor.propTypes = {
   value: PropTypes.string.isRequired,
   onValueChanged: PropTypes.func.isRequired,
 };
+
+export function NoteBodyEditorShimmer() {
+  return (
+    <Shimmer>
+      <p className="note-body--editor">Body</p>
+    </Shimmer>
+  );
+}

@@ -14,10 +14,16 @@ import {
   BaseDialogForm,
   BaseDialogTitle,
 } from "./BaseDialog";
-import { NoteBodyEditor, NoteTitleEditor } from "../components/NoteEditor";
+import {
+  NoteBodyEditor,
+  NoteBodyEditorShimmer,
+  NoteTitleEditor,
+  NoteTitleEditorShimmer,
+} from "../components/NoteEditor";
 import PropTypes from "prop-types";
 import { useEnhancedNavigate } from "../routes";
 import { useAddNote, useNote } from "../api";
+import { MultiLineShimmer, Shimmer } from "../components/Shimmer";
 
 function NoteDetailsDialogSuccessForm({
   title,
@@ -141,6 +147,36 @@ NoteDetailsDialogNotFoundForm.propTypes = {
   onCreateNew: PropTypes.func.isRequired,
 };
 
+function NoteDetailsDialogLoadingForm() {
+  return (
+    <BaseDialogForm>
+      <BaseDialogScrollable>
+        <NoteTitleEditorShimmer />
+        <Shimmer>
+          <time className="note-details-dialog--created-date">Waktu</time>
+        </Shimmer>
+        <MultiLineShimmer
+          lineCount={3}
+          renderItem={(index) => <NoteBodyEditorShimmer key={index} />}
+        />
+      </BaseDialogScrollable>
+      <BaseDialogFooter>
+        <AppButtonGroup>
+          <Shimmer>
+            <AppButton>Simpan</AppButton>
+            <AppButton>Arsipkan</AppButton>
+            <AppButton>Hapus</AppButton>
+          </Shimmer>
+          <AppButtonGroupSpacer />
+          <Shimmer>
+            <AppButton>Keluar</AppButton>
+          </Shimmer>
+        </AppButtonGroup>
+      </BaseDialogFooter>
+    </BaseDialogForm>
+  );
+}
+
 function NoteDetailsDialog({
   open,
   note: rawNote,
@@ -163,7 +199,9 @@ function NoteDetailsDialog({
       className="note-details-dialog"
       onCloseTransitionEnd={onClose}
     >
-      {note ? (
+      {isLoading ? (
+        <NoteDetailsDialogLoadingForm />
+      ) : note ? (
         <NoteDetailsDialogSuccessForm
           archived={note.archived}
           body={note.body}

@@ -8,7 +8,7 @@ import { filterNotes } from "../utils";
 import { useActiveNotes } from "../api";
 
 function ActiveNotePage({ location, searchQuery }) {
-  const { notes } = useActiveNotes();
+  const { notes, isLoading } = useActiveNotes();
   const filteredNotes = useMemo(
     () =>
       notes
@@ -24,6 +24,7 @@ function ActiveNotePage({ location, searchQuery }) {
         emptyMessage={
           searchQuery.length > 0 ? "Catatan tidak ditemukan" : "Catatan kosong"
         }
+        isLoading={isLoading}
       />
       <FloatingActionButton
         to="/note/add"

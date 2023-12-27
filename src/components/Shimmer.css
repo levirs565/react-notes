@@ -1,0 +1,33 @@
+.shimmer {
+  background-color: var(--color-zink-100);
+  background-image: linear-gradient(
+    to right,
+    var(--color-zink-100) 0%,
+    var(--color-zink-200) 20%,
+    var(--color-zink-100) 40%,
+    var(--color-zink-100) 100%
+  );
+  background-size: 100vw 100px;
+  background-repeat: no-repeat;
+  animation: shimmerAnimation 1s linear infinite forwards;
+}
+
+.shimmer > * {
+  visibility: hidden;
+}
+
+@keyframes shimmerAnimation {
+  0% {
+    background-position: -50vw 0;
+  }
+
+  100% {
+    background-position: 75vw 0;
+  }
+}
+
+.multiline-shimmer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2px;
+}

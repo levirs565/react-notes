@@ -7,7 +7,7 @@ import { filterNotes } from "../utils";
 import { useArchivedNotes } from "../api";
 
 function ArchiveNotePage({ searchQuery }) {
-  const { notes } = useArchivedNotes();
+  const { notes, isLoading } = useArchivedNotes();
   const filteredNotes = useMemo(
     () =>
       notes
@@ -25,6 +25,7 @@ function ArchiveNotePage({ searchQuery }) {
             ? "Catatan terarsip tidak ditemukan"
             : "Arsip catatan kosong"
         }
+        isLoading={isLoading}
       />
     </main>
   );

@@ -25,6 +25,7 @@ import { useAddNote, useNote } from "../api";
 import { MultiLineShimmer, Shimmer } from "../components/Shimmer";
 import { useI8n } from "../provider/context";
 import { useFormatDate } from "../hook";
+import { LoggedInGuard } from "../guard/LoginGuard";
 
 function NoteDetailsDialogSuccessForm({
   title,
@@ -182,7 +183,7 @@ function NoteDetailsDialogLoadingForm() {
   );
 }
 
-function NoteDetailsDialog({
+function NoteDetailsDialogContent({
   open,
   note: rawNote,
   isLoading,
@@ -238,7 +239,7 @@ function NoteDetailsDialog({
   );
 }
 
-NoteDetailsDialog.propTypes = {
+NoteDetailsDialogContent.propTypes = {
   open: PropTypes.bool.isRequired,
   note: PropTypes.object,
   isLoading: PropTypes.bool.isRequired,
@@ -249,7 +250,7 @@ NoteDetailsDialog.propTypes = {
   onCreateNew: PropTypes.func.isRequired,
 };
 
-export function NoteDetailsDialogWrapper() {
+function NoteDetailsDialog() {
   const location = useLocation();
   const { id } = useParams();
   const { navigate, modalGoBack } = useEnhancedNavigate();
@@ -258,7 +259,7 @@ export function NoteDetailsDialogWrapper() {
   const [open, setOpen] = useState(true);
 
   return (
-    <NoteDetailsDialog
+    <NoteDetailsDialogContent
       isLoading={isLoading}
       open={open}
       note={note}
@@ -295,5 +296,13 @@ export function NoteDetailsDialogWrapper() {
         );
       }}
     />
+  );
+}
+
+export function NoteDetailsDialogWrapper() {
+  return (
+    <LoggedInGuard>
+      <NoteDetailsDialog />
+    </LoggedInGuard>
   );
 }

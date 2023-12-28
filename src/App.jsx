@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { ActiveNotePageWrapper } from "./pages/ActiveNotePage";
@@ -17,9 +16,12 @@ import { LoginPageWrapper } from "./pages/LoginPage";
 import { RegisterPageWrapper } from "./pages/RegisterPage";
 import { ThemeContext } from "./context";
 import { useLocalStorageState } from "./hook";
+import { SplashScreen } from "./components/SplashScreen";
+import { useLoggedUser } from "./api";
 
 export function App() {
   const enhancedLocation = useEnhancedLocation();
+  const { isLoading } = useLoggedUser();
 
   const [theme, setTheme] = useLocalStorageState("theme", "");
   const toggleTheme = () =>
@@ -33,6 +35,7 @@ export function App() {
   return (
     <div className="app" data-theme={theme}>
       <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        {isLoading && <SplashScreen />}
         <div inert={enhancedLocation.hasModal ? "" : undefined}>
           <Routes location={enhancedLocation.currentLocation}>
             <Route path="/" element={<MainLayout />}>

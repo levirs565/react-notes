@@ -22,6 +22,7 @@ import { useForm } from "react-hook-form";
 import { useRegisterUser } from "../api";
 import { useI8n } from "../provider/context";
 import { FancyLink } from "../components/FancyLink";
+import { NotLoggedInGuard } from "../guard/LoginGuard";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -119,5 +120,9 @@ function RegisterPage() {
 }
 
 export function RegisterPageWrapper() {
-  return <RegisterPage />;
+  return (
+    <NotLoggedInGuard>
+      <RegisterPage />
+    </NotLoggedInGuard>
+  );
 }

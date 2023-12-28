@@ -1,4 +1,3 @@
-import { Navigate } from "react-router-dom";
 import {
   AppButton,
   AppButtonGroup,
@@ -19,12 +18,12 @@ import {
   ReactHookFieldMessage,
 } from "../components/Field";
 import { useForm } from "react-hook-form";
-import { useLoggedUser, useLoginUser } from "../api";
+import { useLoginUser } from "../api";
 import { useI8n } from "../provider/context";
 import { FancyLink } from "../components/FancyLink";
+import { NotLoggedInGuard } from "../guard/LoginGuard";
 
 function LoginPage() {
-  const { user } = useLoggedUser();
   const loginUser = useLoginUser();
   const {
     register,
@@ -32,8 +31,6 @@ function LoginPage() {
     handleSubmit,
   } = useForm();
   const { getText } = useI8n();
-
-  if (user) return <Navigate to="/" />;
 
   return (
     <CardForm
@@ -84,5 +81,9 @@ function LoginPage() {
 }
 
 export function LoginPageWrapper() {
-  return <LoginPage />;
+  return (
+    <NotLoggedInGuard>
+      <LoginPage />
+    </NotLoggedInGuard>
+  );
 }

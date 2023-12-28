@@ -7,14 +7,12 @@ import { useSearchQuery } from "./utils";
 import { filterNotes } from "../utils";
 import { useActiveNotes } from "../api";
 import { useI8n } from "../provider/context";
+import { LoggedInGuard } from "../guard/LoginGuard";
 
-function ActiveNotePage({ location, searchQuery }) {
+function ActiveNotePageContent({ location, searchQuery }) {
   const { notes, isLoading } = useActiveNotes();
   const filteredNotes = useMemo(
-    () =>
-      notes
-        ? filterNotes(notes, searchQuery).filter(({ archived }) => !archived)
-        : [],
+    () => (notes ? filterNotes(notes, searchQuery) : []),
     [searchQuery, notes]
   );
   const { getText } = useI8n();
@@ -43,12 +41,12 @@ function ActiveNotePage({ location, searchQuery }) {
   );
 }
 
-ActiveNotePage.propTypes = {
+ActiveNotePageContent.propTypes = {
   location: PropTypes.object.isRequired,
   searchQuery: PropTypes.string.isRequired,
 };
 
-export function ActiveNotePageWrapper() {
+function ActiveNotePage() {
   const { setShowSearch } = useOutletContext();
   const [searchQuery] = useSearchQuery();
   const location = useLocation();
@@ -61,5 +59,15 @@ export function ActiveNotePageWrapper() {
     };
   });
 
-  return <ActiveNotePage location={location} searchQuery={searchQuery} />;
+  return (
+    <ActiveNotePageContent location={location} searchQuery={searchQuery} />
+  );
+}
+
+export function ActiveNotePageWrapper() {
+  return (
+    <LoggedInGuard>
+      <ActiveNotePage />
+    </LoggedInGuard>
+  );
 }

@@ -1,0 +1,34 @@
+.splash-screen {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--color-fuchsia-500);
+  justify-content: center;
+  z-index: 1000;
+  gap: 16px;
+}
+
+.splash-screen--img {
+  width: 128px;
+  height: 128px;
+  animation: splashScreenSpin 5s linear infinite;
+}
+
+.splash-screen--text {
+  font-size: 24px;
+  font-weight: 500;
+  color: white;
+}
+
+@keyframes splashScreenSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

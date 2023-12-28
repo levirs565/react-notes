@@ -13,8 +13,9 @@ import PropTypes from "prop-types";
 import { useEnhancedNavigate } from "../routes";
 import { useAddNote } from "../api";
 import { useI8n } from "../provider/context";
+import { LoggedInGuard } from "../guard/LoginGuard";
 
-function NoteAddDialog({ open, onSubmit, onClose }) {
+function NoteAddDialogContent({ open, onSubmit, onClose }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const { getText } = useI8n();
@@ -61,13 +62,13 @@ function NoteAddDialog({ open, onSubmit, onClose }) {
   );
 }
 
-NoteAddDialog.propTypes = {
+NoteAddDialogContent.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
 };
 
-export function NoteAddDialogWrapper() {
+function NoteAddDialog() {
   const addNote = useAddNote();
   const { navigate, modalGoBack } = useEnhancedNavigate();
   const location = useLocation();
@@ -75,7 +76,7 @@ export function NoteAddDialogWrapper() {
   const [open, setOpen] = useState(true);
 
   return (
-    <NoteAddDialog
+    <NoteAddDialogContent
       open={open}
       onClose={() => {
         if (newNoteId.current)
@@ -92,5 +93,13 @@ export function NoteAddDialogWrapper() {
         });
       }}
     />
+  );
+}
+
+export function NoteAddDialogWrapper() {
+  return (
+    <LoggedInGuard>
+      <NoteAddDialog />
+    </LoggedInGuard>
   );
 }

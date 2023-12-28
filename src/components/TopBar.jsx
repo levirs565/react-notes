@@ -16,7 +16,7 @@ import { AccountCircleIcon } from "../icons/AccountCircleIcon";
 import { LogoutCircleIcon } from "../icons/LogoutCircleIcon";
 import { MoonIcon } from "../icons/MoonIcon";
 import { SunIcon } from "../icons/SunIcon";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { ThemeContext } from "../context";
 import { useI8n } from "../provider/context";
 import { TranslateIcon } from "../icons/TranslateIcon";
@@ -58,18 +58,22 @@ export function TopBarPopupContent({ userName, onLogout }) {
 
   return (
     <PopupContent>
-      <PopupItem>
-        <PopupItemIcon>
-          <AccountCircleIcon />
-        </PopupItemIcon>
-        <PopupItemText>{userName}</PopupItemText>
-      </PopupItem>
-      <PopupItem clickable onClick={onLogout}>
-        <PopupItemIcon>
-          <LogoutCircleIcon />
-        </PopupItemIcon>
-        <PopupItemText>{getText("logout")}</PopupItemText>
-      </PopupItem>
+      {userName && (
+        <React.Fragment>
+          <PopupItem>
+            <PopupItemIcon>
+              <AccountCircleIcon />
+            </PopupItemIcon>
+            <PopupItemText>{userName}</PopupItemText>
+          </PopupItem>
+          <PopupItem clickable onClick={onLogout}>
+            <PopupItemIcon>
+              <LogoutCircleIcon />
+            </PopupItemIcon>
+            <PopupItemText>{getText("logout")}</PopupItemText>
+          </PopupItem>
+        </React.Fragment>
+      )}
       <PopupItem clickable onClick={toggleTheme}>
         <PopupItemIcon>
           {theme === "dark" ? <MoonIcon /> : <SunIcon />}
@@ -89,7 +93,7 @@ export function TopBarPopupContent({ userName, onLogout }) {
 }
 
 TopBarPopupContent.propTypes = {
-  userName: PropTypes.string.isRequired,
+  userName: PropTypes.string,
   onLogout: PropTypes.func.isRequired,
 };
 
@@ -107,24 +111,26 @@ export function TopBar({
   return (
     <header className="top-bar">
       <h1 className="top-bar--title">Notes</h1>
-      <TopBarTabs>
-        <TopBarTabsItem
-          to={{
-            pathname: "/",
-            search: searchParam,
-          }}
-        >
-          {getText("activeNote")}
-        </TopBarTabsItem>
-        <TopBarTabsItem
-          to={{
-            pathname: "/archive",
-            search: searchParam,
-          }}
-        >
-          {getText("archiveNote")}
-        </TopBarTabsItem>
-      </TopBarTabs>
+      {userName && (
+        <TopBarTabs>
+          <TopBarTabsItem
+            to={{
+              pathname: "/",
+              search: searchParam,
+            }}
+          >
+            {getText("activeNote")}
+          </TopBarTabsItem>
+          <TopBarTabsItem
+            to={{
+              pathname: "/archive",
+              search: searchParam,
+            }}
+          >
+            {getText("archiveNote")}
+          </TopBarTabsItem>
+        </TopBarTabs>
+      )}
       <div className="top-bar--grow" />
       {showSearch && (
         <SearchInput
@@ -146,6 +152,6 @@ TopBar.propTypes = {
   searchQuery: PropTypes.string.isRequired,
   onSearchChange: PropTypes.func.isRequired,
   showSearch: PropTypes.bool.isRequired,
-  userName: PropTypes.string.isRequired,
+  userName: PropTypes.string,
   onLogout: PropTypes.func.isRequired,
 };

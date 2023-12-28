@@ -6,14 +6,12 @@ import { useSearchQuery } from "./utils";
 import { filterNotes } from "../utils";
 import { useArchivedNotes } from "../api";
 import { useI8n } from "../provider/context";
+import { LoggedInGuard } from "../guard/LoginGuard";
 
-function ArchiveNotePage({ searchQuery }) {
+function ArchiveNotePageContent({ searchQuery }) {
   const { notes, isLoading } = useArchivedNotes();
   const filteredNotes = useMemo(
-    () =>
-      notes
-        ? filterNotes(notes, searchQuery).filter(({ archived }) => archived)
-        : [],
+    () => (notes ? filterNotes(notes, searchQuery) : []),
     [notes, searchQuery]
   );
   const { getText } = useI8n();
@@ -34,11 +32,11 @@ function ArchiveNotePage({ searchQuery }) {
   );
 }
 
-ArchiveNotePage.propTypes = {
+ArchiveNotePageContent.propTypes = {
   searchQuery: PropTypes.string.isRequired,
 };
 
-export function ArchiveNotePageWrapper() {
+function ArchiveNotePage() {
   const { setShowSearch } = useOutletContext();
   const [searchQuery] = useSearchQuery();
 
@@ -50,5 +48,13 @@ export function ArchiveNotePageWrapper() {
     };
   });
 
-  return <ArchiveNotePage searchQuery={searchQuery} />;
+  return <ArchiveNotePageContent searchQuery={searchQuery} />;
+}
+
+export function ArchiveNotePageWrapper() {
+  return (
+    <LoggedInGuard>
+      <ArchiveNotePage />
+    </LoggedInGuard>
+  );
 }

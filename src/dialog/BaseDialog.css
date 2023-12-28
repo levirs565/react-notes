@@ -1,23 +1,20 @@
+@import "../base.css";
+
 .base-dialog {
+  @mixin primary-surface;
+
+  border-radius: 16px;
   margin: auto;
   padding: 0;
-  border-radius: 16px;
-  border: 1px solid var(--color-fuchsia-700);
   max-block-size: min(80vh, 100%);
   min-inline-size: 60ch;
   max-inline-size: min(90vw, 60ch);
   overflow: hidden;
   display: flex;
-  color: var(--text-color);
-  background: white;
-}
 
-[data-theme="dark"] .base-dialog {
-  background: var(--color-zink-900);
-}
-
-.base-dialog:focus {
-  outline: none;
+  &:focus {
+    outline: none;
+  }
 }
 
 .base-dialog--form {

@@ -1,3 +1,5 @@
+@import "../base.css";
+
 .note-empty {
   text-align: center;
 }
@@ -7,52 +9,42 @@
   padding-inline: 0;
   margin: 0 auto;
   --column-count: 1 !important;
-}
 
-@media (min-width: 640px) {
-  .note-list {
+  @media (min-width: 640px) {
     --column-count: 2 !important;
     max-width: calc(640px - 32px);
   }
-}
 
-@media (min-width: 960px) {
-  .note-list {
+  @media (min-width: 960px) {
     --column-count: 3 !important;
     max-width: calc(960px - 32px);
   }
-}
 
-@media (min-width: 1280px) {
-  .note-list {
+  @media (min-width: 1280px) {
     max-width: calc(1280px - 32px);
     --column-count: 4 !important;
   }
 }
 
 .note {
+  @mixin primary-surface;
+
   padding: 8px 16px;
-  border: 1px solid var(--color-fuchsia-700);
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   gap: 8px;
   position: relative;
   transition: transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
-  background: white;
-}
 
-[data-theme="dark"] .note {
-  background: var(--color-zink-900);
-}
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 8px 16px -8px var(--color-fuchsia-700);
+  }
 
-.note:hover {
-  transform: translateY(-4px);
-  box-shadow: 0px 8px 16px -8px var(--color-fuchsia-700);
-}
-
-.note:active {
-  box-shadow: 0px 8px 16px -4px var(--color-fuchsia-700);
+  &:active {
+    box-shadow: 0px 8px 16px -4px var(--color-fuchsia-700);
+  }
 }
 
 .note--title {
@@ -64,15 +56,15 @@
 .note--link {
   color: var(--text-color);
   text-decoration: none;
-}
 
-.note--link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
 }
 
 .note--created-date {

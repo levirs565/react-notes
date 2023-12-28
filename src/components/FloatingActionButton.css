@@ -19,12 +19,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
 
-.floating-action-button:hover {
-  background-color: var(--color-green-600);
-}
+  &:hover {
+    background-color: var(--color-green-600);
+  }
 
-.floating-action-button:active {
-  background-color: var(--color-green-700);
+  &:active {
+    background-color: var(--color-green-700);
+  }
 }

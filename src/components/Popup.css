@@ -1,22 +1,22 @@
+@import "../base.css";
+
 .popup {
   position: relative;
 }
 
 .popup--content {
+  border: 1px solid;
+  @mixin surface;
+
   position: absolute;
   right: 0;
   top: calc(100% - 4px);
   display: none;
   width: 256px;
-  background-color: white;
   z-index: 100;
   box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
   border-radius: 16px;
   overflow: hidden;
-}
-
-[data-theme="dark"] .popup--content {
-  background-color: var(--color-zink-900);
 }
 
 .popup:focus-within .popup--content {
@@ -35,10 +35,10 @@
 
 .popup-item:not(:last-child) {
   border-bottom: 1px solid var(--color-zink-100);
-}
 
-[data-theme="dark"] .popup-item:not(:last-child) {
-  border-bottom: 1px solid var(--color-zink-800);
+  @mixin dark-theme {
+    border-bottom-color: var(--color-zink-800);
+  }
 }
 
 .popup-item--icon {
@@ -56,26 +56,12 @@
 }
 
 .popup-item--clickable {
+  @mixin transparent-button;
+
   cursor: pointer;
   outline: none;
   appearance: none;
   background-color: transparent;
   border: none;
   color: var(--text-color);
-}
-
-.popup-item--clickable:hover {
-  background-color: var(--color-zink-200);
-}
-
-[data-theme="dark"] .popup-item--clickable:hover {
-  background-color: var(--color-zink-700);
-}
-
-.popup-item--clickable:active {
-  background-color: var(--color-zink-300);
-}
-
-[data-theme="dark"] .popup-item--clickable:active {
-  background-color: var(--color-zink-600);
 }

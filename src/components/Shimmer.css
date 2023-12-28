@@ -12,6 +12,17 @@
   animation: shimmerAnimation 1s linear infinite forwards;
 }
 
+[data-theme="dark"] .shimmer {
+  background-color: var(--color-zink-800);
+  background-image: linear-gradient(
+    to right,
+    var(--color-zink-800) 0%,
+    var(--color-zink-700) 20%,
+    var(--color-zink-800) 40%,
+    var(--color-zink-800) 100%
+  );
+}
+
 .shimmer > * {
   visibility: hidden;
 }

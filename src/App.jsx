@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { ActiveNotePageWrapper } from "./pages/ActiveNotePage";
@@ -15,9 +15,17 @@ import { NotFoundPageWrapper } from "./pages/NotFoundPage";
 import { MainLayout } from "./layout/MainLayout";
 import { LoginPageWrapper } from "./pages/LoginPage";
 import { RegisterPageWrapper } from "./pages/RegisterPage";
+import { ThemeContext } from "./context";
 
 export function App() {
   const enhancedLocation = useEnhancedLocation();
+
+  const [theme, setTheme] = useState(localStorage.getItem("theme") ?? "");
+  const toggleTheme = () =>
+    setTheme((prevTheme) => (prevTheme === "dark" ? "" : "dark"));
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   useSyncLastBackgroundLocation(enhancedLocation);
 
@@ -25,26 +33,28 @@ export function App() {
     return <Navigate {...createToValidNavigation(enhancedLocation)} />;
 
   return (
-    <React.Fragment>
-      <div inert={enhancedLocation.hasModal ? "" : undefined}>
-        <Routes location={enhancedLocation.currentLocation}>
-          <Route path="/" element={<MainLayout />}>
-            <Route path="/" element={<ActiveNotePageWrapper />} />
-            <Route path="/archive" element={<ArchiveNotePageWrapper />} />
-            <Route path="*" element={<NotFoundPageWrapper />} />
-          </Route>
+    <div className="app" data-theme={theme}>
+      <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <div inert={enhancedLocation.hasModal ? "" : undefined}>
+          <Routes location={enhancedLocation.currentLocation}>
+            <Route path="/" element={<MainLayout />}>
+              <Route path="/" element={<ActiveNotePageWrapper />} />
+              <Route path="/archive" element={<ArchiveNotePageWrapper />} />
+              <Route path="*" element={<NotFoundPageWrapper />} />
+            </Route>
 
-          <Route path="/login" element={<LoginPageWrapper />} />
-          <Route path="/register" element={<RegisterPageWrapper />} />
-        </Routes>
-      </div>
+            <Route path="/login" element={<LoginPageWrapper />} />
+            <Route path="/register" element={<RegisterPageWrapper />} />
+          </Routes>
+        </div>
 
-      {enhancedLocation.hasModal && (
-        <Routes>
-          <Route path="/note/add" element={<NoteAddDialogWrapper />} />
-          <Route path="/note/:id" element={<NoteDetailsDialogWrapper />} />
-        </Routes>
-      )}
-    </React.Fragment>
+        {enhancedLocation.hasModal && (
+          <Routes>
+            <Route path="/note/add" element={<NoteAddDialogWrapper />} />
+            <Route path="/note/:id" element={<NoteDetailsDialogWrapper />} />
+          </Routes>
+        )}
+      </ThemeContext.Provider>
+    </div>
   );
 }

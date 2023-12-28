@@ -1,9 +1,15 @@
 :root {
+  --color-zink-50: #fafafa;
   --color-zink-100: #f4f4f5;
   --color-zink-200: #e4e4e7;
   --color-zink-300: #d4d4d8;
   --color-zink-400: #a1a1aa;
   --color-zink-500: #71717a;
+  --color-zink-600: #52525b;
+  --color-zink-700: #3f3f46;
+  --color-zink-800: #27272a;
+  --color-zink-900: #18181b;
+  --color-zink-950: #09090b;
   --color-red-300: #fca5a5;
   --color-red-500: #ef4444;
   --color-red-700: #b91c1c;
@@ -16,6 +22,10 @@
   --color-green-600: #16a34a;
   --color-green-700: #15803d;
   --color-yellow-200: #fef08a;
+}
+
+body {
+  height: 100vh;
 }
 
 * {

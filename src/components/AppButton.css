@@ -80,12 +80,21 @@
   height: 20px;
   width: 20px;
   margin: 8px;
+  color: var(--text-color);
 }
 
 .app-icon-button:hover {
-  background-color: var(--color-zink-100);
+  background-color: var(--color-zink-200);
+}
+
+[data-theme="dark"] .app-icon-button:hover {
+  background-color: var(--color-zink-700);
 }
 
 .app-icon-button:active {
-  background-color: var(--color-zink-200);
+  background-color: var(--color-zink-300);
+}
+
+[data-theme="dark"] .app-icon-button:active {
+  background-color: var(--color-zink-600);
 }

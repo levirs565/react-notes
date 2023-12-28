@@ -14,6 +14,10 @@ import {
 } from "./Popup";
 import { AccountCircleIcon } from "../icons/AccountCircleIcon";
 import { LogoutCircleIcon } from "../icons/LogoutCircleIcon";
+import { MoonIcon } from "../icons/MoonIcon";
+import { SunIcon } from "../icons/SunIcon";
+import { useContext } from "react";
+import { ThemeContext } from "../context";
 
 export function TopBarTabsItem({ to, children }) {
   return (
@@ -47,6 +51,8 @@ TopBarTabs.propTypes = {
 };
 
 export function TopBarPopupContent({ userName, onLogout }) {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+
   return (
     <PopupContent>
       <PopupItem>
@@ -61,9 +67,22 @@ export function TopBarPopupContent({ userName, onLogout }) {
         </PopupItemIcon>
         <PopupItemText>Logout</PopupItemText>
       </PopupItem>
+      <PopupItem clickable onClick={toggleTheme}>
+        <PopupItemIcon>
+          {theme === "dark" ? <MoonIcon /> : <SunIcon />}
+        </PopupItemIcon>
+        <PopupItemText>
+          {theme === "dark" ? "Tema Gelap" : "Tema Terang"}
+        </PopupItemText>
+      </PopupItem>
     </PopupContent>
   );
 }
+
+TopBarPopupContent.propTypes = {
+  userName: PropTypes.string.isRequired,
+  onLogout: PropTypes.func.isRequired,
+};
 
 export function TopBar({
   showSearch,

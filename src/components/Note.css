@@ -39,6 +39,11 @@
   gap: 8px;
   position: relative;
   transition: transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+  background: white;
+}
+
+[data-theme="dark"] .note {
+  background: var(--color-zink-900);
 }
 
 .note:hover {
@@ -57,7 +62,7 @@
 }
 
 .note--link {
-  color: black;
+  color: var(--text-color);
   text-decoration: none;
 }
 

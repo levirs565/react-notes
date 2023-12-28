@@ -8,6 +8,12 @@
   max-inline-size: min(90vw, 60ch);
   overflow: hidden;
   display: flex;
+  color: var(--text-color);
+  background: white;
+}
+
+[data-theme="dark"] .base-dialog {
+  background: var(--color-zink-900);
 }
 
 .base-dialog:focus {

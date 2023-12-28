@@ -1,3 +1,14 @@
+.app {
+  --text-color: black;
+  background-color: var(--color-zink-50);
+  color: var(--text-color);
+}
+
+.app[data-theme="dark"] {
+  background-color: var(--color-zink-950);
+  --text-color: white;
+}
+
 .app-main {
   margin-bottom: 72px;
   padding: 8px 16px;

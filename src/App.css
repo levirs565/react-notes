@@ -2,6 +2,7 @@
   --text-color: black;
   background-color: var(--color-zink-50);
   color: var(--text-color);
+  min-height: 100vh;
 }
 
 .app[data-theme="dark"] {

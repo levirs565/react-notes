@@ -12,7 +12,6 @@ export function useLocalStorageState(name, defaultValue) {
 
   useEffect(() => {
     const listener = (event) => {
-      console.log(event);
       if (event.key && event.key != name) return;
       if (event.storageArea != localStorage) return;
       if (event.newValue == value) return;
@@ -22,7 +21,7 @@ export function useLocalStorageState(name, defaultValue) {
     return () => {
       window.removeEventListener("storage", listener);
     };
-  }, []);
+  }, [value, name]);
 
   return [value, setter];
 }

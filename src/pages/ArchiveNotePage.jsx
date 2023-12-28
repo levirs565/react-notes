@@ -5,6 +5,7 @@ import { useOutletContext } from "react-router-dom";
 import { useSearchQuery } from "./utils";
 import { filterNotes } from "../utils";
 import { useArchivedNotes } from "../api";
+import { useI8n } from "../provider/context";
 
 function ArchiveNotePage({ searchQuery }) {
   const { notes, isLoading } = useArchivedNotes();
@@ -15,16 +16,18 @@ function ArchiveNotePage({ searchQuery }) {
         : [],
     [notes, searchQuery]
   );
+  const { getText } = useI8n();
+
   return (
     <main className="app-main">
       <NoteList
         list={filteredNotes}
         highlightPattern={searchQuery}
-        emptyMessage={
+        emptyMessage={getText(
           searchQuery.length > 0
-            ? "Catatan terarsip tidak ditemukan"
-            : "Arsip catatan kosong"
-        }
+            ? "archiveFindNotFoundMessage"
+            : "archiveBlankMessage"
+        )}
         isLoading={isLoading}
       />
     </main>

@@ -16,16 +16,14 @@ import { MainLayout } from "./layout/MainLayout";
 import { LoginPageWrapper } from "./pages/LoginPage";
 import { RegisterPageWrapper } from "./pages/RegisterPage";
 import { ThemeContext } from "./context";
+import { useLocalStorageState } from "./hook";
 
 export function App() {
   const enhancedLocation = useEnhancedLocation();
 
-  const [theme, setTheme] = useState(localStorage.getItem("theme") ?? "");
+  const [theme, setTheme] = useLocalStorageState("theme", "");
   const toggleTheme = () =>
     setTheme((prevTheme) => (prevTheme === "dark" ? "" : "dark"));
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-  }, [theme]);
 
   useSyncLastBackgroundLocation(enhancedLocation);
 

@@ -46,16 +46,6 @@ const getInitialNotes = () => [
   },
 ];
 
-const showFormattedDate = (date) => {
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  return new Date(date).toLocaleDateString("id-ID", options);
-};
-
 const createNote = (data) => {
   const date = new Date();
   return {
@@ -80,7 +70,6 @@ const filterNotes = (notes, text) => {
 
 export {
   getInitialNotes,
-  showFormattedDate,
   createNote,
   htmlInnerText,
   normalizeInnerText,

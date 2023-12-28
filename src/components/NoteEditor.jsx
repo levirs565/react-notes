@@ -3,8 +3,10 @@ import { ContentEditable, LimitedContentEditable } from "./ContentEditable";
 import PropTypes from "prop-types";
 import "./NoteEditor.css";
 import { Shimmer } from "./Shimmer";
+import { useI8n } from "../provider/context";
 
 export function NoteTitleEditor({ editable, value, onValueChanged }) {
+  const { getText } = useI8n();
   const [titleRemainingLength, setTitleRemainingLength] = useState();
   const maxTitleLength = 50;
 
@@ -15,7 +17,7 @@ export function NoteTitleEditor({ editable, value, onValueChanged }) {
         contentEditable={editable}
         className="note-title-editor--title"
         maxLength={maxTitleLength}
-        placeholder="Judul"
+        placeholder={getText("noteTitlePlaceholder")}
         onRemainingLengthUpdated={(length) => setTitleRemainingLength(length)}
         value={value}
         onValueChanged={(e) => onValueChanged(e)}
@@ -25,7 +27,7 @@ export function NoteTitleEditor({ editable, value, onValueChanged }) {
           editable ? "note-title-editor--remaining--show" : ""
         }`}
       >
-        {titleRemainingLength} tersisa
+        {getText("remainingLength").replace("%", `${titleRemainingLength}`)}
       </p>
     </div>
   );
@@ -49,6 +51,7 @@ export const NoteBodyEditor = forwardRef(function NoteBodyEditor(
   { editable, value, onValueChanged },
   ref
 ) {
+  const { getText } = useI8n();
   const elementRef = useRef();
   useImperativeHandle(ref, () => {
     return {
@@ -71,7 +74,7 @@ export const NoteBodyEditor = forwardRef(function NoteBodyEditor(
       className="note-body-editor"
       value={value}
       onValueChanged={(e) => onValueChanged(e)}
-      placeholder="Catatan"
+      placeholder={getText("noteBodyPlaceholder")}
     />
   );
 });

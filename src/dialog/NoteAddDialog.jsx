@@ -12,10 +12,12 @@ import { NoteBodyEditor, NoteTitleEditor } from "../components/NoteEditor";
 import PropTypes from "prop-types";
 import { useEnhancedNavigate } from "../routes";
 import { useAddNote } from "../api";
+import { useI8n } from "../provider/context";
 
 function NoteAddDialog({ open, onSubmit, onClose }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const { getText } = useI8n();
 
   return (
     <BaseDialog
@@ -38,7 +40,7 @@ function NoteAddDialog({ open, onSubmit, onClose }) {
         </BaseDialogScrollable>
         <BaseDialogFooter>
           <AppButtonGroup>
-            <AppButton>Keluar</AppButton>
+            <AppButton>{getText("closeAction")}</AppButton>
             <AppButton
               disabled={title.length === 0}
               variant="primary"
@@ -50,7 +52,7 @@ function NoteAddDialog({ open, onSubmit, onClose }) {
                 });
               }}
             >
-              Simpan
+              {getText("saveAction")}
             </AppButton>
           </AppButtonGroup>
         </BaseDialogFooter>

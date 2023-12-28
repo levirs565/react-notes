@@ -6,6 +6,7 @@ import { useEffect, useMemo } from "react";
 import { useSearchQuery } from "./utils";
 import { filterNotes } from "../utils";
 import { useActiveNotes } from "../api";
+import { useI8n } from "../provider/context";
 
 function ActiveNotePage({ location, searchQuery }) {
   const { notes, isLoading } = useActiveNotes();
@@ -16,14 +17,18 @@ function ActiveNotePage({ location, searchQuery }) {
         : [],
     [searchQuery, notes]
   );
+  const { getText } = useI8n();
+
   return (
     <main className="app-main">
       <NoteList
         list={filteredNotes}
         highlightPattern={searchQuery}
-        emptyMessage={
-          searchQuery.length > 0 ? "Catatan tidak ditemukan" : "Catatan kosong"
-        }
+        emptyMessage={getText(
+          searchQuery.length > 0
+            ? "noteFindNotFoundMessage"
+            : "noteBlankMessage"
+        )}
         isLoading={isLoading}
       />
       <FloatingActionButton

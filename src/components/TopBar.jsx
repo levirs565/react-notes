@@ -18,6 +18,8 @@ import { MoonIcon } from "../icons/MoonIcon";
 import { SunIcon } from "../icons/SunIcon";
 import { useContext } from "react";
 import { ThemeContext } from "../context";
+import { useI8n } from "../provider/context";
+import { TranslateIcon } from "../icons/TranslateIcon";
 
 export function TopBarTabsItem({ to, children }) {
   return (
@@ -52,6 +54,7 @@ TopBarTabs.propTypes = {
 
 export function TopBarPopupContent({ userName, onLogout }) {
   const { theme, toggleTheme } = useContext(ThemeContext);
+  const { getText, toggleLang } = useI8n();
 
   return (
     <PopupContent>
@@ -65,15 +68,21 @@ export function TopBarPopupContent({ userName, onLogout }) {
         <PopupItemIcon>
           <LogoutCircleIcon />
         </PopupItemIcon>
-        <PopupItemText>Logout</PopupItemText>
+        <PopupItemText>{getText("logout")}</PopupItemText>
       </PopupItem>
       <PopupItem clickable onClick={toggleTheme}>
         <PopupItemIcon>
           {theme === "dark" ? <MoonIcon /> : <SunIcon />}
         </PopupItemIcon>
         <PopupItemText>
-          {theme === "dark" ? "Tema Gelap" : "Tema Terang"}
+          {getText(theme === "dark" ? "lightTheme" : "darkTheme")}
         </PopupItemText>
+      </PopupItem>
+      <PopupItem clickable onClick={toggleLang}>
+        <PopupItemIcon>
+          <TranslateIcon />
+        </PopupItemIcon>
+        <PopupItemText>{getText("langName")}</PopupItemText>
       </PopupItem>
     </PopupContent>
   );
@@ -91,6 +100,7 @@ export function TopBar({
   userName,
   onLogout,
 }) {
+  const { getText } = useI8n();
   const searchParam = createSearchParams(
     buildSearchParam(searchQuery)
   ).toString();
@@ -104,7 +114,7 @@ export function TopBar({
             search: searchParam,
           }}
         >
-          Aktif
+          {getText("activeNote")}
         </TopBarTabsItem>
         <TopBarTabsItem
           to={{
@@ -112,7 +122,7 @@ export function TopBar({
             search: searchParam,
           }}
         >
-          Arsip
+          {getText("archiveNote")}
         </TopBarTabsItem>
       </TopBarTabs>
       <div className="top-bar--grow" />

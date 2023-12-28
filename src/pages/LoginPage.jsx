@@ -20,6 +20,7 @@ import {
 } from "../components/Field";
 import { useForm } from "react-hook-form";
 import { useLoggedUser, useLoginUser } from "../api";
+import { useI8n } from "../provider/context";
 
 function LoginPage() {
   const { user } = useLoggedUser();
@@ -29,6 +30,7 @@ function LoginPage() {
     formState: { errors },
     handleSubmit,
   } = useForm();
+  const { getText } = useI8n();
 
   if (user) return <Navigate to="/" />;
 
@@ -37,32 +39,33 @@ function LoginPage() {
       onSubmit={handleSubmit((data) => loginUser(data.email, data.password))}
     >
       <CardFormHeader>
-        <CardFormTitle>Login</CardFormTitle>
+        <CardFormTitle>{getText("loginAction")}</CardFormTitle>
       </CardFormHeader>
       <CardFormContent>
         <CardFormMessage>
-          Tidak punya akun? <Link to="/register">Register</Link>
+          {getText("notHaveAccountMessage")}{" "}
+          <Link to="/register">{getText("registerAction")}</Link>
         </CardFormMessage>
         <Field inputId="email">
-          <FieldLabel>Email</FieldLabel>
+          <FieldLabel>{getText("emailField")}</FieldLabel>
           <FieldInput
             {...register("email", {
               required: {
                 value: true,
-                message: "Email tidak boleh kosong",
+                message: getText("emailCannotBlankMessage"),
               },
             })}
           />
           <ReactHookFieldMessage error={errors.email} />
         </Field>
         <Field inputId="password">
-          <FieldLabel>Password</FieldLabel>
+          <FieldLabel>{getText("passwordField")}</FieldLabel>
           <FieldInput
             type="password"
             {...register("password", {
               required: {
                 value: true,
-                message: "Password tidak boleh kosong",
+                message: getText("passwordCannotBlankMessage"),
               },
             })}
           />
@@ -72,7 +75,7 @@ function LoginPage() {
       <CardFormFooter>
         <AppButtonGroup>
           <AppButtonGroupSpacer />
-          <AppButton variant="primary">Login</AppButton>
+          <AppButton variant="primary">{getText("loginAction")}</AppButton>
         </AppButtonGroup>
       </CardFormFooter>
     </CardForm>

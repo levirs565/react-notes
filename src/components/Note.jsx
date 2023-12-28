@@ -1,13 +1,14 @@
 import { HighlightHTML } from "./HighlightHTML";
 import "./Note.css";
-import { showFormattedDate } from "../utils";
 import { Link, useLocation } from "react-router-dom";
 import { Masonry, MasonryItem } from "./Masonry";
 import PropTypes from "prop-types";
 import { MultiLineShimmer, Shimmer } from "./Shimmer";
+import { useFormatDate } from "../hook";
 
 export function Note({ id, title, body, createdAt, highlightPattern }) {
   const location = useLocation();
+  const formatDate = useFormatDate();
   return (
     <MasonryItem as="li" className="note">
       <div className="note--header">
@@ -22,9 +23,7 @@ export function Note({ id, title, body, createdAt, highlightPattern }) {
             <HighlightHTML text={title} pattern={highlightPattern} />
           </Link>
         </h3>
-        <time className="note--created-date">
-          {showFormattedDate(createdAt)}
-        </time>
+        <time className="note--created-date">{formatDate(createdAt)}</time>
       </div>
       <div className="note--body">
         <HighlightHTML text={body} pattern={highlightPattern} />

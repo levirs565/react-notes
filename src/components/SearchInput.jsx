@@ -2,8 +2,10 @@ import { AppInput } from "./AppInput";
 import { SearchIcon } from "../icons/SearchIcon";
 import PropTypes from "prop-types";
 import "./SearchInput.css";
+import { useI8n } from "../provider/context";
 
 export function SearchInput({ value, onChange }) {
+  const { getText } = useI8n();
   return (
     <div className="search-input">
       <label
@@ -18,7 +20,7 @@ export function SearchInput({ value, onChange }) {
         id="search"
         className="search-input--input"
         type="text"
-        placeholder="Cari..."
+        placeholder={getText("searchPlaceholder")}
         onChange={(el) => onChange(el)}
       />
     </div>

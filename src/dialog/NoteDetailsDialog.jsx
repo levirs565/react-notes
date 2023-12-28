@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { showFormattedDate } from "../utils";
 import "./NoteDetailsDialog.css";
 import {
   AppButton,
@@ -24,6 +23,8 @@ import PropTypes from "prop-types";
 import { useEnhancedNavigate } from "../routes";
 import { useAddNote, useNote } from "../api";
 import { MultiLineShimmer, Shimmer } from "../components/Shimmer";
+import { useI8n } from "../provider/context";
+import { useFormatDate } from "../hook";
 
 function NoteDetailsDialogSuccessForm({
   title,
@@ -38,6 +39,9 @@ function NoteDetailsDialogSuccessForm({
 }) {
   const [editable, setEditable] = useState(false);
   const bodyRef = useRef();
+  const { getText } = useI8n();
+  const formatDate = useFormatDate();
+
   return (
     <BaseDialogForm>
       <BaseDialogScrollable>
@@ -47,7 +51,7 @@ function NoteDetailsDialogSuccessForm({
           onValueChanged={(newTitle) => onTitleChanged(newTitle)}
         />
         <time className="note-details-dialog--created-date">
-          {showFormattedDate(createdAt)}
+          {formatDate(createdAt)}
         </time>
         <NoteBodyEditor
           ref={bodyRef}
@@ -66,7 +70,7 @@ function NoteDetailsDialogSuccessForm({
                 onSave();
               }}
             >
-              Simpan
+              {getText("saveAction")}
             </AppButton>
           ) : (
             <AppButton
@@ -78,7 +82,7 @@ function NoteDetailsDialogSuccessForm({
                 }, 100);
               }}
             >
-              Edit
+              {getText("editAction")}
             </AppButton>
           )}
           <AppButton
@@ -87,7 +91,7 @@ function NoteDetailsDialogSuccessForm({
               onChangeArchive(!archived);
             }}
           >
-            {archived ? "Batal Arsip" : "Arsipkan"}
+            {getText(archived ? "unarchiveAction" : "archiveAction")}
           </AppButton>
           <AppButton
             onClick={(e) => {
@@ -96,10 +100,10 @@ function NoteDetailsDialogSuccessForm({
             }}
             variant="danger"
           >
-            Hapus
+            {getText("deleteAction")}
           </AppButton>
           <AppButtonGroupSpacer />
-          <AppButton>Keluar</AppButton>
+          <AppButton>{getText("closeAction")}</AppButton>
         </AppButtonGroup>
       </BaseDialogFooter>
     </BaseDialogForm>
@@ -119,15 +123,16 @@ NoteDetailsDialogSuccessForm.propTypes = {
 };
 
 function NoteDetailsDialogNotFoundForm({ onCreateNew }) {
+  const { getText } = useI8n();
   return (
     <BaseDialogForm>
       <BaseDialogScrollable>
-        <BaseDialogTitle>Catatan tidak ada!</BaseDialogTitle>
+        <BaseDialogTitle>{getText("noteNotFoundMessage")}</BaseDialogTitle>
       </BaseDialogScrollable>
       <BaseDialogFooter>
         <AppButtonGroup>
           <AppButtonGroupSpacer />
-          <AppButton>Keluar</AppButton>
+          <AppButton>{getText("closeAction")}</AppButton>
           <AppButton
             variant="primary"
             onClick={(e) => {
@@ -135,7 +140,7 @@ function NoteDetailsDialogNotFoundForm({ onCreateNew }) {
               onCreateNew();
             }}
           >
-            Buat Baru
+            {getText("createNewAction")}
           </AppButton>
         </AppButtonGroup>
       </BaseDialogFooter>

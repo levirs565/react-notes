@@ -20,6 +20,7 @@ import {
 } from "../components/AppButton";
 import { useForm } from "react-hook-form";
 import { useRegisterUser } from "../api";
+import { useI8n } from "../provider/context";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ function RegisterPage() {
     watch,
   } = useForm();
   const passwordValue = watch("password");
+  const { getText } = useI8n();
 
   return (
     <CardForm
@@ -41,62 +43,65 @@ function RegisterPage() {
       )}
     >
       <CardFormHeader>
-        <CardFormTitle>Register</CardFormTitle>
+        <CardFormTitle>{getText("registerAction")}</CardFormTitle>
       </CardFormHeader>
       <CardFormContent>
         <CardFormMessage>
-          Sudah punya akun? <Link to="/login">Login</Link>
+          {getText("haveAccountMessage")}{" "}
+          <Link to="/login">{getText("loginAction")}</Link>
         </CardFormMessage>
         <Field inputId="email">
-          <FieldLabel>Email</FieldLabel>
+          <FieldLabel>{getText("emailField")}</FieldLabel>
           <FieldInput
             type="email"
             {...register("email", {
               required: {
                 value: true,
-                message: "Email tidak boleh kosong",
+                message: getText("emailCannotBlankMessage"),
               },
             })}
           />
           <ReactHookFieldMessage error={errors.email} />
         </Field>
         <Field inputId="name">
-          <FieldLabel>Nama</FieldLabel>
+          <FieldLabel>{getText("nameField")}</FieldLabel>
           <FieldInput
             {...register("name", {
               required: {
                 value: true,
-                message: "Nama tidak boleh kosong",
+                message: getText("nameCannotBlankMessage"),
               },
             })}
           />
           <ReactHookFieldMessage error={errors.name} />
         </Field>
         <Field inputId="password">
-          <FieldLabel>Password</FieldLabel>
+          <FieldLabel>{getText("passwordField")}</FieldLabel>
           <FieldInput
             type="password"
             {...register("password", {
               required: {
                 value: true,
-                message: "Password tidak boleh kosong",
+                message: getText("passwordCannotBlankMessage"),
               },
               minLength: {
                 value: 8,
-                message: "Password minimal 8 karakter",
+                message: getText("passwordMinimalMessage"),
               },
             })}
           />
           <ReactHookFieldMessage error={errors.password} />
         </Field>
         <Field inputId="passwordRetry">
-          <FieldLabel>Ulangi Password</FieldLabel>
+          <FieldLabel>{getText("repeatPasswordField")}</FieldLabel>
           <FieldInput
             type="password"
             {...register("passwordRetry", {
               deps: "password",
               validate: (value) =>
-                value === passwordValue ? true : "Password harus sama",
+                value === passwordValue
+                  ? true
+                  : getText("passwordMustEqualMessage"),
             })}
           />
           <ReactHookFieldMessage error={errors.passwordRetry} />
@@ -105,7 +110,7 @@ function RegisterPage() {
       <CardFormFooter>
         <AppButtonGroup>
           <AppButtonGroupSpacer />
-          <AppButton variant="primary">Register</AppButton>
+          <AppButton variant="primary">{getText("registerAction")}</AppButton>
         </AppButtonGroup>
       </CardFormFooter>
     </CardForm>

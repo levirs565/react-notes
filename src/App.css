@@ -1,5 +1,6 @@
 .app {
   --text-color: black;
+  --placeholder-color: var(--color-zink-700);
   background-color: var(--color-zink-50);
   color: var(--text-color);
   min-height: 100vh;
@@ -8,6 +9,7 @@
 .app[data-theme="dark"] {
   background-color: var(--color-zink-950);
   --text-color: white;
+  --placeholder-color: var(--color-zink-300);
 }
 
 .app-main {

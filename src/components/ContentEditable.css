@@ -4,5 +4,5 @@
 
 .content-editable:empty::before {
   content: attr(placeholder);
-  color: var(--color-zink-500);
+  color: var(--placeholder-color);
 }

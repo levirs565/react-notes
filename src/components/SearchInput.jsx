@@ -7,7 +7,14 @@ import { useI8n } from "../provider/context";
 export function SearchInput({ value, onChange }) {
   const { getText } = useI8n();
   return (
-    <div className="search-input">
+    <AppInput
+      alue={value}
+      id="search"
+      className="search-input"
+      type="text"
+      placeholder={getText("searchPlaceholder")}
+      onChange={(el) => onChange(el)}
+    >
       <label
         aria-label="Search"
         className="search-input--label"
@@ -15,15 +22,7 @@ export function SearchInput({ value, onChange }) {
       >
         <SearchIcon className="search-input--icon" />
       </label>
-      <AppInput
-        value={value}
-        id="search"
-        className="search-input--input"
-        type="text"
-        placeholder={getText("searchPlaceholder")}
-        onChange={(el) => onChange(el)}
-      />
-    </div>
+    </AppInput>
   );
 }
 

@@ -1,8 +1,6 @@
 .search-input {
   display: flex;
   flex-direction: row;
-  background-color: white;
-  border: 1px solid var(--color-zink-300);
   align-items: center;
   padding: 0 8px;
 }
@@ -16,8 +14,5 @@
 .search-input--icon {
   width: 20px;
   height: 20px;
-}
-
-.search-input--input {
-  border: none;
+  color: var(--text-color);
 }

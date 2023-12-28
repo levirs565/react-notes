@@ -3,23 +3,20 @@ import "./AppInput.css";
 import PropTypes from "prop-types";
 
 export const AppInput = forwardRef(function AppInput(
-  { as, className, variant, ...rest },
+  { as, className, children, ...rest },
   ref
 ) {
   const Component = as ? as : "input";
   return (
-    <Component
-      className={`app-input ${variant ? `app-input--${variant}` : ""} ${
-        className ? className : ""
-      }`}
-      {...rest}
-      ref={ref}
-    />
+    <div className={`app-input ${className ? className : ""}`}>
+      {children}
+      <Component className="app-input--input" {...rest} ref={ref} />
+    </div>
   );
 });
 
 AppInput.propTypes = {
   as: PropTypes.string,
   className: PropTypes.string,
-  variant: PropTypes.string,
+  children: PropTypes.node,
 };

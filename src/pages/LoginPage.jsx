@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import {
   AppButton,
   AppButtonGroup,
@@ -21,6 +21,7 @@ import {
 import { useForm } from "react-hook-form";
 import { useLoggedUser, useLoginUser } from "../api";
 import { useI8n } from "../provider/context";
+import { FancyLink } from "../components/FancyLink";
 
 function LoginPage() {
   const { user } = useLoggedUser();
@@ -44,7 +45,7 @@ function LoginPage() {
       <CardFormContent>
         <CardFormMessage>
           {getText("notHaveAccountMessage")}{" "}
-          <Link to="/register">{getText("registerAction")}</Link>
+          <FancyLink to="/register">{getText("registerAction")}</FancyLink>
         </CardFormMessage>
         <Field inputId="email">
           <FieldLabel>{getText("emailField")}</FieldLabel>

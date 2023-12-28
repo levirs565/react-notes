@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
 import image404Url from "../assets/404.svg";
 import "./NotFoundPage.css";
 import { useI8n } from "../provider/context";
+import { FancyLink } from "../components/FancyLink";
 
 export function NotFoundPage() {
   const { getText } = useI8n();
@@ -13,9 +13,7 @@ export function NotFoundPage() {
         <h2 className="not-found-page--title">{getText("notFoundTitle")}</h2>
         <p className="not-found-page--text">{getText("checkUrlMessage")}</p>
         <p className="not-found-page--text">
-          <Link className="not-found-page--link" to="/">
-            {getText("homeAction")}
-          </Link>
+          <FancyLink to="/">{getText("homeAction")}</FancyLink>
         </p>
       </div>
     </main>

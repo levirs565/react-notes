@@ -32,37 +32,3 @@
   font-weight: 400;
   font-size: 32px;
 }
-
-.not-found-page--link {
-  text-decoration: none;
-  color: var(--color-fuchsia-500);
-  position: relative;
-  display: inline-block;
-  padding: 4px 8px;
-  font-weight: 600;
-  transition: color 0.3s ease-in-out;
-}
-
-.not-found-page--link:hover {
-  color: white;
-}
-
-.not-found-page--link::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  height: 1px;
-  transition: all 0.3s ease-in-out;
-  z-index: -1;
-}
-
-.not-found-page--link::before {
-  background-color: var(--color-fuchsia-500);
-}
-
-.not-found-page--link:hover::before {
-  height: 100%;
-  background-color: var(--color-fuchsia-700);
-}

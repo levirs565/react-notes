@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   CardForm,
   CardFormContent,
@@ -21,6 +21,7 @@ import {
 import { useForm } from "react-hook-form";
 import { useRegisterUser } from "../api";
 import { useI8n } from "../provider/context";
+import { FancyLink } from "../components/FancyLink";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ function RegisterPage() {
       <CardFormContent>
         <CardFormMessage>
           {getText("haveAccountMessage")}{" "}
-          <Link to="/login">{getText("loginAction")}</Link>
+          <FancyLink to="/login">{getText("loginAction")}</FancyLink>
         </CardFormMessage>
         <Field inputId="email">
           <FieldLabel>{getText("emailField")}</FieldLabel>

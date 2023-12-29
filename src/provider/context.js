@@ -8,5 +8,5 @@ export function useI8n() {
 }
 
 export function useTheme() {
-  return useContext(I8nContext);
+  return useContext(ThemeContext);
 }

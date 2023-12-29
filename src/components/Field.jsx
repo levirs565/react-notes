@@ -1,5 +1,5 @@
 import React, { forwardRef, useContext } from "react";
-import { AppInput } from "./AppInput";
+import { AppInput, AppInputContainer } from "./AppInput";
 import PropTypes from "prop-types";
 import "./Field.css";
 
@@ -11,12 +11,14 @@ export const FieldInput = forwardRef(function FieldInput(
 ) {
   const inputId = useContext(InputIdContext);
   return (
-    <AppInput
-      className={`field--input ${className ? className : ""}`}
-      id={inputId}
-      {...rest}
-      ref={ref}
-    />
+    <AppInputContainer>
+      <AppInput
+        className={`field--input ${className ? className : ""}`}
+        id={inputId}
+        {...rest}
+        ref={ref}
+      />
+    </AppInputContainer>
   );
 });
 

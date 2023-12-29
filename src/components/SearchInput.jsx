@@ -1,4 +1,4 @@
-import { AppInput } from "./AppInput";
+import { AppInput, AppInputContainer } from "./AppInput";
 import { SearchIcon } from "../icons/SearchIcon";
 import PropTypes from "prop-types";
 import "./SearchInput.css";
@@ -6,15 +6,9 @@ import { useI8n } from "../provider/context";
 
 export function SearchInput({ value, onChange }) {
   const { getText } = useI8n();
+  AppInputContainer;
   return (
-    <AppInput
-      alue={value}
-      id="search"
-      className="search-input"
-      type="text"
-      placeholder={getText("searchPlaceholder")}
-      onChange={(el) => onChange(el)}
-    >
+    <AppInputContainer className="search-input">
       <label
         aria-label="Search"
         className="search-input--label"
@@ -22,7 +16,14 @@ export function SearchInput({ value, onChange }) {
       >
         <SearchIcon className="search-input--icon" />
       </label>
-    </AppInput>
+      <AppInput
+        value={value}
+        id="search"
+        type="text"
+        placeholder={getText("searchPlaceholder")}
+        onChange={(el) => onChange(el)}
+      />
+    </AppInputContainer>
   );
 }
 

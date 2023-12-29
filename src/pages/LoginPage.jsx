@@ -52,6 +52,7 @@ function LoginPage() {
         <Field inputId="email">
           <FieldLabel>{getText("emailField")}</FieldLabel>
           <FieldInput
+            type="email"
             {...register("email", {
               required: {
                 value: true,

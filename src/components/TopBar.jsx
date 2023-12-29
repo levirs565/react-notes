@@ -16,9 +16,8 @@ import { AccountCircleIcon } from "../icons/AccountCircleIcon";
 import { LogoutCircleIcon } from "../icons/LogoutCircleIcon";
 import { MoonIcon } from "../icons/MoonIcon";
 import { SunIcon } from "../icons/SunIcon";
-import React, { useContext } from "react";
-import { ThemeContext } from "../context";
-import { useI8n } from "../provider/context";
+import React from "react";
+import { useI8n, useTheme } from "../provider/context";
 import { TranslateIcon } from "../icons/TranslateIcon";
 
 export function TopBarTabsItem({ to, children }) {
@@ -53,7 +52,7 @@ TopBarTabs.propTypes = {
 };
 
 export function TopBarPopupContent({ userName, onLogout }) {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme, toggleTheme } = useTheme();
   const { getText, toggleLang } = useI8n();
 
   return (

@@ -5,6 +5,7 @@
   border-radius: 8px;
   background: white;
   color: var(--text-color);
+  overflow: hidden;
 
   @mixin dark-theme {
     border-color: var(--color-zink-600);

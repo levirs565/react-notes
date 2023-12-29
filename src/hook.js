@@ -41,3 +41,22 @@ export function useFormatDate() {
     );
   };
 }
+
+export function useActionState() {
+  const [error, setError] = useState(null);
+  const [isPerformed, setIsPerformed] = useState(false);
+  const handlePromise = (promise) => {
+    setError(null);
+    setIsPerformed(true);
+    promise
+      .catch((e) => {
+        console.error(e);
+        setError(e.message);
+      })
+      .finally(() => {
+        console.log("Finish");
+        setIsPerformed(false);
+      });
+  };
+  return { error, isPerformed, handlePromise };
+}

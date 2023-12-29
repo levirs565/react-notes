@@ -11,6 +11,7 @@ import {
   Field,
   FieldInput,
   FieldLabel,
+  FieldMessage,
   ReactHookFieldMessage,
 } from "../components/Field";
 import {
@@ -23,6 +24,7 @@ import { useRegisterUser } from "../api";
 import { useI8n } from "../provider/context";
 import { FancyLink } from "../components/FancyLink";
 import { NotLoggedInGuard } from "../guard/LoginGuard";
+import { useActionState } from "../hook";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -35,12 +37,15 @@ function RegisterPage() {
   } = useForm();
   const passwordValue = watch("password");
   const { getText } = useI8n();
+  const { error, isPerformed, handlePromise } = useActionState();
 
   return (
     <CardForm
       onSubmit={handleSubmit((data) =>
-        registerUser(data.name, data.email, data.password).then(() =>
-          navigate("/login")
+        handlePromise(
+          registerUser(data.name, data.email, data.password).then(() =>
+            navigate("/login")
+          )
         )
       )}
     >
@@ -108,11 +113,16 @@ function RegisterPage() {
           />
           <ReactHookFieldMessage error={errors.passwordRetry} />
         </Field>
+        <Field inputId="">
+          {error && <FieldMessage error>{error}</FieldMessage>}
+        </Field>
       </CardFormContent>
       <CardFormFooter>
         <AppButtonGroup>
           <AppButtonGroupSpacer />
-          <AppButton variant="primary">{getText("registerAction")}</AppButton>
+          <AppButton variant="primary" disabled={isPerformed}>
+            {getText("registerAction")}
+          </AppButton>
         </AppButtonGroup>
       </CardFormFooter>
     </CardForm>

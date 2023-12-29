@@ -15,6 +15,7 @@ import {
   Field,
   FieldInput,
   FieldLabel,
+  FieldMessage,
   ReactHookFieldMessage,
 } from "../components/Field";
 import { useForm } from "react-hook-form";
@@ -22,6 +23,7 @@ import { useLoginUser } from "../api";
 import { useI8n } from "../provider/context";
 import { FancyLink } from "../components/FancyLink";
 import { NotLoggedInGuard } from "../guard/LoginGuard";
+import { useActionState } from "../hook";
 
 function LoginPage() {
   const loginUser = useLoginUser();
@@ -31,10 +33,13 @@ function LoginPage() {
     handleSubmit,
   } = useForm();
   const { getText } = useI8n();
+  const { error, isPerformed, handlePromise } = useActionState();
 
   return (
     <CardForm
-      onSubmit={handleSubmit((data) => loginUser(data.email, data.password))}
+      onSubmit={handleSubmit((data) =>
+        handlePromise(loginUser(data.email, data.password))
+      )}
     >
       <CardFormHeader>
         <CardFormTitle>{getText("loginAction")}</CardFormTitle>
@@ -69,11 +74,16 @@ function LoginPage() {
           />
           <ReactHookFieldMessage error={errors.password} />
         </Field>
+        <Field inputId="">
+          {error && <FieldMessage error>{error}</FieldMessage>}
+        </Field>
       </CardFormContent>
       <CardFormFooter>
         <AppButtonGroup>
           <AppButtonGroupSpacer />
-          <AppButton variant="primary">{getText("loginAction")}</AppButton>
+          <AppButton variant="primary" disabled={isPerformed}>
+            {getText("loginAction")}
+          </AppButton>
         </AppButtonGroup>
       </CardFormFooter>
     </CardForm>

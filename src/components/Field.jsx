@@ -24,17 +24,13 @@ FieldInput.propTypes = {
   className: PropTypes.string,
 };
 
-export class FieldLabel extends React.Component {
-  static contextType = InputIdContext;
-
-  render() {
-    const inputId = this.context;
-    return (
-      <label className="field--label" htmlFor={inputId}>
-        {this.props.children}
-      </label>
-    );
-  }
+export function FieldLabel({ children }) {
+  const inputId = useContext(InputIdContext);
+  return (
+    <label className="field--label" htmlFor={inputId}>
+      {children}
+    </label>
+  );
 }
 
 FieldLabel.propTypes = {

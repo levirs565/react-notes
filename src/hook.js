@@ -54,7 +54,6 @@ export function useActionState() {
         setError(e.message);
       })
       .finally(() => {
-        console.log("Finish");
         setIsPerformed(false);
       });
   };

@@ -1,9 +1,10 @@
+@import "../base.css";
+
 .app-button {
   outline: none;
   appearance: none;
   border: none;
 
-  background-color: var(--color-zink-200);
   padding: 8px 16px;
   font-size: 14px;
   cursor: pointer;
@@ -11,46 +12,63 @@
   transition: background-color 100ms ease-in-out;
 }
 
-.app-button:hover {
-  background-color: var(--color-zink-300);
-}
+.app-button--normal {
+  color: var(--text-color);
+  background-color: var(--color-zink-200);
 
-.app-button:active {
-  background-color: var(--color-zink-400);
-}
+  &:hover {
+    background-color: var(--color-zink-300);
+  }
 
-.app-button:disabled {
-  cursor: not-allowed;
+  &:active {
+    background-color: var(--color-zink-400);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  @mixin dark-theme {
+    background-color: var(--color-zink-700);
+
+    &:hover {
+      background-color: var(--color-zink-600);
+    }
+
+    &:active {
+      background-color: var(--color-zink-500);
+    }
+  }
 }
 
 .app-button--danger {
   background-color: var(--color-red-500);
   color: white;
-}
 
-.app-button--danger:hover {
-  background-color: var(--color-red-700);
-}
+  &:hover {
+    background-color: var(--color-red-700);
+  }
 
-.app-button--danger:active {
-  background-color: var(--color-red-800);
+  &:active {
+    background-color: var(--color-red-800);
+  }
 }
 
 .app-button--primary {
   background-color: var(--color-fuchsia-500);
   color: white;
-}
 
-.app-button--primary:hover {
-  background-color: var(--color-fuchsia-700);
-}
+  &:hover {
+    background-color: var(--color-fuchsia-700);
+  }
 
-.app-button--primary:active {
-  background-color: var(--color-fuchsia-800);
-}
+  &:active {
+    background-color: var(--color-fuchsia-800);
+  }
 
-.app-button--primary:disabled {
-  background-color: var(--color-fuchsia-300);
+  &:disabled {
+    background-color: var(--color-fuchsia-300);
+  }
 }
 
 .app-button-group-spacer {
@@ -74,27 +92,13 @@
   border-radius: 100%;
   padding: 0;
   cursor: pointer;
-}
 
-.app-icon-button > svg {
-  height: 20px;
-  width: 20px;
-  margin: 8px;
-  color: var(--text-color);
-}
+  & > svg {
+    height: 20px;
+    width: 20px;
+    margin: 8px;
+    color: var(--text-color);
+  }
 
-.app-icon-button:hover {
-  background-color: var(--color-zink-200);
-}
-
-[data-theme="dark"] .app-icon-button:hover {
-  background-color: var(--color-zink-700);
-}
-
-.app-icon-button:active {
-  background-color: var(--color-zink-300);
-}
-
-[data-theme="dark"] .app-icon-button:active {
-  background-color: var(--color-zink-600);
+  @mixin transparent-button;
 }

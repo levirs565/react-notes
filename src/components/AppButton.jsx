@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 export function AppButton({ className, variant, children, onClick, disabled }) {
   return (
     <button
-      className={`app-button ${variant ? `app-button--${variant}` : ""} ${
+      className={`app-button app-button--${variant ?? "normal"} ${
         className ? className : ""
       }`}
       onClick={onClick}
